@@ -1,0 +1,10 @@
+rootProject.name = 'imdb-aggregator'
+include 'api'
+findProject(':api')?.name = 'imdb-aggregator-api'
+include 'service'
+findProject(':service')?.name = 'imdb-aggregator-service'
+include 'models'
+findProject(':models')?.name = 'imdb-aggregator-models'
+include 'infrastructure'
+findProject(':infrastructure')?.name = 'imdb-aggregator-infrastructure'
+

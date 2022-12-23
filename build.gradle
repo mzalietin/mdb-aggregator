@@ -1,0 +1,19 @@
+plugins {
+	id 'java'
+}
+
+group = 'com.mzaletsin.selfstudy'
+version = "${version}"
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
