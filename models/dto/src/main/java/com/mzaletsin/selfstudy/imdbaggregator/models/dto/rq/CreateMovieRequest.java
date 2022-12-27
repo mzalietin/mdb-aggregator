@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.models.rq;
+package com.mzaletsin.selfstudy.imdbaggregator.models.dto.rq;
 
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;

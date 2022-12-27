@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.infrastructure.entity;
+package com.mzaletsin.selfstudy.imdbaggregator.models.entity;
 
 public class User {
     private Integer id;

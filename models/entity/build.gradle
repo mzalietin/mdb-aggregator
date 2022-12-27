@@ -11,10 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':models:imdb-aggregator-models-entity')
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.1"
 }
 
 publishing {
@@ -24,7 +21,6 @@ publishing {
         }
     }
 }
-
 
 test {
     useJUnitPlatform()

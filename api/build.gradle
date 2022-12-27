@@ -15,7 +15,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 
-    implementation project(':imdb-aggregator-models')
+    implementation project(':models:imdb-aggregator-models-dto')
     implementation project(':imdb-aggregator-service')
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

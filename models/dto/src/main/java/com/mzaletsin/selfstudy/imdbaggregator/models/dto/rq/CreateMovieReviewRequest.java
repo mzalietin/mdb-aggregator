@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.models.rq;
+package com.mzaletsin.selfstudy.imdbaggregator.models.dto.rq;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

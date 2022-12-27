@@ -11,7 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation project(':imdb-aggregator-models')
+    implementation project(':models:imdb-aggregator-models-dto')
+    implementation project(':models:imdb-aggregator-models-entity')
     implementation project(':imdb-aggregator-infrastructure')
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
