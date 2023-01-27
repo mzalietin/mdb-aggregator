@@ -5,4 +5,6 @@ import com.mzaletsin.selfstudy.imdbaggregator.models.entity.MovieReview;
 public interface MovieReviewDao {
 
     void save(MovieReview movieReview);
+
+    Integer countByMovieId(String movieId);
 }

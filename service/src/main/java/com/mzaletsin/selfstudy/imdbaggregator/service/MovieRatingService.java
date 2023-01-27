@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface MovieRatingService {
 
-    void addReview(MovieReview  review);
+    void saveAndRecalculate(final Collection<MovieReview> reviews);
 
     Collection<Movie> getTopRated(Integer positions);
 
