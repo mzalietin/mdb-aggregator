@@ -7,6 +7,10 @@ public class User {
     private final String lastName;
     private final Integer age;
 
+    public User(String username, String firstName, String lastName, Integer age) {
+        this(null, username, firstName, lastName, age);
+    }
+
     public User(Integer id, String username, String firstName, String lastName, Integer age) {
         this.id = id;
         this.username = username;
