@@ -1,40 +1,33 @@
 package com.mzaletsin.selfstudy.imdbaggregator.domain.entity;
 
-public class Movie { //TODO immutable entities
-    private String id;
-    private String name;
-    private java.time.LocalDate issueDate;
-    private Double rating;
+import java.time.LocalDate;
+
+public class Movie {
+    private final String id;
+    private final String name;
+    private final LocalDate releaseDate;
+    private final Double rating;
+
+    public Movie(String id, String name, LocalDate releaseDate, Double rating) {
+        this.id = id;
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.rating = rating;
+    }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public java.time.LocalDate getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(final java.time.LocalDate issueDate) {
-        this.issueDate = issueDate;
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
 
     public Double getRating() {
         return rating;
-    }
-
-    public void setRating(final Double rating) {
-        this.rating = rating;
     }
 }

@@ -48,9 +48,9 @@ class SaveReviewsImplementation implements SaveReviews {
             Integer newReviewsCount = reviewsCount + movieReviews.size();
             Double newRating = newVolume / newReviewsCount;
 
-            movie.setRating(newRating);
+            Movie newRatingMovie = new Movie(movie.getId(), movie.getName(), movie.getReleaseDate(), newRating);
             //
-            movieDao.save(movie);
+            movieDao.save(newRatingMovie);
         }
 
         //movieReviewDao.save(reviews); TODO
