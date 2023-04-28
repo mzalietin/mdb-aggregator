@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'org.springframework.boot' version '3.0.1'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'maven-publish'
@@ -15,9 +15,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 
-//    implementation project(':domain:imdb-aggregator-domain-dto')
-//    implementation project(':domain:imdb-aggregator-domain-entity')
-//    implementation project(':imdb-aggregator-usecase')
+    implementation project(':adapter:imdb-aggregator-api')
+    implementation project(':adapter:imdb-aggregator-infrastructure')
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
