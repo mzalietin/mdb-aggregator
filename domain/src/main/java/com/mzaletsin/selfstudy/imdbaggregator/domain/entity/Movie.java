@@ -11,11 +11,7 @@ public class Movie {
     private final LocalDate releaseDate;
     private final BigDecimal rating;
 
-    public Movie(String name, LocalDate releaseDate) {
-        this(null, name, releaseDate, BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP));
-    }
-
-    private Movie(String id, String name, LocalDate releaseDate, BigDecimal rating) {
+    Movie(String id, String name, LocalDate releaseDate, BigDecimal rating) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
@@ -23,17 +19,22 @@ public class Movie {
     }
 
     public Movie applyReviews(Integer currentReviewsCount, Collection<MovieReview> newReviews) {
-        BigDecimal currentVolume = rating.multiply(BigDecimal.valueOf(currentReviewsCount));
+        if (newReviews.isEmpty()) {
+            return this;
+        } else {
+            BigDecimal currentVolume = rating.multiply(BigDecimal.valueOf(currentReviewsCount));
 
-        int newReviewsVolume = newReviews.stream()
-            .mapToInt(MovieReview::getRating)
-            .sum();
+            int newReviewsVolume = newReviews.stream()
+                .mapToInt(MovieReview::getRating)
+                .sum();
 
-        BigDecimal newVolume = currentVolume.add(BigDecimal.valueOf(newReviewsVolume));
-        int newReviewsCount = currentReviewsCount + newReviews.size();
-        BigDecimal newRating = newVolume.divide(BigDecimal.valueOf(newReviewsCount), RoundingMode.HALF_UP);
+            BigDecimal newVolume = currentVolume.add(BigDecimal.valueOf(newReviewsVolume));
+            int newReviewsCount = currentReviewsCount + newReviews.size();
+            BigDecimal newRating = newVolume.setScale(2, RoundingMode.HALF_UP)
+                .divide(BigDecimal.valueOf(newReviewsCount));
 
-        return new Movie(id, name, releaseDate, newRating);
+            return new Movie(id, name, releaseDate, newRating);
+        }
     }
 
     public String getId() {
