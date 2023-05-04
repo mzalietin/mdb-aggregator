@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
 
-public final class TestFixtures {
+public final class DomainTestFixtures {
 
     public static final String MOVIE_ID = "28df567kl678l";
     public static final String MOVIE_NAME = "Forrest Gump";
@@ -17,4 +17,8 @@ public final class TestFixtures {
     public static final String FIRST_NAME = "John";
     public static final String LAST_NAME = "Doe";
     public static final Integer USER_AGE = 25;
+
+    public static Movie defaultMovie() {
+        return new Movie(MOVIE_ID, MOVIE_NAME, RELEASE_DATE, INITIAL_RATING);
+    }
 }

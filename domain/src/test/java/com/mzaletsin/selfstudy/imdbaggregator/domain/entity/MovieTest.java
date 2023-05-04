@@ -11,13 +11,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.INITIAL_RATING;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.MOVIE_ID;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.MOVIE_NAME;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.RATING_TEN;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.RELEASE_DATE;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.REVIEW_COMMENT;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.USER_ID;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.INITIAL_RATING;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.MOVIE_ID;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.MOVIE_NAME;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.RATING_TEN;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.RELEASE_DATE;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.REVIEW_COMMENT;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USER_ID;
 
 class MovieTest {
 

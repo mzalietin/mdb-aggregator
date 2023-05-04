@@ -3,11 +3,11 @@ package com.mzaletsin.selfstudy.imdbaggregator.domain.entity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.FIRST_NAME;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.LAST_NAME;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.USERNAME;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.USER_AGE;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.USER_ID;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.FIRST_NAME;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.LAST_NAME;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USERNAME;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USER_AGE;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USER_ID;
 
 class UserTest {
 

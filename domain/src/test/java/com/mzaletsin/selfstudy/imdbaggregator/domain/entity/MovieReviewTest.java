@@ -3,10 +3,10 @@ package com.mzaletsin.selfstudy.imdbaggregator.domain.entity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.MOVIE_ID;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.RATING_TEN;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.REVIEW_COMMENT;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.TestFixtures.USER_ID;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.MOVIE_ID;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.RATING_TEN;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.REVIEW_COMMENT;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USER_ID;
 
 class MovieReviewTest {
 
