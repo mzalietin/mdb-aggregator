@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.usecase.impl;
+package com.mzaletsin.selfstudy.imdbaggregator.usecase.implementation;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie;
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.MovieReview;
@@ -9,12 +9,12 @@ import com.mzaletsin.selfstudy.imdbaggregator.usecase.SaveReviews;
 import java.util.Collection;
 import java.util.List;
 
-final class SaveReviewsImplementation implements SaveReviews {
+final class SaveReviewsUC implements SaveReviews {
     private final MovieDataAccess movieDataAccess;
     private final MovieReviewDataAccess movieReviewDataAccess;
 
-    public SaveReviewsImplementation(MovieDataAccess movieDataAccess,
-                                     MovieReviewDataAccess movieReviewDataAccess) {
+    SaveReviewsUC(MovieDataAccess movieDataAccess,
+                  MovieReviewDataAccess movieReviewDataAccess) {
         this.movieDataAccess = movieDataAccess;
         this.movieReviewDataAccess = movieReviewDataAccess;
     }

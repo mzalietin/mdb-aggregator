@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.usecase.impl;
+package com.mzaletsin.selfstudy.imdbaggregator.usecase.implementation;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures;
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie;
@@ -20,7 +20,7 @@ import java.util.List;
 import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.MOVIE_ID;
 
 @ExtendWith(MockitoExtension.class)
-class SaveReviewsImplementationTest {
+class SaveReviewsUCTest {
     @Mock
     MovieDataAccess movieDataAccess;
 
@@ -28,7 +28,7 @@ class SaveReviewsImplementationTest {
     MovieReviewDataAccess movieReviewDataAccess;
 
     @InjectMocks
-    SaveReviewsImplementation usecase;
+    SaveReviewsUC usecase;
 
     @Test
     void givenUseCase_whenSaveReviews_thenRecalculatesMovieRatingAndSavesReviews() {

@@ -6,5 +6,7 @@ import java.util.Collection;
 
 public interface GetTopRated {
 
-    Collection<Movie> get(Integer amount);
+    Collection<Movie> get(Integer count);
+
+    Collection<Movie> getByUser(Integer count, String username);
 }
