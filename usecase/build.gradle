@@ -11,6 +11,8 @@ repositories {
 }
 
 dependencies {
+    var jakartaValidationVersion = '3.0.0'
+    implementation "jakarta.validation:jakarta.validation-api:${jakartaValidationVersion}"
     api(project(':imdb-aggregator-domain'))
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"

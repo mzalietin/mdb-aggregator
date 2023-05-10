@@ -6,15 +6,18 @@ import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.MovieReviews;
 import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieDataAccess;
 import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieReviewDataAccess;
 import com.mzaletsin.selfstudy.imdbaggregator.usecase.SaveReviews;
+import jakarta.validation.Validator;
 
 import java.util.List;
 
-final class SaveReviewsUC implements SaveReviews {
+final class SaveReviewsUC extends BaseValidatingUseCase implements SaveReviews {
     private final MovieDataAccess movieDataAccess;
     private final MovieReviewDataAccess movieReviewDataAccess;
 
-    SaveReviewsUC(MovieDataAccess movieDataAccess,
-                  MovieReviewDataAccess movieReviewDataAccess) {
+    public SaveReviewsUC(Validator validator,
+                         MovieDataAccess movieDataAccess,
+                         MovieReviewDataAccess movieReviewDataAccess) {
+        super(validator);
         this.movieDataAccess = movieDataAccess;
         this.movieReviewDataAccess = movieReviewDataAccess;
     }
@@ -22,6 +25,8 @@ final class SaveReviewsUC implements SaveReviews {
     @Override
     public void save(MovieReviews reviews) {
         if (!reviews.isEmpty()) {
+            validate(reviews);
+
             List<String> movieIds = reviews.getUniqueMovieIds();
 
             for (String movieId : movieIds) {
