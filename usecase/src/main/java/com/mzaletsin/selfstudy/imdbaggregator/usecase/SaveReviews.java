@@ -1,9 +1,8 @@
 package com.mzaletsin.selfstudy.imdbaggregator.usecase;
 
-import java.util.Collection;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.MovieReview;
+import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.MovieReviews;
 
 public interface SaveReviews {
 
-    void save(final Collection<MovieReview> reviews);
+    void save(MovieReviews reviews);
 }
