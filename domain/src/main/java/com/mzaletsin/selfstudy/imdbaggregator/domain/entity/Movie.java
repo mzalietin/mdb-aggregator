@@ -1,5 +1,7 @@
 package com.mzaletsin.selfstudy.imdbaggregator.domain.entity;
 
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -7,6 +9,7 @@ import java.util.Collection;
 
 public class Movie {
     private final String id;
+    @Size(min = 2, max = 100)
     private final String name;
     private final LocalDate releaseDate;
     private final BigDecimal rating;

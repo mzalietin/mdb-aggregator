@@ -12,14 +12,11 @@ repositories {
 
 dependencies {
     var lombokVersion = '1.18.22'
-    var jakartaValidationVersion = '3.0.0'
 
     implementation project(':imdb-aggregator-usecase')
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
-    implementation "jakarta.validation:jakarta.validation-api:${jakartaValidationVersion}"
 }
 
 publishing {
