@@ -13,8 +13,7 @@ repositories {
 dependencies {
     api(project(':imdb-aggregator-domain'))
 
-    implementation "org.springframework.data:spring-data-jpa:${spring_data_jpa_version}"
-    implementation "org.springframework:spring-context:${spring_context_version}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}"
 
     runtimeOnly "com.h2database:h2:2.1.214"
 }
