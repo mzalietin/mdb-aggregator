@@ -1,0 +1,12 @@
+spring:
+    datasource:
+        url: jdbc:h2:file:./mock_db
+        username: sa
+        password: password
+        driverClassName: org.h2.Driver
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        show-sql: true
+        generate-ddl: true
+        hibernate:
+            ddl-auto: create-drop
