@@ -1,7 +1,6 @@
 plugins {
-    id 'java-library'
-    id 'org.springframework.boot' version "${spring_boot_plugin_version}"
-    id 'io.spring.dependency-management' version "${spring_dependency_management_plugin_version}"
+    id 'org.springframework.boot' version "${spring_boot_version}"
+    //id 'io.spring.dependency-management' version "${spring_dependency_management_plugin_version}"
 }
 
 group = 'com.mzaletsin.selfstudy'
@@ -13,12 +12,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-starter:${spring_boot_version}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${spring_boot_version}"
     runtimeOnly "org.hibernate.validator:hibernate-validator:${hibernate_validator_version}"
 
-    implementation project(':adapter:imdb-aggregator-api')
-    implementation project(':adapter:imdb-aggregator-infrastructure')
+    implementation project(':imdb-aggregator-api')
+    implementation project(':imdb-aggregator-infrastructure')
 }
 
 test {

@@ -1,0 +1,25 @@
+plugins {
+    //id 'io.spring.dependency-management' version "${spring_dependency_management_plugin_version}"
+}
+
+group = 'com.mzaletsin.selfstudy'
+version = "${version}"
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api(project(':imdb-aggregator-domain'))
+
+    //implementation "org.springframework.data:spring-data-jpa"
+    //implementation "org.springframework:spring-context"
+
+    runtimeOnly "com.h2database:h2:2.1.214"
+}
+
+
+test {
+    useJUnitPlatform()
+}
