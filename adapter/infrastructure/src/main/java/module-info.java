@@ -1,3 +1,3 @@
 module imdb.aggregator.infrastructure {
-    requires imdb.aggregator.domain;
+    requires transitive imdb.aggregator.domain;
 }

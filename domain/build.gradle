@@ -12,12 +12,11 @@ repositories {
 }
 
 dependencies {
-    var jakartaValidationVersion = '3.0.0'
-    api("jakarta.validation:jakarta.validation-api:${jakartaValidationVersion}")
+    api("jakarta.validation:jakarta.validation-api:${jakarta_validation_version}")
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.1"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.1"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_jupiter_version}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_jupiter_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_version}"
 }
 
 publishing {
@@ -30,4 +29,8 @@ publishing {
 
 test {
     useJUnitPlatform()
+}
+
+build {
+    dependsOn test
 }
