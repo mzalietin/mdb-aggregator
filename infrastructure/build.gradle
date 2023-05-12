@@ -1,5 +1,5 @@
 plugins {
-    //id 'io.spring.dependency-management' version "${spring_dependency_management_plugin_version}"
+    id 'java-library'
 }
 
 group = 'com.mzaletsin.selfstudy'
@@ -13,8 +13,8 @@ repositories {
 dependencies {
     api(project(':imdb-aggregator-domain'))
 
-    //implementation "org.springframework.data:spring-data-jpa"
-    //implementation "org.springframework:spring-context"
+    implementation "org.springframework.data:spring-data-jpa:${spring_data_jpa_version}"
+    implementation "org.springframework:spring-context:${spring_context_version}"
 
     runtimeOnly "com.h2database:h2:2.1.214"
 }

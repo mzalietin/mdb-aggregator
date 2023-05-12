@@ -1,5 +1,5 @@
 plugins {
-
+    id 'java-library'
 }
 
 group = 'com.mzaletsin.selfstudy'
@@ -13,6 +13,8 @@ repositories {
 dependencies {
     api(project(':imdb-aggregator-domain'))
 
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_jupiter_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_version}"
     testImplementation "org.mockito:mockito-junit-jupiter:${mockito_version}"
     testImplementation(testFixtures(project(":imdb-aggregator-domain")))
 }
