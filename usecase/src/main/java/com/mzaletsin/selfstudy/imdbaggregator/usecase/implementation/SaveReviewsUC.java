@@ -10,7 +10,7 @@ import jakarta.validation.Validator;
 
 import java.util.List;
 
-final class SaveReviewsUC extends BaseValidatingUseCase implements SaveReviews {
+public final class SaveReviewsUC extends BaseValidatingUseCase implements SaveReviews {
     private final MovieDataAccess movieDataAccess;
     private final MovieReviewDataAccess movieReviewDataAccess;
 

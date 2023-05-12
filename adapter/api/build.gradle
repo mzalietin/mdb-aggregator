@@ -13,7 +13,7 @@ repositories {
 dependencies {
     var lombokVersion = '1.18.22'
 
-    implementation project(':imdb-aggregator-usecase')
+    api(project(':imdb-aggregator-usecase'))
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

@@ -1,5 +1,6 @@
+@SuppressWarnings("requires-transitive-automatic")
 module imdb.aggregator.domain {
-    requires jakarta.validation;
+    requires transitive jakarta.validation;
     exports com.mzaletsin.selfstudy.imdbaggregator.domain.entity;
     exports com.mzaletsin.selfstudy.imdbaggregator.domain.port;
 }

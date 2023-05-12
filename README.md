@@ -6,4 +6,8 @@ AWS IMDB Service - Aggregator
 
 Prerequisites: Java 17
 
-`gradlew clean build publishToMavenLocal`
+`gradlew clean build`
+
+## Run
+
+`java -jar application/build/libs/imdb-aggregator-application-{version}.jar`
