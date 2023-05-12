@@ -2,7 +2,6 @@ plugins {
     id 'java-library'
     id 'org.springframework.boot' version "${spring_boot_plugin_version}"
     id 'io.spring.dependency-management' version "${spring_dependency_management_plugin_version}"
-    id 'maven-publish'
 }
 
 group = 'com.mzaletsin.selfstudy'
@@ -19,14 +18,6 @@ dependencies {
 
     implementation project(':adapter:imdb-aggregator-api')
     implementation project(':adapter:imdb-aggregator-infrastructure')
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
 }
 
 test {
