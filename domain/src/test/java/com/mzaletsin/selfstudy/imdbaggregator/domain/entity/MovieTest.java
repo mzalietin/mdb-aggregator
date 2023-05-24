@@ -17,7 +17,7 @@ import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFix
 import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.RATING_TEN;
 import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.RELEASE_DATE;
 import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.REVIEW_COMMENT;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USER_ID;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USERNAME;
 
 class MovieTest {
 
@@ -48,14 +48,14 @@ class MovieTest {
         return Stream.of(
             Arguments.of(List.of(), BigDecimal.ZERO),
             Arguments.of(List.of(
-                new MovieReview(USER_ID, MOVIE_ID, RATING_TEN, REVIEW_COMMENT)),
+                new MovieReview(USERNAME, MOVIE_ID, RATING_TEN, REVIEW_COMMENT)),
                 BigDecimal.valueOf(1000, 2)), //10
             Arguments.of(List.of(
-                new MovieReview(0, MOVIE_ID, 6, "comment_0"),
-                new MovieReview(1, MOVIE_ID, 6, "comment_1"),
-                new MovieReview(2, MOVIE_ID, 7, "comment_2"),
-                new MovieReview(3, MOVIE_ID, 7, "comment_3"),
-                new MovieReview(4, MOVIE_ID, 8, "comment_4")),
+                new MovieReview("user_0", MOVIE_ID, 6, "comment_0"),
+                new MovieReview("user_1", MOVIE_ID, 6, "comment_1"),
+                new MovieReview("user_2", MOVIE_ID, 7, "comment_2"),
+                new MovieReview("user_3", MOVIE_ID, 7, "comment_3"),
+                new MovieReview("user_4", MOVIE_ID, 8, "comment_4")),
                 BigDecimal.valueOf(680, 2)) //6.8
         );
     }

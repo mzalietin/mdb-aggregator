@@ -5,22 +5,22 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
 public class MovieReview {
-    private final Integer userId;
+    private final String username;
     private final String movieId;
     @Min(1) @Max(10)
     private final Integer rating;
     @Size(max = 10_000)
     private final String comment;
 
-    public MovieReview(Integer userId, String movieId, Integer rating, String comment) {
-        this.userId = userId;
+    public MovieReview(String username, String movieId, Integer rating, String comment) {
+        this.username = username;
         this.movieId = movieId;
         this.rating = rating;
         this.comment = comment;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
     public String getMovieId() {

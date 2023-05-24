@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.MOVIE_ID;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USERNAME;
 
 @ExtendWith(MockitoExtension.class)
 class SaveReviewsUCTest {
@@ -39,11 +40,11 @@ class SaveReviewsUCTest {
     void givenUseCase_whenSaveReviews_thenRecalculatesMovieRatingAndSavesReviews() {
         var movie = DomainTestFixtures.defaultMovie();
         var reviews = new MovieReviews(List.of(
-            new MovieReview(0, MOVIE_ID, 6, "comment_0"),
-            new MovieReview(1, MOVIE_ID, 6, "comment_1"),
-            new MovieReview(2, MOVIE_ID, 7, "comment_2"),
-            new MovieReview(3, MOVIE_ID, 7, "comment_3"),
-            new MovieReview(4, MOVIE_ID, 8, "comment_4")));
+            new MovieReview("user_0", MOVIE_ID, 6, "comment_0"),
+            new MovieReview("user_1", MOVIE_ID, 6, "comment_1"),
+            new MovieReview("user_2", MOVIE_ID, 7, "comment_2"),
+            new MovieReview("user_3", MOVIE_ID, 7, "comment_3"),
+            new MovieReview("user_4", MOVIE_ID, 8, "comment_4")));
 
         Mockito.when(movieDataAccess.getById(MOVIE_ID)).thenReturn(movie);
 

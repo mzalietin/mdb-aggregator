@@ -10,7 +10,6 @@ public final class DomainTestFixtures {
     public static final String MOVIE_NAME = "Forrest Gump";
     public static final LocalDate RELEASE_DATE = LocalDate.of(1994, Month.JUNE, 23);
     public static final BigDecimal INITIAL_RATING = BigDecimal.ZERO;
-    public static final Integer USER_ID = 10001;
     public static final Integer RATING_TEN = 10;
     public static final String REVIEW_COMMENT = "some comment";
     public static final String USERNAME = "jdoe";
