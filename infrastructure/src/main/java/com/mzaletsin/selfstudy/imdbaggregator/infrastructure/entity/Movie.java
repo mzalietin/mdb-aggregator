@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "movie")
+@Table(name = "imdb_movie")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,4 +26,51 @@ public class Movie {
 
     @Column(name = "rating", precision = 4, scale = 2, nullable = false)
     private BigDecimal rating;
+
+    public Movie() {
+    }
+
+    private Movie(final String id,
+                 final String name,
+                 final LocalDate releaseDate,
+                 final BigDecimal rating) {
+        this.id = id;
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.rating = rating;
+    }
+
+    public static Movie fromDomain(com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie domainMovie) {
+        return new Movie(
+            domainMovie.getId(),
+            domainMovie.getName(),
+            domainMovie.getReleaseDate(),
+            domainMovie.getRating()
+        );
+    }
+
+    public static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie toDomain(Movie persistenceMovie) {
+        return new com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie(
+            persistenceMovie.getId(),
+            persistenceMovie.getName(),
+            persistenceMovie.getReleaseDate(),
+            persistenceMovie.getRating()
+        );
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public BigDecimal getRating() {
+        return rating;
+    }
 }

@@ -4,7 +4,7 @@ import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.User;
 
 public interface UserDataAccess {
 
-    Integer save(User user);
+    void save(User user);
 
     User getByUsername(String username);
 

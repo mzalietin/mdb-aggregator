@@ -2,4 +2,5 @@ module imdb.aggregator.domain {
     requires transitive jakarta.validation;
     exports com.mzaletsin.selfstudy.imdbaggregator.domain.entity;
     exports com.mzaletsin.selfstudy.imdbaggregator.domain.port;
+    exports com.mzaletsin.selfstudy.imdbaggregator.domain.exception;
 }

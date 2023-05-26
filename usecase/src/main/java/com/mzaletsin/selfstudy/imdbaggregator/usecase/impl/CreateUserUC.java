@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.usecase.implementation;
+package com.mzaletsin.selfstudy.imdbaggregator.usecase.impl;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.User;
 import com.mzaletsin.selfstudy.imdbaggregator.domain.port.UserDataAccess;
@@ -15,8 +15,8 @@ final class CreateUserUC extends BaseValidatingUseCase implements CreateUser {
     }
 
     @Override
-    public Integer create(User user) {
+    public void create(User user) {
         validate(user);
-        return userDataAccess.save(user);
+        userDataAccess.save(user);
     }
 }

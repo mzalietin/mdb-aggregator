@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "imdb_user")
 public class User {
     @Id
     @Column(name = "username", length = 30, unique = true, nullable = false)
@@ -20,4 +20,51 @@ public class User {
 
     @Column(name = "age", nullable = false)
     private Integer age;
+
+    public User() {
+    }
+
+    public User(final String username,
+                final String firstName,
+                final String lastName,
+                final Integer age) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
+    public static User fromDomain(com.mzaletsin.selfstudy.imdbaggregator.domain.entity.User domainUser) {
+        return new User(
+            domainUser.getUsername(),
+            domainUser.getFirstName(),
+            domainUser.getLastName(),
+            domainUser.getAge()
+        );
+    }
+
+    public static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.User toDomain(User persistenceUser) {
+        return new com.mzaletsin.selfstudy.imdbaggregator.domain.entity.User(
+            persistenceUser.getUsername(),
+            persistenceUser.getFirstName(),
+            persistenceUser.getLastName(),
+            persistenceUser.getAge()
+        );
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
 }

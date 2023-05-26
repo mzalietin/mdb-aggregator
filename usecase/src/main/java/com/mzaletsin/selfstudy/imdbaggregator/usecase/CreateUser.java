@@ -4,5 +4,5 @@ import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.User;
 
 public interface CreateUser {
 
-    Integer create(User user);
+    void create(User user);
 }

@@ -1,0 +1,36 @@
+package com.mzaletsin.selfstudy.imdbaggregator.infrastructure;
+
+import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieDataAccess;
+import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieReviewDataAccess;
+import com.mzaletsin.selfstudy.imdbaggregator.domain.port.UserDataAccess;
+import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.impl.MovieDao;
+import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.impl.MovieReviewDao;
+import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.impl.UserDao;
+import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.repository.MovieRepository;
+import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.repository.MovieReviewRepository;
+import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.repository.UserRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@Configuration
+@EnableJpaRepositories(
+    basePackages = "com.mzaletsin.selfstudy.imdbaggregator.infrastructure.repository"
+)
+public class PersistenceConfig {
+
+    @Bean
+    public MovieDataAccess movieDataAccess(MovieRepository repository) {
+        return new MovieDao(repository);
+    }
+
+    @Bean
+    public MovieReviewDataAccess movieReviewDataAccess(MovieReviewRepository repository) {
+        return new MovieReviewDao(repository);
+    }
+
+    @Bean
+    public UserDataAccess userDataAccess(UserRepository repository) {
+        return new UserDao(repository);
+    }
+}

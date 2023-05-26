@@ -29,4 +29,8 @@ public class MovieReviews {
     public boolean isEmpty() {
         return reviews.isEmpty();
     }
+
+    public Collection<MovieReview> getReviews() {
+        return reviews;
+    }
 }

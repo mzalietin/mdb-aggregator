@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.usecase.implementation;
+package com.mzaletsin.selfstudy.imdbaggregator.usecase.impl;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.User;
 import com.mzaletsin.selfstudy.imdbaggregator.domain.port.UserDataAccess;

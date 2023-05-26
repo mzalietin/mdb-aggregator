@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.usecase.implementation;
+package com.mzaletsin.selfstudy.imdbaggregator.usecase.impl;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures;
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie;
@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.MOVIE_ID;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USERNAME;
 
 @ExtendWith(MockitoExtension.class)
 class SaveReviewsUCTest {

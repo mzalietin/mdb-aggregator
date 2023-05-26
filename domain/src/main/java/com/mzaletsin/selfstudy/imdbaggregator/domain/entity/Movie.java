@@ -19,7 +19,7 @@ public class Movie {
     @Min(1) @Max(10)
     private final BigDecimal rating;
 
-    Movie(String id, String name, LocalDate releaseDate, BigDecimal rating) {
+    public Movie(String id, String name, LocalDate releaseDate, BigDecimal rating) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
