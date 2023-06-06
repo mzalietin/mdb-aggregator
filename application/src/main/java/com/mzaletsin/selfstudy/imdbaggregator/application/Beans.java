@@ -1,11 +1,10 @@
 package com.mzaletsin.selfstudy.imdbaggregator.application;
 
-import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieDataAccess;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieReviewDataAccess;
 import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.PersistenceConfig;
-import com.mzaletsin.selfstudy.imdbaggregator.usecase.SaveReviews;
-import com.mzaletsin.selfstudy.imdbaggregator.usecase.impl.SaveReviewsUC;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.CasesProvider;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out.MovieDataAccess;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out.MovieReviewDataAccess;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out.UserDataAccess;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -21,12 +20,9 @@ public class Beans {
     }
 
     @Bean
-    public SaveReviews saveReviews(MovieDataAccess movieDataAccess,
-                                   MovieReviewDataAccess movieReviewDataAccess) {
-         return new SaveReviewsUC(
-             validator(),
-             movieDataAccess,
-             movieReviewDataAccess
-         );
+    public CasesProvider casesProvider(MovieDataAccess movieDataAccess,
+                                       UserDataAccess userDataAccess,
+                                       MovieReviewDataAccess movieReviewDataAccess) {
+         return new CasesProvider(movieDataAccess, userDataAccess, movieReviewDataAccess, validator());
     }
 }

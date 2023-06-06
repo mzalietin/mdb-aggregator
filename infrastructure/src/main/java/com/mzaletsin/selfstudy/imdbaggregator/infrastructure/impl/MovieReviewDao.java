@@ -3,9 +3,9 @@ package com.mzaletsin.selfstudy.imdbaggregator.infrastructure.impl;
 import static com.mzaletsin.selfstudy.imdbaggregator.infrastructure.entity.MovieReview.fromDomain;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.MovieReviews;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieReviewDataAccess;
 import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.entity.MovieReview;
 import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.repository.MovieReviewRepository;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out.MovieReviewDataAccess;
 import java.util.Collection;
 
 public class MovieReviewDao implements MovieReviewDataAccess {

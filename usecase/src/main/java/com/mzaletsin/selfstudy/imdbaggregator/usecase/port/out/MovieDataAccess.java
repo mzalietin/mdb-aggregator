@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.domain.port;
+package com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie;
 

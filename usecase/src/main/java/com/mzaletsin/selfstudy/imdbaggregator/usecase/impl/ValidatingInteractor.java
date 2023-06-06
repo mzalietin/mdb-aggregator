@@ -6,10 +6,10 @@ import jakarta.validation.Validator;
 
 import java.util.Set;
 
-abstract class BaseValidatingUseCase {
+abstract class ValidatingInteractor {
     private final Validator validator;
 
-    BaseValidatingUseCase(Validator validator) {
+    ValidatingInteractor(Validator validator) {
         this.validator = validator;
     }
 

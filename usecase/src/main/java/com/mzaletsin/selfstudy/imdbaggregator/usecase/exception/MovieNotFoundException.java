@@ -1,4 +1,4 @@
-package com.mzaletsin.selfstudy.imdbaggregator.domain.exception;
+package com.mzaletsin.selfstudy.imdbaggregator.usecase.exception;
 
 public class MovieNotFoundException extends RuntimeException {
     private final String id;

@@ -4,9 +4,9 @@ import static com.mzaletsin.selfstudy.imdbaggregator.infrastructure.entity.Movie
 import static com.mzaletsin.selfstudy.imdbaggregator.infrastructure.entity.Movie.toDomain;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.exception.MovieNotFoundException;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieDataAccess;
 import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.repository.MovieRepository;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.exception.MovieNotFoundException;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out.MovieDataAccess;
 import java.util.Collection;
 
 public class MovieDao implements MovieDataAccess {

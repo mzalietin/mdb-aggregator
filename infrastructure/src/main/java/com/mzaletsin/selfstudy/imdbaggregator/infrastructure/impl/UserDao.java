@@ -4,9 +4,9 @@ import static com.mzaletsin.selfstudy.imdbaggregator.infrastructure.entity.User.
 import static com.mzaletsin.selfstudy.imdbaggregator.infrastructure.entity.User.toDomain;
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.User;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.exception.UserNotFoundException;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.port.UserDataAccess;
 import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.repository.UserRepository;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.exception.UserNotFoundException;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out.UserDataAccess;
 
 public class UserDao implements UserDataAccess {
     private final UserRepository repo;

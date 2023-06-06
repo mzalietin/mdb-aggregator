@@ -5,8 +5,8 @@ import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFix
 
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures;
 import com.mzaletsin.selfstudy.imdbaggregator.domain.entity.Movie;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieDataAccess;
-import com.mzaletsin.selfstudy.imdbaggregator.domain.port.MovieReviewDataAccess;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out.MovieDataAccess;
+import com.mzaletsin.selfstudy.imdbaggregator.usecase.port.out.MovieReviewDataAccess;
 import jakarta.validation.Validator;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class SaveReviewsUCTest {
+class MovieReviewUseCasesInteractorTest {
     @Mock
     MovieDataAccess movieDataAccess;
 
@@ -30,7 +30,7 @@ class SaveReviewsUCTest {
     Validator validator;
 
     @InjectMocks
-    SaveReviewsUC usecase;
+    MovieReviewUseCasesInteractor interactor;
 
     @Test
     void givenUseCase_whenSaveReviews_thenRecalculatesMovieRatingAndSavesReviews() {
@@ -39,7 +39,7 @@ class SaveReviewsUCTest {
 
         Mockito.when(movieDataAccess.getById(MOVIE_ID)).thenReturn(movie);
 
-        usecase.save(reviews);
+        interactor.save(reviews);
 
         var movieArgumentCaptor = ArgumentCaptor.forClass(Movie.class);
         Mockito.verify(validator).validate(reviews);
