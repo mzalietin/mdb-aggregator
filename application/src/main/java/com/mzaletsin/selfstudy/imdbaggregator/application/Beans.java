@@ -13,7 +13,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 @Import(PersistenceConfig.class)
-@EntityScan("com.mzaletsin.selfstudy.imdbaggregator.infrastructure.entity")
 public class Beans {
 
     @Bean

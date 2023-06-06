@@ -4,5 +4,6 @@ module imdb.aggregator.infrastructure {
     requires spring.data.jpa;
     requires spring.context;
     requires jakarta.persistence;
+    requires spring.boot.autoconfigure;
     exports com.mzaletsin.selfstudy.imdbaggregator.infrastructure;
 }

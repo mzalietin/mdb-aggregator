@@ -17,6 +17,10 @@ public final class DomainTestFixtures {
     public static final String LAST_NAME = "Doe";
     public static final Integer USER_AGE = 25;
 
+    public static User defaultUser() {
+        return new User(USERNAME, FIRST_NAME, LAST_NAME, USER_AGE);
+    }
+
     public static Movie defaultMovie() {
         return new Movie(MOVIE_ID, MOVIE_NAME, RELEASE_DATE, INITIAL_RATING);
     }
