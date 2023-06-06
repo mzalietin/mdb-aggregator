@@ -24,14 +24,15 @@ public class MovieDao implements MovieDataAccess {
 
     @Override
     public Movie getByName(String name) {
-        var persistenceEntity = repo.findByName(name);
+        var persistenceEntity = repo.findByName(name)
+            .orElseThrow(() -> MovieNotFoundException.byName(name));
         return toDomain(persistenceEntity);
     }
 
     @Override
     public Movie getById(String id) {
         var persistenceEntity = repo.findById(id)
-            .orElseThrow(() -> new MovieNotFoundException(id));
+            .orElseThrow(() -> MovieNotFoundException.byId(id));
         return toDomain(persistenceEntity);
     }
 

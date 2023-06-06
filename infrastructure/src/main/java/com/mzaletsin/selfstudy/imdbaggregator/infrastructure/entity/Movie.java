@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "imdb_movie")
@@ -28,6 +29,14 @@ public class Movie {
     private BigDecimal rating;
 
     public Movie() {
+    }
+
+    public Movie(final String name,
+                 final LocalDate releaseDate,
+                 final BigDecimal rating) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.rating = rating;
     }
 
     private Movie(final String id,
@@ -72,5 +81,21 @@ public class Movie {
 
     public BigDecimal getRating() {
         return rating;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        final Movie movie = (Movie) o;
+        return Objects.equals(id, movie.id) && Objects.equals(name, movie.name) && Objects.equals(releaseDate,
+            movie.releaseDate) && Objects.equals(rating, movie.rating);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, releaseDate, rating);
     }
 }

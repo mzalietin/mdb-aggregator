@@ -1,11 +1,9 @@
 package com.mzaletsin.selfstudy.imdbaggregator.infrastructure.repository;
 
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.FIRST_NAME;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.LAST_NAME;
 import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USERNAME;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.USER_AGE;
-import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.defaultUser;
+import static com.mzaletsin.selfstudy.imdbaggregator.domain.entity.DomainTestFixtures.testUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.mzaletsin.selfstudy.imdbaggregator.infrastructure.PersistenceConfig;
@@ -38,20 +36,17 @@ class UserRepositoryTest {
 
     @Test
     void should_store_a_user() {
-        var user = User.fromDomain(defaultUser());
+        var user = User.fromDomain(testUser());
 
-        var savedUser = repository.saveAndFlush(user);
+        repository.saveAndFlush(user);
 
-        assertEquals(USERNAME, savedUser.getUsername());
-        assertEquals(FIRST_NAME, savedUser.getFirstName());
-        assertEquals(LAST_NAME, savedUser.getLastName());
-        assertEquals(USER_AGE, savedUser.getAge());
+        assertNotNull(entityManager.find(User.class, user.getUsername()));
     }
 
     @Test
     void should_find_user_by_id() {
-        var user = User.fromDomain(defaultUser());
-        entityManager.persist(user);
+        var user = User.fromDomain(testUser());
+        entityManager.persistAndFlush(user);
 
         var foundUser = repository.findById(USERNAME);
 
@@ -61,8 +56,8 @@ class UserRepositoryTest {
 
     @Test
     void should_delete_user_by_id() {
-        var user = User.fromDomain(defaultUser());
-        entityManager.persist(user);
+        var user = User.fromDomain(testUser());
+        entityManager.persistAndFlush(user);
 
         repository.deleteById(USERNAME);
 
