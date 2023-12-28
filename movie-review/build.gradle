@@ -1,0 +1,25 @@
+plugins {
+    id 'java-library'
+    id 'java-test-fixtures'
+}
+
+group = 'me.mzalietin.imdbproject'
+version = "${version}"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api(project(':movie'))
+
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_jupiter_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_version}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_jupiter_version}"
+}
+
+test {
+    useJUnitPlatform()
+}

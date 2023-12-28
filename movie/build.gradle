@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+    id 'java-test-fixtures'
+}
+
+group = 'me.mzalietin.imdbproject'
+version = "${version}"
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //api("jakarta.validation:jakarta.validation-api:${jakarta_validation_version}")
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_jupiter_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_version}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_jupiter_version}"
+    //TODO enforce ArchUnit
+    testImplementation 'com.tngtech.archunit:archunit-junit5:1.2.1'
+}
+
+test {
+    useJUnitPlatform()
+}

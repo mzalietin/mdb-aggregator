@@ -10,4 +10,4 @@ Prerequisites: Java 17
 
 ## Run
 
-`java -jar application/build/libs/imdb-aggregator-application-{version}.jar`
+`java -jar application/build/libs/application-0.0.1.jar`
