@@ -1,7 +1,9 @@
 package me.mzalietin.imdbproject.movie.usecase;
 
 import java.util.Collection;
+import java.util.List;
 import me.mzalietin.imdbproject.movie.domain.Movie;
+import me.mzalietin.imdbproject.movie.domain.Ratings;
 import me.mzalietin.imdbproject.movie.usecase.ports.MovieDataAccess;
 import me.mzalietin.imdbproject.movie.usecase.ports.MovieUseCases;
 
@@ -20,7 +22,7 @@ public final class MovieUseCasesInteractor implements MovieUseCases {
     @Override
     public Double findRating(final String movieName) {
         var movie = movieDataAccess.getByName(movieName);
-        return movie.getRating().doubleValue();
+        return movie.rating().doubleValue();
     }
 
     @Override
@@ -31,5 +33,20 @@ public final class MovieUseCasesInteractor implements MovieUseCases {
     @Override
     public Collection<Movie> getTopRatedByUser(final Integer count, final String username) {
         return movieDataAccess.getTopRated(count, username);
+    }
+
+    @Override
+    public void updateMovies(final Ratings ratings) {
+        ratings.ratings();
+        if (!ratings.isEmpty()) {
+            List<String> movieIds = ratings.getUniqueMovieIds();
+
+            for (String movieId : movieIds) {
+                int[] movieReviews = ratings.getRatingsByMovie(movieId);
+                Movie movie = movieDataAccess.getById(movieId);
+                Movie updatedMovie = movie.updateRating(movieReviews);
+                movieDataAccess.save(updatedMovie);
+            }
+        }
     }
 }

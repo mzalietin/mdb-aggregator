@@ -1,52 +1,35 @@
 package me.mzalietin.imdbproject.movie.domain;
 
+import static me.mzalietin.imdbproject.movie.domain.DomainTestFixtures.initialTestMovie;
+
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static me.mzalietin.imdbproject.movie.domain.DomainTestFixtures.*;
-
 class MovieTest {
 
-    @Test
-    void givenMovie_whenGetValue_thenReturnsValue() {
-        var movie = new Movie(MOVIE_ID, MOVIE_NAME, RELEASE_DATE, INITIAL_MOVIE_RATING);
+    @ParameterizedTest
+    @MethodSource("ratings")
+    void givenMovie_whenUpdateRating_thenReturnsInstanceWithUpdatedRating(
+        int[] newRatings,
+        BigDecimal expectedRating,
+        Integer expectedReviewsCount)
+    {
+        var movie = initialTestMovie();
 
-        Assertions.assertEquals(MOVIE_ID, movie.getId());
-        Assertions.assertEquals(MOVIE_NAME, movie.getName());
-        Assertions.assertEquals(RELEASE_DATE, movie.getReleaseDate());
-        Assertions.assertEquals(INITIAL_MOVIE_RATING, movie.getRating());
+        var result = movie.updateRating(newRatings);
+
+        Assertions.assertEquals(expectedRating, result.rating());
+        Assertions.assertEquals(expectedReviewsCount, result.reviewsCount());
     }
 
-    //TODO
-//    @ParameterizedTest
-//    @MethodSource("reviews")
-//    void givenMovie_whenApplyReviews_thenReturnsInstanceWithUpdatedRating(Collection<MovieReview> newReviews,
-//                                                                          BigDecimal expectedRating) {
-//        var initialReviewsCount = 0;
-//
-//        var movie = initialTestMovie();
-//
-//        var result = movie.applyReviews(initialReviewsCount, newReviews);
-//
-//        Assertions.assertEquals(expectedRating, result.getRating());
-//    }
-//
-//    private static Stream<Arguments> reviews() {
-//        return Stream.of(
-//            Arguments.of(List.of(), BigDecimal.ZERO),
-//            Arguments.of(List.of(
-//                testMovieReview()),
-//                BigDecimal.valueOf(1000, 2)), //10
-//            Arguments.of(
-//                testMovieReviews().getReviews(),
-//                BigDecimal.valueOf(680, 2)) //6.8
-//        );
-//    }
+    private static Stream<Arguments> ratings() {
+        return Stream.of(
+            Arguments.of(new int[] {10}, BigDecimal.valueOf(1000, 2), 1),
+            Arguments.of(new int[] {6, 6, 7, 7, 8}, BigDecimal.valueOf(680, 2), 5)
+        );
+    }
 }

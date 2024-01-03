@@ -1,10 +1,9 @@
 package me.mzalietin.imdbproject.moviereview.usecase.ports;
 
-import me.mzalietin.imdbproject.moviereview.domain.MovieReviews;
+import java.util.Collection;
+import me.mzalietin.imdbproject.moviereview.domain.MovieReview;
 
 public interface MovieReviewDataAccess {
 
-    void save(MovieReviews reviews);
-
-    Integer countByMovieId(String movieId);
+    void save(Collection<MovieReview> reviews);
 }

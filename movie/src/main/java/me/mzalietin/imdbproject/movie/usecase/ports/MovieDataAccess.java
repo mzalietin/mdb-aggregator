@@ -11,7 +11,7 @@ public interface MovieDataAccess {
 
     Movie getById(String id);
 
-    Collection<Movie> getTopRated(Integer count);
+    Collection<Movie> getTopRated(Integer limit);
 
-    Collection<Movie> getTopRated(Integer count, String username);
+    Collection<Movie> getTopRated(Integer limit, String username);
 }

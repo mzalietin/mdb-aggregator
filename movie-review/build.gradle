@@ -11,13 +11,14 @@ repositories {
 }
 
 dependencies {
-    api(project(':movie'))
-
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_jupiter_version}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_version}"
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_jupiter_version}"
+
+    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_version}"
 }
 
 test {

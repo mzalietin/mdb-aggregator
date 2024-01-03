@@ -11,4 +11,4 @@ spring:
         hibernate:
             ddl-auto: update #create-drop
     h2:
-        console.enabled: true #todo remove
+        console.enabled: true

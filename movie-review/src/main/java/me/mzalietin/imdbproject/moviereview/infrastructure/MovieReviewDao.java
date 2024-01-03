@@ -1,9 +1,8 @@
 package me.mzalietin.imdbproject.moviereview.infrastructure;
 
-import static me.mzalietin.imdbproject.moviereview.infrastructure.MovieReviewEntity.fromDomain;
-
 import java.util.Collection;
-import me.mzalietin.imdbproject.moviereview.domain.MovieReviews;
+import java.util.stream.Collectors;
+import me.mzalietin.imdbproject.moviereview.domain.MovieReview;
 import me.mzalietin.imdbproject.moviereview.usecase.ports.MovieReviewDataAccess;
 
 public class MovieReviewDao implements MovieReviewDataAccess {
@@ -14,13 +13,11 @@ public class MovieReviewDao implements MovieReviewDataAccess {
     }
 
     @Override
-    public void save(MovieReviews reviews) {
-        Collection<MovieReviewEntity> persistenceReviews = fromDomain(reviews);
+    public void save(Collection<MovieReview> reviews) {
+        var persistenceReviews = reviews
+            .stream()
+            .map(r -> new MovieReviewEntity(r.username(), r.movieId(), r.rating(), r.comment()))
+            .collect(Collectors.toList());
         repo.saveAllAndFlush(persistenceReviews);
-    }
-
-    @Override
-    public Integer countByMovieId(String movieId) {
-        return repo.countByMovieId(movieId);
     }
 }

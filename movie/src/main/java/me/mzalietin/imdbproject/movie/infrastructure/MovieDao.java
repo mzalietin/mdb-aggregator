@@ -5,8 +5,8 @@ import static me.mzalietin.imdbproject.movie.infrastructure.MovieEntity.toDomain
 
 import java.util.Collection;
 import me.mzalietin.imdbproject.movie.domain.Movie;
-import me.mzalietin.imdbproject.movie.usecase.ports.MovieDataAccess;
 import me.mzalietin.imdbproject.movie.domain.MovieNotFoundException;
+import me.mzalietin.imdbproject.movie.usecase.ports.MovieDataAccess;
 
 public class MovieDao implements MovieDataAccess {
     private final MovieRepository repo;
@@ -36,14 +36,14 @@ public class MovieDao implements MovieDataAccess {
     }
 
     @Override
-    public Collection<Movie> getTopRated(Integer count) {
-        //TODO
+    public Collection<Movie> getTopRated(Integer limit) {
+        //TODO implement
         return null;
     }
 
     @Override
-    public Collection<Movie> getTopRated(Integer count, String username) {
-        //TODO
+    public Collection<Movie> getTopRated(Integer limit, String username) {
+        //TODO implement
         return null;
     }
 }
