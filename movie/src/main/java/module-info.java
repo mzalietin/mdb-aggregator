@@ -5,6 +5,6 @@ module imdbproject.movie {
     requires jakarta.persistence;
     requires lombok;
 
-    exports me.mzalietin.imdbproject.movie.usecase.ports to imdbproject.application;
-    exports me.mzalietin.imdbproject.movie.infrastructure to imdbproject.application;
+    exports me.mzalietin.imdbproject.movie.core.usecase.ports to imdbproject.application;
+    exports me.mzalietin.imdbproject.movie.gateway.dataprovider to imdbproject.application;
 }

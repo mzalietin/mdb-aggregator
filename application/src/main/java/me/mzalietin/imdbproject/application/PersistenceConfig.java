@@ -1,14 +1,14 @@
 package me.mzalietin.imdbproject.application;
 
-import me.mzalietin.imdbproject.movie.infrastructure.MovieDao;
-import me.mzalietin.imdbproject.movie.infrastructure.MovieRepository;
-import me.mzalietin.imdbproject.movie.usecase.ports.MovieDataAccess;
-import me.mzalietin.imdbproject.moviereview.infrastructure.MovieReviewDao;
-import me.mzalietin.imdbproject.moviereview.infrastructure.MovieReviewRepository;
-import me.mzalietin.imdbproject.moviereview.usecase.ports.MovieReviewDataAccess;
-import me.mzalietin.imdbproject.user.infrastructure.UserDao;
-import me.mzalietin.imdbproject.user.infrastructure.UserRepository;
-import me.mzalietin.imdbproject.user.usecase.ports.UserDataAccess;
+import me.mzalietin.imdbproject.movie.gateway.dataprovider.MovieDao;
+import me.mzalietin.imdbproject.movie.gateway.dataprovider.MovieRepository;
+import me.mzalietin.imdbproject.movie.core.usecase.ports.MovieDataAccess;
+import me.mzalietin.imdbproject.moviereview.gateway.dataprovider.MovieReviewDao;
+import me.mzalietin.imdbproject.moviereview.gateway.dataprovider.MovieReviewRepository;
+import me.mzalietin.imdbproject.moviereview.core.usecase.ports.MovieReviewDataAccess;
+import me.mzalietin.imdbproject.user.gateway.dataprovider.UserDao;
+import me.mzalietin.imdbproject.user.gateway.dataprovider.UserRepository;
+import me.mzalietin.imdbproject.user.core.usecase.ports.UserDataAccess;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

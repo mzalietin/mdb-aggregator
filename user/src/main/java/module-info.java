@@ -5,6 +5,6 @@ module imdbproject.user {
     requires jakarta.persistence;
     requires lombok;
 
-    exports me.mzalietin.imdbproject.user.usecase.ports to imdbproject.application;
-    exports me.mzalietin.imdbproject.user.infrastructure to imdbproject.application;
+    exports me.mzalietin.imdbproject.user.core.usecase.ports to imdbproject.application;
+    exports me.mzalietin.imdbproject.user.gateway.dataprovider to imdbproject.application;
 }

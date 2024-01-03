@@ -3,6 +3,7 @@ package me.mzalietin.imdbproject.movie.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import me.mzalietin.imdbproject.movie.core.domain.Movie;
 
 public final class DomainTestFixtures {
 
