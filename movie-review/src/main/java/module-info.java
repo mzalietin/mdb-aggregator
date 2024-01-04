@@ -1,5 +1,4 @@
 module imdbproject.moviereview {
-    requires spring.data.commons;
     requires spring.data.jpa;
     requires spring.context;
     requires jakarta.persistence;

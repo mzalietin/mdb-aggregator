@@ -1,6 +1,7 @@
 package me.mzalietin.imdbproject.movie.core.domain;
 
-import static me.mzalietin.imdbproject.movie.domain.DomainTestFixtures.initialTestMovie;
+
+import static me.mzalietin.imdbproject.movie.core.domain.DomainTestFixtures.initialMovie;
 
 import java.math.BigDecimal;
 import java.util.stream.Stream;
@@ -18,7 +19,7 @@ class MovieTest {
         BigDecimal expectedRating,
         Integer expectedReviewsCount)
     {
-        var movie = initialTestMovie();
+        var movie = initialMovie();
 
         var result = movie.updateRating(newRatings);
 

@@ -3,8 +3,8 @@ package me.mzalietin.imdbproject.movie.core.usecase;
 import java.util.Collection;
 import java.util.List;
 import me.mzalietin.imdbproject.movie.core.domain.Movie;
-import me.mzalietin.imdbproject.movie.core.usecase.ports.MovieDataAccess;
 import me.mzalietin.imdbproject.movie.core.domain.Ratings;
+import me.mzalietin.imdbproject.movie.core.usecase.ports.MovieDataAccess;
 import me.mzalietin.imdbproject.movie.core.usecase.ports.MovieUseCases;
 
 public final class MovieUseCasesInteractor implements MovieUseCases {
@@ -37,7 +37,6 @@ public final class MovieUseCasesInteractor implements MovieUseCases {
 
     @Override
     public void updateMovies(final Ratings ratings) {
-        ratings.ratings();
         if (!ratings.isEmpty()) {
             List<String> movieIds = ratings.getUniqueMovieIds();
 

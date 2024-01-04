@@ -1,7 +1,7 @@
 package me.mzalietin.imdbproject.user.core.usecase;
 
-import me.mzalietin.imdbproject.user.core.usecase.ports.UserDataAccess;
 import me.mzalietin.imdbproject.user.core.domain.User;
+import me.mzalietin.imdbproject.user.core.usecase.ports.UserDataAccess;
 import me.mzalietin.imdbproject.user.core.usecase.ports.UserUseCases;
 
 public final class UserUseCasesInteractor implements UserUseCases {
