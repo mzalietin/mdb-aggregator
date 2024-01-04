@@ -5,5 +5,7 @@ import me.mzalietin.imdbproject.moviereview.core.domain.MovieReview;
 
 public interface MovieReviewUseCases {
 
-    void save(Collection<MovieReview> reviews);
+    void create(MovieReview review);
+
+    void create(Collection<MovieReview> reviews);
 }

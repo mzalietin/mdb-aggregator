@@ -1,16 +1,22 @@
 package me.mzalietin.imdbproject.application;
 
-import org.springframework.context.annotation.Bean;
+import me.mzalietin.imdbproject.movie.config.MovieBeans;
+import me.mzalietin.imdbproject.moviereview.config.MovieReviewBeans;
+import me.mzalietin.imdbproject.user.config.UserBeans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-@Import(PersistenceConfig.class)
+@Import({
+    PersistenceConfig.class,
+    MovieBeans.class,
+    MovieReviewBeans.class,
+    UserBeans.class
+})
 public class Beans {
 
-    @Bean
-    public LocalValidatorFactoryBean validator() {
-        return new LocalValidatorFactoryBean();
-    }
+//    @Bean
+//    public LocalValidatorFactoryBean validator() {
+//        return new LocalValidatorFactoryBean();
+//    }
 }

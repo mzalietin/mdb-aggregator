@@ -13,7 +13,12 @@ public class MovieReviewDao implements MovieReviewDataAccess {
     }
 
     @Override
-    public void save(Collection<MovieReview> reviews) {
+    public void save(final MovieReview r) {
+        repo.saveAndFlush(new MovieReviewEntity(r.username(), r.movieId(), r.rating(), r.comment()));
+    }
+
+    @Override
+    public void save(final Collection<MovieReview> reviews) {
         var persistenceReviews = reviews
             .stream()
             .map(r -> new MovieReviewEntity(r.username(), r.movieId(), r.rating(), r.comment()))

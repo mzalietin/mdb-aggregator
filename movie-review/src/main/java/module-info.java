@@ -5,6 +5,7 @@ module imdbproject.moviereview {
     requires jakarta.persistence;
     requires lombok;
 
+    exports me.mzalietin.imdbproject.moviereview.config to imdbproject.application;
     exports me.mzalietin.imdbproject.moviereview.core.usecase.ports to imdbproject.application;
     exports me.mzalietin.imdbproject.moviereview.gateway.dataprovider to imdbproject.application;
 }
