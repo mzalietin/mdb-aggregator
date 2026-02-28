@@ -13,9 +13,9 @@ public class CleanArchitectureTest {
 
     @ArchTest
     static final ArchRule onion_architecture_is_respected = onionArchitecture()
-        .domainModels("..core.domain..")
-        .domainServices("..core.usecase..")
-        .applicationServices("..config..")
-        .adapter("eventbus", "..gateway.eventbus..")
-        .adapter("persistence", "..gateway.dataprovider..");
+        .domainModels("..domain.model..")
+        .domainServices("..domain.service..")
+        .applicationServices("..application..")
+        .adapter("queue", "..infrastructure.queue..")
+        .adapter("repo", "..infrastructure.repo..");
 }

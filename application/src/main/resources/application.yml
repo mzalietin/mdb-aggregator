@@ -9,6 +9,8 @@ spring:
         show-sql: true
         generate-ddl: true
         hibernate:
-            ddl-auto: update #create-drop
+            ddl-auto: create-drop
     h2:
-        console.enabled: true
+        console:
+            enabled: true
+            path: /h2-console
