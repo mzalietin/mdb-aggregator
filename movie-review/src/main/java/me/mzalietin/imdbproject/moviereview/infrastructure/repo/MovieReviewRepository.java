@@ -1,9 +1,11 @@
 package me.mzalietin.imdbproject.moviereview.infrastructure.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@Repository
-public interface MovieReviewRepository extends JpaRepository<MovieReviewEntity, MovieReviewId> {
+@RepositoryRestResource(collectionResourceRel = "movie-reviews", path = "movie-reviews")
+public interface MovieReviewRepository
+    extends PagingAndSortingRepository<MovieReviewEntity, MovieReviewId>, CrudRepository<MovieReviewEntity, MovieReviewId> {
 
 }

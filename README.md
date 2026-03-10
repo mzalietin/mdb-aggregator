@@ -1,6 +1,6 @@
 ## Description
 
-AWS IMDB Service - Aggregator
+IMDB Service - Aggregator
 
 ## Build
 

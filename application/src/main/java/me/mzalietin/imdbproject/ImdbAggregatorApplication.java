@@ -1,14 +1,21 @@
 package me.mzalietin.imdbproject;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import me.mzalietin.imdbproject.movie.MovieContextConfig;
+import me.mzalietin.imdbproject.moviereview.MovieReviewContextConfig;
+import me.mzalietin.imdbproject.user.UserContextConfig;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
-@SpringBootApplication
+@SpringBootConfiguration
 public class ImdbAggregatorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ImdbAggregatorApplication.class, args);
+        new SpringApplicationBuilder()
+            .parent(ImdbAggregatorApplication.class).web(WebApplicationType.NONE)
+            .child(MovieContextConfig.class).web(WebApplicationType.SERVLET)
+            .sibling(MovieReviewContextConfig.class).web(WebApplicationType.SERVLET)
+            .sibling(UserContextConfig.class).web(WebApplicationType.SERVLET)
+            .run(args);
 	}
 }

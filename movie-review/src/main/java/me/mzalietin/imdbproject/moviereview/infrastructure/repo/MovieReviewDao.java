@@ -19,7 +19,7 @@ public class MovieReviewDao implements MovieReviewDataAccess {
 
     @Override
     public void save(final MovieReview r) {
-        repo.saveAndFlush(new MovieReviewEntity(r.username(), r.movieId(), r.rating(), r.comment()));
+        repo.save(new MovieReviewEntity(r.username(), r.movieId(), r.rating(), r.comment()));
     }
 
     @Override
@@ -28,6 +28,6 @@ public class MovieReviewDao implements MovieReviewDataAccess {
             .stream()
             .map(r -> new MovieReviewEntity(r.username(), r.movieId(), r.rating(), r.comment()))
             .collect(Collectors.toList());
-        repo.saveAllAndFlush(persistenceReviews);
+        repo.saveAll(persistenceReviews);
     }
 }

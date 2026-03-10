@@ -21,7 +21,7 @@ public class UserDao implements UserDataAccess {
     @Override
     public void save(User user) {
         var persistenceUser = fromDomain(user);
-        repo.saveAndFlush(persistenceUser);
+        repo.save(persistenceUser);
     }
 
     @Override

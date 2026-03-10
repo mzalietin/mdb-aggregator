@@ -1,11 +1,13 @@
 package me.mzalietin.imdbproject.movie.infrastructure.repo;
 
 import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@Repository
-public interface MovieRepository extends JpaRepository<MovieEntity, String> {
+@RepositoryRestResource(collectionResourceRel = "movies", path = "movies")
+public interface MovieRepository extends PagingAndSortingRepository<MovieEntity, String>, CrudRepository<MovieEntity, String> {
 
-    Optional<MovieEntity> findByName(String name);
+    Optional<MovieEntity> findByName(@Param("name") String name);
 }

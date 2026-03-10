@@ -12,6 +12,9 @@ repositories {
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}"
+    implementation "org.springframework.boot:spring-boot-starter-data-rest:${spring_boot_version}"
+
+    runtimeOnly 'org.postgresql:postgresql:42.7.10'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_jupiter_version}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_version}"

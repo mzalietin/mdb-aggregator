@@ -18,7 +18,7 @@ public class MovieDao implements MovieDataAccess {
 
     @Override
     public String save(Movie movie) {
-        var persistenceEntity = repo.saveAndFlush(MovieEntity.fromDomain(movie));
+        var persistenceEntity = repo.save(MovieEntity.fromDomain(movie));
         return persistenceEntity.getId();
     }
 
