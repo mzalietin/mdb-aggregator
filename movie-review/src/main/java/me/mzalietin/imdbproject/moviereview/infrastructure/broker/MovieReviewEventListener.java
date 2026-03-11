@@ -1,9 +1,13 @@
 package me.mzalietin.imdbproject.moviereview.infrastructure.broker;
 
-import java.util.List;
+import me.mzalietin.imdbproject.moviereview.domain.model.MovieReview;
+import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.imdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,10 +19,19 @@ public class MovieReviewEventListener {
     @KafkaListener(
         id = "movie-review-group",
         topics = "movie-review",
-        batch = "true",
+        batch = "false",
         clientIdPrefix = "MovieReviewEventListener"
     )
-    public void listen(List<String> in) {
-        in.forEach(System.out::println);
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, @Payload(required = false) MovieReview value) {
+
+        if (value == null) {
+            // tombstone received - delete
+            if (key != null) {
+                movieReviewDataAccess.delete(key);
+            }
+        } else {
+            // do upsert
+            movieReviewDataAccess.save(value);
+        }
     }
 }

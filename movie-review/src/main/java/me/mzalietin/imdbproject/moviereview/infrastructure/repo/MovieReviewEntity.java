@@ -9,10 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 
 @Entity
 @Table(name = "imdb_movie_review")
-@IdClass(MovieReviewId.class)
+@IdClass(MovieReviewKey.class)
 @Getter
 @Setter
 @NoArgsConstructor

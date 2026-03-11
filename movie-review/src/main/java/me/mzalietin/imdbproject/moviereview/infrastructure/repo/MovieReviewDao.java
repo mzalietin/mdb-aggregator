@@ -1,11 +1,9 @@
 package me.mzalietin.imdbproject.moviereview.infrastructure.repo;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReview;
+import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.imdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,11 +21,7 @@ public class MovieReviewDao implements MovieReviewDataAccess {
     }
 
     @Override
-    public void save(final Collection<MovieReview> reviews) {
-        var persistenceReviews = reviews
-            .stream()
-            .map(r -> new MovieReviewEntity(r.username(), r.movieId(), r.rating(), r.comment()))
-            .collect(Collectors.toList());
-        repo.saveAll(persistenceReviews);
+    public void delete(final MovieReviewKey key) {
+        repo.deleteById(key);
     }
 }
