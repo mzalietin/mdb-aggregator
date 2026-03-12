@@ -15,8 +15,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter:${spring_boot_version}"
 
     implementation project(':movie')
-    implementation project(':movie-review')
     implementation project(':user')
+    implementation project(':movie-review-query')
+    implementation project(':movie-review-command')
 }
 
 test {

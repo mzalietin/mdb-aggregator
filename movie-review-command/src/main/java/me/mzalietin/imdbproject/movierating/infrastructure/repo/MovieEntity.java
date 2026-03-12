@@ -1,4 +1,4 @@
-package me.mzalietin.imdbproject.movie.infrastructure.repo;
+package me.mzalietin.imdbproject.movierating.infrastructure.repo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.mzalietin.imdbproject.movie.domain.model.Movie;
+import me.mzalietin.imdbproject.movierating.domain.model.Movie;
 
 @Entity
 @Table(name = "imdb_movie")
@@ -37,4 +37,24 @@ public class MovieEntity {
 
     @Column(name = "reviews_count")
     private Integer reviewsCount;
+
+    public static MovieEntity fromDomain(Movie domainMovie) {
+        return new MovieEntity(
+            domainMovie.id(),
+            domainMovie.name(),
+            domainMovie.releaseDate(),
+            domainMovie.rating(),
+            domainMovie.reviewsCount()
+        );
+    }
+
+    public static Movie toDomain(MovieEntity persistenceMovieEntity) {
+        return new Movie(
+            persistenceMovieEntity.id,
+            persistenceMovieEntity.name,
+            persistenceMovieEntity.releaseDate,
+            persistenceMovieEntity.rating,
+            persistenceMovieEntity.reviewsCount
+        );
+    }
 }

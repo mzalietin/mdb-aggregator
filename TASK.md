@@ -14,12 +14,12 @@ MovieReview entity:
 You have 2 main services: we can call them gateway-service and aggregator-service.
 Gateway-service is the main entrance of your application. Gateway-service does not have access to your main AWS storage (where all data is stored), however it can call some caching storage for some GET operations. It can call aggregator-service to retrieve data, it can call any AWS service to put data. It supports the following operations:
 * GET – top 10 movies with the highest rating
-* GET – user info by username
+* GET – user info by username - DONE
 * GET – top 10 favorite user movies by username
-* GET – movie rating by movie name
-* POST – create new movie
-* POST – create new user
-* POST – add new movie review by user
+* GET – movie rating by movie name - DONE
+* POST – create new movie - DONE
+* POST – create new user - DONE
+* POST – add new movie review by user - DONE
 * DELETE – delete user (all user reviews should be also deleted in 10 minutes)
 
 Customer requirements:
