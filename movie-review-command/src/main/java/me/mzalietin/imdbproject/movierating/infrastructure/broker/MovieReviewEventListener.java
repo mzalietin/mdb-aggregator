@@ -28,16 +28,41 @@ public class MovieReviewEventListener {
 
     @KafkaHandler
     public void onCreated(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, @Payload @Valid MovieReviewCreated value) {
+        /*
+            TODO
+                1. select Movie with LockModeType.PESSIMISTIC_WRITE
+                2. reviewsCount += 1
+                3. accumulatedRealRating += reviewRating
+                4. movieRating = accumulatedRealRating / reviewsCount
+                5. commit update
+         */
+
         logger.info("Received MovieReviewCreated event for key={}, value={}", key, value);
     }
 
     @KafkaHandler
     public void onUpdated(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, @Payload @Valid MovieReviewUpdated value) {
+        /*
+            TODO
+                1. select Movie with LockModeType.PESSIMISTIC_WRITE
+                2. ratingDelta = newRating - oldRating
+                3. accumulatedRealRating += ratingDelta
+                4. movieRating = accumulatedRealRating / reviewsCount
+                5. commit update
+         */
         logger.info("Received MovieReviewUpdated event for key={}, value={}", key, value);
     }
 
     @KafkaHandler
     public void onDeleted(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, MovieReviewDeleted value) {
+        /*
+            TODO
+                1. select Movie with LockModeType.PESSIMISTIC_WRITE
+                2. reviewsCount -= 1
+                3. accumulatedRealRating -= deletedReviewRating
+                4. movieRating = accumulatedRealRating / reviewsCount
+                5. commit update
+         */
         logger.info("Received MovieReviewDeleted event for key={}, value={}", key, value);
     }
 

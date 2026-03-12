@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,26 +36,22 @@ public class MovieEntity {
     @Column(name = "rating", precision = 4, scale = 2, nullable = false)
     private BigDecimal rating;
 
-    @Column(name = "reviews_count")
+    @Column(name = "accumulated_real_rating", nullable = false)
+    private Integer accumulatedRealRating;
+
+    @Column(name = "reviews_count", nullable = false)
     private Integer reviewsCount;
 
-    public static MovieEntity fromDomain(Movie domainMovie) {
-        return new MovieEntity(
-            domainMovie.id(),
-            domainMovie.name(),
-            domainMovie.releaseDate(),
-            domainMovie.rating(),
-            domainMovie.reviewsCount()
-        );
-    }
-
-    public static Movie toDomain(MovieEntity persistenceMovieEntity) {
-        return new Movie(
-            persistenceMovieEntity.id,
-            persistenceMovieEntity.name,
-            persistenceMovieEntity.releaseDate,
-            persistenceMovieEntity.rating,
-            persistenceMovieEntity.reviewsCount
-        );
+    @PrePersist
+    public void prePersist() {
+        if (rating == null) {
+            rating = BigDecimal.ZERO;
+        }
+        if (accumulatedRealRating == null) {
+            accumulatedRealRating = 0;
+        }
+        if (reviewsCount == null) {
+            reviewsCount = 0;
+        }
     }
 }

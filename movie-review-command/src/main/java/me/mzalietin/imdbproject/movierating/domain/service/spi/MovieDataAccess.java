@@ -4,7 +4,5 @@ import me.mzalietin.imdbproject.movierating.domain.model.Movie;
 
 public interface MovieDataAccess {
 
-    String save(Movie movie);
 
-    Movie getById(String id);
 }
