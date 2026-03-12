@@ -5,7 +5,9 @@ import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 
 public interface MovieReviewDataAccess {
 
-    void save(MovieReview review);
+    void create(MovieReview review) throws ResourceAlreadyExistsException;
 
-    void delete(MovieReviewKey key);
+    void update(MovieReview review) throws ResourceNotFoundException;
+
+    void delete(MovieReviewKey key) throws ResourceNotFoundException;
 }

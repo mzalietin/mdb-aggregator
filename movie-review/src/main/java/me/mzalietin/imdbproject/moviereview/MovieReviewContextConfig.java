@@ -3,9 +3,6 @@ package me.mzalietin.imdbproject.moviereview;
 import java.util.HashMap;
 import java.util.Map;
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewCreatedEvent;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewDeletedEvent;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewUpdatedEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +15,6 @@ import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
-import org.springframework.kafka.support.converter.RecordMessageConverter;
-import org.springframework.kafka.support.converter.StringJacksonJsonMessageConverter;
-import org.springframework.kafka.support.mapping.DefaultJacksonJavaTypeMapper;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
 
@@ -32,12 +26,11 @@ import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
 public class MovieReviewContextConfig {
 
     @Bean
-    KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<MovieReviewKey, Object>> kafkaListenerContainerFactory() {
+    KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<MovieReviewKey, Object>> moviereviewKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<MovieReviewKey, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(1);
         factory.getContainerProperties().setPollTimeout(3000);
-        factory.setRecordMessageConverter(multiTypeConverter());
         return factory;
     }
 
@@ -51,24 +44,14 @@ public class MovieReviewContextConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, JacksonJsonDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JacksonJsonDeserializer.class);
-        props.put(JacksonJsonDeserializer.KEY_DEFAULT_TYPE, Object.class);
+        props.put(JacksonJsonDeserializer.KEY_DEFAULT_TYPE, MovieReviewKey.class);
         props.put(JacksonJsonDeserializer.VALUE_DEFAULT_TYPE, Object.class);
+        props.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "me.mzalietin.imdbproject.moviereview.infrastructure.broker.events");
+        props.put(JacksonJsonDeserializer.TYPE_MAPPINGS,
+            "review_created:me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewCreated,"
+            + " review_updated:me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewUpdated,"
+            + " review_deleted:me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewDeleted");
 
         return new DefaultKafkaConsumerFactory<>(props);
-    }
-
-    @Bean
-    public RecordMessageConverter multiTypeConverter() {
-        StringJacksonJsonMessageConverter converter = new StringJacksonJsonMessageConverter();
-        DefaultJacksonJavaTypeMapper typeMapper = new DefaultJacksonJavaTypeMapper();
-        typeMapper.setTypePrecedence(DefaultJacksonJavaTypeMapper.TypePrecedence.TYPE_ID);
-        typeMapper.addTrustedPackages("me.mzalietin.imdbproject.moviereview.infrastructure.broker.events");
-        Map<String, Class<?>> mappings = new HashMap<>();
-        mappings.put("review_created", MovieReviewCreatedEvent.class);
-        mappings.put("review_updated", MovieReviewUpdatedEvent.class);
-        mappings.put("review_deleted", MovieReviewDeletedEvent.class);
-        typeMapper.setIdClassMapping(mappings);
-        converter.setTypeMapper(typeMapper);
-        return converter;
     }
 }

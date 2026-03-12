@@ -1,10 +1,15 @@
 package me.mzalietin.imdbproject.moviereview.infrastructure.broker;
 
+import me.mzalietin.imdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.imdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewCreatedEvent;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewDeletedEvent;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewUpdatedEvent;
+import me.mzalietin.imdbproject.moviereview.domain.service.spi.ResourceAlreadyExistsException;
+import me.mzalietin.imdbproject.moviereview.domain.service.spi.ResourceNotFoundException;
+import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewCreated;
+import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewDeleted;
+import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewUpdated;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,30 +22,45 @@ import org.springframework.stereotype.Component;
     id = "movie-review-group",
     topics = "movie-review",
     batch = "false",
-    clientIdPrefix = "MovieReviewEventListener"
+    clientIdPrefix = "MovieReviewEventListener",
+    containerFactory = "moviereviewKafkaListenerContainerFactory"
 )
 public class MovieReviewEventListener {
+
+    private static final Logger logger = LoggerFactory.getLogger(MovieReviewEventListener.class);
 
     @Autowired
     MovieReviewDataAccess movieReviewDataAccess;
 
     @KafkaHandler
-    public void listenCreated(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, MovieReviewCreatedEvent value) {
-        System.out.println("MovieReviewEventListener.listenCreated: " + key + " value= " + value);
+    public void onCreated(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, MovieReviewCreated value) {
+        try {
+            movieReviewDataAccess.create(new MovieReview(key.username(), key.movieId(), value.rating(), value.comment()));
+        } catch (ResourceAlreadyExistsException e) {
+            logger.error("MovieReviewEventListener - onCreated", e);
+        }
     }
 
     @KafkaHandler
-    public void listenUpdated(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, MovieReviewUpdatedEvent value) {
-        System.out.println("MovieReviewEventListener.listenUpdated: " + key + " value= " + value);
+    public void onUpdated(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, MovieReviewUpdated value) {
+        try {
+            movieReviewDataAccess.update(new MovieReview(key.username(), key.movieId(), value.newRating(), value.newComment()));
+        } catch (ResourceNotFoundException e) {
+            logger.error("MovieReviewEventListener - onUpdated", e);
+        }
     }
 
     @KafkaHandler
-    public void listenDeleted(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, MovieReviewDeletedEvent value) {
-        System.out.println("MovieReviewEventListener.listenDeleted: " + key + " value= " + value);
+    public void onDeleted(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, MovieReviewDeleted value) {
+        try {
+            movieReviewDataAccess.delete(key);
+        } catch (ResourceNotFoundException e) {
+            logger.error("MovieReviewEventListener - onDeleted", e);
+        }
     }
 
     @KafkaHandler(isDefault = true)
     public void unknown(Object object) {
-        System.out.println("Unkown type received: " + object);
+        logger.error("Unknown object received: {}", object);
     }
 }

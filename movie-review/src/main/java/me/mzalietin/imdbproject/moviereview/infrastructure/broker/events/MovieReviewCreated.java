@@ -1,5 +1,7 @@
 package me.mzalietin.imdbproject.moviereview.infrastructure.broker.events;
 
-public record MovieReviewDeletedEvent(
+public record MovieReviewCreated(
+    Integer rating,
+    String comment
 ) {
 }
