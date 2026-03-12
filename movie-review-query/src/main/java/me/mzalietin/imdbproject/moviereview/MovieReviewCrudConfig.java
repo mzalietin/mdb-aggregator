@@ -51,6 +51,7 @@ public class MovieReviewCrudConfig implements KafkaListenerConfigurer {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, JacksonJsonDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JacksonJsonDeserializer.class);
+        props.put(ErrorHandlingDeserializer.VALIDATOR_CLASS, LocalValidatorFactoryBean.class);
         props.put(JacksonJsonDeserializer.KEY_DEFAULT_TYPE, MovieReviewKey.class);
         props.put(JacksonJsonDeserializer.VALUE_DEFAULT_TYPE, Object.class);
         props.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "me.mzalietin.imdbproject.moviereview.infrastructure.broker.events");
