@@ -2,8 +2,11 @@ package me.mzalietin.imdbproject.movierating;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import me.mzalietin.imdbproject.movierating.domain.model.MovieReviewKey;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +21,7 @@ import org.springframework.kafka.config.KafkaListenerEndpointRegistrar;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -37,7 +41,9 @@ public class MovieReviewRatingConsumerConfig implements KafkaListenerConfigurer 
         ConcurrentKafkaListenerContainerFactory<MovieReviewKey, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(1);
+        factory.setBatchListener(true);
         factory.getContainerProperties().setPollTimeout(3000);
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
         return factory;
     }
 
@@ -49,18 +55,25 @@ public class MovieReviewRatingConsumerConfig implements KafkaListenerConfigurer 
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "500");
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, JacksonJsonDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JacksonJsonDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALIDATOR_CLASS, LocalValidatorFactoryBean.class);
         props.put(JacksonJsonDeserializer.KEY_DEFAULT_TYPE, MovieReviewKey.class);
         props.put(JacksonJsonDeserializer.VALUE_DEFAULT_TYPE, Object.class);
-        props.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "me.mzalietin.imdbproject.moviereview.infrastructure.broker.events");
+        props.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "me.mzalietin.imdbproject.movierating.domain.model.events");
         props.put(JacksonJsonDeserializer.TYPE_MAPPINGS,
-            "review_created:me.mzalietin.imdbproject.movierating.infrastructure.broker.events.MovieReviewCreated,"
-            + " review_updated:me.mzalietin.imdbproject.movierating.infrastructure.broker.events.MovieReviewUpdated,"
-            + " review_deleted:me.mzalietin.imdbproject.movierating.infrastructure.broker.events.MovieReviewDeleted");
+            "review_created:me.mzalietin.imdbproject.movierating.domain.model.events.MovieReviewCreated,"
+            + " review_updated:me.mzalietin.imdbproject.movierating.domain.model.events.MovieReviewUpdated,"
+            + " review_deleted:me.mzalietin.imdbproject.movierating.domain.model.events.MovieReviewDeleted");
 
         return new DefaultKafkaConsumerFactory<>(props);
+    }
+
+    @Bean
+    public ExecutorService kafkaProcessingPool() {
+        return Executors.newFixedThreadPool(16);
     }
 
     @Override
