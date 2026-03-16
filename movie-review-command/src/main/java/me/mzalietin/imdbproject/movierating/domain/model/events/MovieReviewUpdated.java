@@ -10,10 +10,15 @@ public record MovieReviewUpdated(
     @NotNull @Length(max = 5000) String oldComment,
     @NotNull @Min(1) @Max(10) Integer newRating,
     @NotNull @Length(max = 5000) String newComment
-) implements RatingImpactEvent {
+) implements MovieRatingImpactEvent {
 
     @Override
-    public Integer get() {
+    public Integer absoluteRatingImpact() {
         return newRating - oldRating;
+    }
+
+    @Override
+    public Integer reviewsCountImpact() {
+        return 0;
     }
 }

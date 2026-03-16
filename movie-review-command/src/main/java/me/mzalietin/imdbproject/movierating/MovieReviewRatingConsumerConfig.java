@@ -43,7 +43,7 @@ public class MovieReviewRatingConsumerConfig implements KafkaListenerConfigurer 
         factory.setConcurrency(1);
         factory.setBatchListener(true);
         factory.getContainerProperties().setPollTimeout(3000);
-        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         return factory;
     }
 
