@@ -12,7 +12,7 @@ import lombok.Setter;
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 
 @Entity
-@Table(name = "imdb_movie_review")
+@Table(name = "mdb_movie_review")
 @IdClass(MovieReviewKey.class)
 @Getter
 @Setter

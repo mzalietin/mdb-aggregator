@@ -11,7 +11,7 @@ import lombok.Setter;
 import me.mzalietin.imdbproject.user.domain.model.User;
 
 @Entity
-@Table(name = "imdb_user")
+@Table(name = "mdb_user")
 @Getter
 @Setter
 @NoArgsConstructor

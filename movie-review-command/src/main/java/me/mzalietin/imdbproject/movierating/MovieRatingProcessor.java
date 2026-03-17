@@ -15,6 +15,7 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.support.serializer.JacksonJsonSerde;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,9 @@ public class MovieRatingProcessor {
 
     @Autowired
     Serde<MovieRatingImpact> valueSerde;
+
+    @Value("${kafka.output-topic}")
+    String outputTopic;
 
     @Autowired
     void buildPipeline(StreamsBuilder streamsBuilder) {
@@ -44,7 +48,7 @@ public class MovieRatingProcessor {
             .mapValues(v -> new MovieRatingUpdated(v.absoluteRating, v.reviewsCount, computeAverageRating(v)))
             .toStream()
             .peek((key, value) -> logger.info("Pushing event key={}, value={}", key, value))
-            .to("movie-rating", Produced.with(String(), new JacksonJsonSerde<>(MovieRatingUpdated.class)));
+            .to(outputTopic, Produced.with(String(), new JacksonJsonSerde<>(MovieRatingUpdated.class)));
     }
 
     static BigDecimal computeAverageRating(RatingData ratingData) {

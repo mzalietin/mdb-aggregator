@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "imdb_movie")
+@Table(name = "mdb_movie")
 @Getter
 @Setter
 @NoArgsConstructor
