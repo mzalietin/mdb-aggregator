@@ -1,4 +1,4 @@
-package me.mzalietin.imdbproject.movierating.domain.model.events;
+package me.mzalietin.imdbproject.movierating.events;
 
 public interface MovieRatingImpactEvent {
 

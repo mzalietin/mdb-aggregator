@@ -1,4 +1,4 @@
-package me.mzalietin.imdbproject.movierating.domain.model;
+package me.mzalietin.imdbproject.movierating.events;
 
 public record MovieReviewKey(String username, String movieId) {
 }
