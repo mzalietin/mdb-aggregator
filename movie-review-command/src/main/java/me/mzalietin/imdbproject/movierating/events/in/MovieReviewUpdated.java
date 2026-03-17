@@ -1,11 +1,11 @@
-package me.mzalietin.imdbproject.movierating.events;
+package me.mzalietin.imdbproject.movierating.events.in;
 
 public record MovieReviewUpdated(
     Integer oldRating,
     String oldComment,
     Integer newRating,
     String newComment
-) implements MovieRatingImpactEvent {
+) implements MovieRatingImpact {
 
     @Override
     public Integer absoluteRatingImpact() {

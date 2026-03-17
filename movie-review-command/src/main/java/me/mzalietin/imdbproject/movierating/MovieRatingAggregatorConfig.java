@@ -9,8 +9,8 @@ import static org.springframework.kafka.streams.RecoveringDeserializationExcepti
 
 import java.util.HashMap;
 import java.util.Map;
-import me.mzalietin.imdbproject.movierating.events.MovieRatingImpactEvent;
-import me.mzalietin.imdbproject.movierating.events.MovieReviewKey;
+import me.mzalietin.imdbproject.movierating.events.in.MovieRatingImpact;
+import me.mzalietin.imdbproject.movierating.events.in.MovieReviewKey;
 import org.apache.kafka.common.serialization.Serde;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,11 +58,11 @@ public class MovieRatingAggregatorConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(JacksonJsonDeserializer.KEY_DEFAULT_TYPE, MovieReviewKey.class);
         props.put(JacksonJsonDeserializer.VALUE_DEFAULT_TYPE, Object.class);
-        props.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "me.mzalietin.imdbproject.movierating.events");
+        props.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "me.mzalietin.imdbproject.movierating.events.in");
         props.put(JacksonJsonDeserializer.TYPE_MAPPINGS,
-            "review_created:me.mzalietin.imdbproject.movierating.events.MovieReviewCreated,"
-                + " review_updated:me.mzalietin.imdbproject.movierating.events.MovieReviewUpdated,"
-                + " review_deleted:me.mzalietin.imdbproject.movierating.events.MovieReviewDeleted");
+            "review_created:me.mzalietin.imdbproject.movierating.events.in.MovieReviewCreated,"
+                + " review_updated:me.mzalietin.imdbproject.movierating.events.in.MovieReviewUpdated,"
+                + " review_deleted:me.mzalietin.imdbproject.movierating.events.in.MovieReviewDeleted");
         return props;
     }
 
@@ -74,8 +74,8 @@ public class MovieRatingAggregatorConfig {
     }
 
     @Bean
-    public Serde<MovieRatingImpactEvent> valueSerde() {
-        Serde<MovieRatingImpactEvent> valueSerde = new JacksonJsonSerde<>(MovieRatingImpactEvent.class);
+    public Serde<MovieRatingImpact> valueSerde() {
+        Serde<MovieRatingImpact> valueSerde = new JacksonJsonSerde<>(MovieRatingImpact.class);
         valueSerde.configure(serdeConfig(), false);
         return valueSerde;
     }

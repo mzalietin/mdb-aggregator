@@ -1,17 +1,17 @@
-package me.mzalietin.imdbproject.movierating.events;
+package me.mzalietin.imdbproject.movierating.events.in;
 
-public record MovieReviewCreated(
+public record MovieReviewDeleted(
     Integer rating,
     String comment
-) implements MovieRatingImpactEvent {
+) implements MovieRatingImpact {
 
     @Override
     public Integer absoluteRatingImpact() {
-        return rating;
+        return - rating;
     }
 
     @Override
     public Integer reviewsCountImpact() {
-        return 1;
+        return -1;
     }
 }

@@ -1,14 +1,21 @@
 package me.mzalietin.imdbproject.movierating;
 
-import me.mzalietin.imdbproject.movierating.events.MovieRatingImpactEvent;
-import me.mzalietin.imdbproject.movierating.events.MovieReviewKey;
+import static org.apache.kafka.common.serialization.Serdes.String;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import me.mzalietin.imdbproject.movierating.events.in.MovieRatingImpact;
+import me.mzalietin.imdbproject.movierating.events.in.MovieReviewKey;
+import me.mzalietin.imdbproject.movierating.events.out.MovieRatingUpdated;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
-import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Grouped;
+import org.apache.kafka.streams.kstream.Produced;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.support.serializer.JacksonJsonSerde;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,20 +27,32 @@ public class MovieRatingProcessor {
     Serde<MovieReviewKey> keySerde;
 
     @Autowired
-    Serde<MovieRatingImpactEvent> valueSerde;
+    Serde<MovieRatingImpact> valueSerde;
 
     @Autowired
     void buildPipeline(StreamsBuilder streamsBuilder) {
-        KStream<MovieReviewKey, MovieRatingImpactEvent> messageStream = streamsBuilder
+        streamsBuilder
             .stream("movie-review", Consumed.with(keySerde, valueSerde))
-            .peek((key, value) -> logger.info("Received event key={}, value={}", key, value));
+            .peek((key, value) -> logger.info("Received event key={}, value={}", key, value))
+            .mapValues(value -> new RatingData(value.absoluteRatingImpact(), value.reviewsCountImpact()))
+            .groupBy((key, value) -> key.movieId(), Grouped.with(String(), new JacksonJsonSerde<>(RatingData.class)))
+            .reduce((aggValue, newValue) -> {
+                aggValue.absoluteRating += newValue.absoluteRating;
+                aggValue.reviewsCount += newValue.reviewsCount;
+                return aggValue;
+            })
+            .mapValues(v -> new MovieRatingUpdated(v.absoluteRating, v.reviewsCount, computeAverageRating(v)))
+            .toStream()
+            .peek((key, value) -> logger.info("Pushing event key={}, value={}", key, value))
+            .to("movie-rating", Produced.with(String(), new JacksonJsonSerde<>(MovieRatingUpdated.class)));
+    }
 
-        //        messageStream
-        //            .mapValues((ValueMapper<String, String>) String::toLowerCase)
-        //            .flatMapValues(value -> Arrays.asList(value.split("\\W+")))
-        //            .groupBy((key, word) -> word, Grouped.with(STRING_SERDE, STRING_SERDE))
-        //            .count()
-        //            .toStream()
-        //            .to("output-topic");
+    static BigDecimal computeAverageRating(RatingData ratingData) {
+        try {
+            return new BigDecimal(ratingData.absoluteRating).divide(new BigDecimal(ratingData.reviewsCount), 2, RoundingMode.HALF_UP);
+        } catch (ArithmeticException e) {
+            logger.error("computeAverageRating failed", e);
+            return BigDecimal.ZERO;
+        }
     }
 }
