@@ -32,22 +32,16 @@ public class MovieEntity {
     @Column(name = "release_date", nullable = false)
     private LocalDate releaseDate;
 
-    @Column(name = "rating", precision = 4, scale = 2, nullable = false)
-    private BigDecimal rating;
-
-    @Column(name = "accumulated_real_rating", nullable = false)
-    private Integer accumulatedRealRating;
+    @Column(name = "average_rating", precision = 4, scale = 2, nullable = false)
+    private BigDecimal averageRating;
 
     @Column(name = "reviews_count", nullable = false)
     private Integer reviewsCount;
 
     @PrePersist
     public void prePersist() {
-        if (rating == null) {
-            rating = BigDecimal.ZERO;
-        }
-        if (accumulatedRealRating == null) {
-            accumulatedRealRating = 0;
+        if (averageRating == null) {
+            averageRating = BigDecimal.ZERO;
         }
         if (reviewsCount == null) {
             reviewsCount = 0;

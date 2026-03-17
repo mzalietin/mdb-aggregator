@@ -1,4 +1,4 @@
-# IMDB application
+# MovieDB application
 
 Application that stores info about movies, users and their reviews.
 

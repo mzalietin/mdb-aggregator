@@ -24,8 +24,7 @@ import org.springframework.stereotype.Component;
     id = "movie-review-group",
     topics = "movie-review",
     batch = "false",
-    clientIdPrefix = "MovieReviewConsumer",
-    containerFactory = "moviereviewKafkaListenerContainerFactory"
+    clientIdPrefix = "MovieReviewConsumer"
 )
 public class MovieReviewEventListener {
 

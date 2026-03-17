@@ -45,7 +45,7 @@ public class MovieRatingProcessor {
                 aggValue.reviewsCount += newValue.reviewsCount;
                 return aggValue;
             })
-            .mapValues(v -> new MovieRatingUpdated(v.absoluteRating, v.reviewsCount, computeAverageRating(v)))
+            .mapValues(v -> new MovieRatingUpdated(computeAverageRating(v), v.reviewsCount))
             .toStream()
             .peek((key, value) -> logger.info("Pushing event key={}, value={}", key, value))
             .to(outputTopic, Produced.with(String(), new JacksonJsonSerde<>(MovieRatingUpdated.class)));

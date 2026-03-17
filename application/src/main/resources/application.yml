@@ -1,3 +1,6 @@
 spring:
     application:
         name: imdb-aggregator
+
+kafka:
+    host: localhost:9092
