@@ -14,8 +14,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @EnableAutoConfiguration
 @EnableKafka
 @Configuration
-@PropertySource("classpath:movie-review-crud.properties")
-public class MovieReviewCrudConfig implements KafkaListenerConfigurer {
+@PropertySource("classpath:movie-review-context.properties")
+public class MovieReviewContextConfig implements KafkaListenerConfigurer {
 
     @Autowired
     private LocalValidatorFactoryBean validator;

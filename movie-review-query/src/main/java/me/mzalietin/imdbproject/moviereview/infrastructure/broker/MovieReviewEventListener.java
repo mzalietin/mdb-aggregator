@@ -6,9 +6,9 @@ import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.imdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
 import me.mzalietin.imdbproject.moviereview.domain.service.spi.ResourceAlreadyExistsException;
 import me.mzalietin.imdbproject.moviereview.domain.service.spi.ResourceNotFoundException;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewCreated;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewDeleted;
-import me.mzalietin.imdbproject.moviereview.infrastructure.broker.events.MovieReviewUpdated;
+import me.mzalietin.imdbproject.moviereview.infrastructure.broker.event.MovieReviewCreated;
+import me.mzalietin.imdbproject.moviereview.infrastructure.broker.event.MovieReviewDeleted;
+import me.mzalietin.imdbproject.moviereview.infrastructure.broker.event.MovieReviewUpdated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @KafkaListener(
-    id = "movie-review-group",
+    id = "movie-review-context-group",
     topics = "movie-review",
     batch = "false",
     clientIdPrefix = "MovieReviewConsumer"

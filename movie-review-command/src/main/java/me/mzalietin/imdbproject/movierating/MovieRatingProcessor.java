@@ -48,7 +48,7 @@ public class MovieRatingProcessor {
             .mapValues(v -> new MovieRatingUpdated(computeAverageRating(v), v.reviewsCount))
             .toStream()
             .peek((key, value) -> logger.info("Pushing event key={}, value={}", key, value))
-            .to(outputTopic, Produced.with(String(), new JacksonJsonSerde<>(MovieRatingUpdated.class)));
+            .to(outputTopic, Produced.with(String(), new JacksonJsonSerde<>(MovieRatingUpdated.class).noTypeInfo()));
     }
 
     static BigDecimal computeAverageRating(RatingData ratingData) {

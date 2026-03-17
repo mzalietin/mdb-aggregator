@@ -5,6 +5,8 @@ import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.EXACTLY_ONCE_V2;
+import static org.apache.kafka.streams.StreamsConfig.PROCESSING_GUARANTEE_CONFIG;
 import static org.springframework.kafka.streams.RecoveringDeserializationExceptionHandler.KSTREAM_DESERIALIZATION_RECOVERER;
 
 import java.util.HashMap;
@@ -59,6 +61,7 @@ public class MovieRatingAggregatorConfig {
         props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, JacksonJsonSerde.class.getName());
         props.put(DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG, RecoveringDeserializationExceptionHandler.class);
         props.put(KSTREAM_DESERIALIZATION_RECOVERER, tempRecoverer());
+        props.put(PROCESSING_GUARANTEE_CONFIG, EXACTLY_ONCE_V2);
         return new KafkaStreamsConfiguration(props);
     }
 

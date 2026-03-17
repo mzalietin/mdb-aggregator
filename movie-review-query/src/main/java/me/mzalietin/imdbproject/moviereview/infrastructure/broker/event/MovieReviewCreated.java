@@ -1,4 +1,4 @@
-package me.mzalietin.imdbproject.moviereview.infrastructure.broker.events;
+package me.mzalietin.imdbproject.moviereview.infrastructure.broker.event;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
