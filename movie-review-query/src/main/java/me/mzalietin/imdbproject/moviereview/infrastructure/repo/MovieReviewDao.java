@@ -3,8 +3,8 @@ package me.mzalietin.imdbproject.moviereview.infrastructure.repo;
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.imdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
-import me.mzalietin.imdbproject.moviereview.domain.service.spi.ResourceAlreadyExistsException;
-import me.mzalietin.imdbproject.moviereview.domain.service.spi.ResourceNotFoundException;
+import me.mzalietin.imdbproject.moviereview.domain.model.ResourceAlreadyExistsException;
+import me.mzalietin.imdbproject.moviereview.domain.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

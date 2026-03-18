@@ -2,9 +2,13 @@ package me.mzalietin.imdbproject.moviereview.infrastructure.repo;
 
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public interface MovieReviewRepository extends CrudRepository<MovieReviewEntity, MovieReviewKey> {
+@RepositoryRestResource(collectionResourceRel = "movie-reviews", path = "movie-reviews")
+@Transactional
+public interface MovieReviewRepository extends PagingAndSortingRepository<MovieReviewEntity, MovieReviewKey>,
+    CrudRepository<MovieReviewEntity, MovieReviewKey> {
 
 }

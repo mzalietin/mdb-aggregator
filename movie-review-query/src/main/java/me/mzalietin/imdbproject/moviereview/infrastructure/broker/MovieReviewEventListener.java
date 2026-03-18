@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.imdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.imdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
-import me.mzalietin.imdbproject.moviereview.domain.service.spi.ResourceAlreadyExistsException;
-import me.mzalietin.imdbproject.moviereview.domain.service.spi.ResourceNotFoundException;
 import me.mzalietin.imdbproject.moviereview.infrastructure.broker.event.MovieReviewCreated;
 import me.mzalietin.imdbproject.moviereview.infrastructure.broker.event.MovieReviewDeleted;
 import me.mzalietin.imdbproject.moviereview.infrastructure.broker.event.MovieReviewUpdated;
@@ -35,29 +33,17 @@ public class MovieReviewEventListener {
 
     @KafkaHandler
     public void onCreated(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, @Payload @Valid MovieReviewCreated value) {
-        try {
-            movieReviewDataAccess.create(new MovieReview(key.username(), key.movieId(), value.rating(), value.comment()));
-        } catch (ResourceAlreadyExistsException e) {
-            logger.error("MovieReviewEventListener - onCreated", e);
-        }
+        movieReviewDataAccess.create(new MovieReview(key.username(), key.movieId(), value.rating(), value.comment()));
     }
 
     @KafkaHandler
     public void onUpdated(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, @Payload @Valid MovieReviewUpdated value) {
-        try {
-            movieReviewDataAccess.update(new MovieReview(key.username(), key.movieId(), value.newRating(), value.newComment()));
-        } catch (ResourceNotFoundException e) {
-            logger.error("MovieReviewEventListener - onUpdated", e);
-        }
+        movieReviewDataAccess.update(new MovieReview(key.username(), key.movieId(), value.newRating(), value.newComment()));
     }
 
     @KafkaHandler
     public void onDeleted(@Header(KafkaHeaders.RECEIVED_KEY) MovieReviewKey key, MovieReviewDeleted value) {
-        try {
-            movieReviewDataAccess.delete(key);
-        } catch (ResourceNotFoundException e) {
-            logger.error("MovieReviewEventListener - onDeleted", e);
-        }
+        movieReviewDataAccess.delete(key);
     }
 
     @KafkaHandler(isDefault = true)
