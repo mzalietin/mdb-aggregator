@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-jackson:${spring_boot_version}"
     implementation "org.springframework.boot:spring-boot-starter-kafka:${spring_boot_version}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${spring_boot_version}"
     implementation 'org.apache.kafka:kafka-streams:4.2.0'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_jupiter_version}"

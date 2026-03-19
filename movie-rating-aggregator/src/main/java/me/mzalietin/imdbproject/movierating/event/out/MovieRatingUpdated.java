@@ -1,4 +1,4 @@
-package me.mzalietin.imdbproject.movierating.events.out;
+package me.mzalietin.imdbproject.movierating.event.out;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,6 @@
 package me.mzalietin.imdbproject.moviereview.domain.model;
 
-public record MovieReviewKey(String username, String movieId) {
+import jakarta.validation.constraints.NotNull;
+
+public record MovieReviewKey(@NotNull String username, @NotNull String movieId) {
 }

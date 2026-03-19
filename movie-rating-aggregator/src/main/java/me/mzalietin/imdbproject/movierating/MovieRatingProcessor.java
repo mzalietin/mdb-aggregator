@@ -4,9 +4,9 @@ import static org.apache.kafka.common.serialization.Serdes.String;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import me.mzalietin.imdbproject.movierating.events.in.MovieRatingImpact;
-import me.mzalietin.imdbproject.movierating.events.in.MovieReviewKey;
-import me.mzalietin.imdbproject.movierating.events.out.MovieRatingUpdated;
+import me.mzalietin.imdbproject.movierating.event.in.MovieRatingEvent;
+import me.mzalietin.imdbproject.movierating.event.in.MovieReviewKey;
+import me.mzalietin.imdbproject.movierating.event.out.MovieRatingUpdated;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
@@ -28,7 +28,7 @@ public class MovieRatingProcessor {
     Serde<MovieReviewKey> keySerde;
 
     @Autowired
-    Serde<MovieRatingImpact> valueSerde;
+    Serde<MovieRatingEvent> valueSerde;
 
     @Value("${kafka.output-topic}")
     String outputTopic;

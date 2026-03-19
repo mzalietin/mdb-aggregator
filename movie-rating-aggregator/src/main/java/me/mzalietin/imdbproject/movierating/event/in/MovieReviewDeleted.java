@@ -1,9 +1,11 @@
-package me.mzalietin.imdbproject.movierating.events.in;
+package me.mzalietin.imdbproject.movierating.event.in;
+
+import jakarta.validation.constraints.NotNull;
 
 public record MovieReviewDeleted(
-    Integer rating,
-    String comment
-) implements MovieRatingImpact {
+    @NotNull Integer rating,
+    @NotNull String comment
+) implements MovieRatingEvent {
 
     @Override
     public Integer absoluteRatingImpact() {

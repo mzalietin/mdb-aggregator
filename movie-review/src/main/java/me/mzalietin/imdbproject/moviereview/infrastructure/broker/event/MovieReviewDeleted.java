@@ -1,7 +1,9 @@
 package me.mzalietin.imdbproject.moviereview.infrastructure.broker.event;
 
+import jakarta.validation.constraints.NotNull;
+
 public record MovieReviewDeleted(
-    Integer rating,
-    String comment
+    @NotNull Integer rating,
+    @NotNull String comment
 ) {
 }
