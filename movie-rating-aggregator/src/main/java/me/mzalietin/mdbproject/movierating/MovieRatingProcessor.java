@@ -30,7 +30,7 @@ public class MovieRatingProcessor {
     @Autowired
     Serde<MovieRatingEvent> valueSerde;
 
-    @Value("${kafka.output-topic}")
+    @Value("${movie-rating-aggregator.kafka.output-topic}")
     String outputTopic;
 
     @Autowired

@@ -2,6 +2,7 @@ package me.mzalietin.mdbproject.movierating;
 
 import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.COMMIT_INTERVAL_MS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.EXACTLY_ONCE_V2;
 import static org.apache.kafka.streams.StreamsConfig.PROCESSING_GUARANTEE_CONFIG;
@@ -44,11 +45,14 @@ public class MovieRatingAggregatorConfig {
     @Value("${kafka.host}")
     String kafkaHost;
 
-    @Value("${kafka.app-id}")
+    @Value("${movie-rating-aggregator.kafka.app-id}")
     String appId;
 
-    @Value("${kafka.output-topic}")
+    @Value("${movie-rating-aggregator.kafka.output-topic}")
     String outputTopic;
+
+    @Value("${movie-rating-aggregator.kafka.commit-interval-ms}")
+    Integer commitInterval;
 
     private static final Logger logger = LoggerFactory.getLogger(MovieRatingAggregatorConfig.class);
 
@@ -60,6 +64,7 @@ public class MovieRatingAggregatorConfig {
         props.put(DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG, RecoveringDeserializationExceptionHandler.class);
         props.put(KSTREAM_DESERIALIZATION_RECOVERER, loggingRecoverer());
         props.put(PROCESSING_GUARANTEE_CONFIG, EXACTLY_ONCE_V2);
+        props.put(COMMIT_INTERVAL_MS_CONFIG, commitInterval);
         return new KafkaStreamsConfiguration(props);
     }
 
