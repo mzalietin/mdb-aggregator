@@ -16,8 +16,8 @@ dependencies {
 
     implementation project(':movie')
     implementation project(':user')
-    implementation project(':movie-review-query')
-    implementation project(':movie-review-command')
+    implementation project(':movie-review')
+    implementation project(':movie-rating-aggregator')
 }
 
 test {
