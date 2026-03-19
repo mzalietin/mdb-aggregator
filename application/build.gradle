@@ -3,7 +3,7 @@ plugins {
     id 'org.springframework.boot' version "${spring_boot_version}"
 }
 
-group = 'me.mzalietin.imdbproject'
+group = 'me.mzalietin.mdbproject'
 version = "${version}"
 sourceCompatibility = '17'
 

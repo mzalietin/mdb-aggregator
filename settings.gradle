@@ -1,4 +1,4 @@
-rootProject.name = 'imdb-aggregator'
+rootProject.name = 'mdb-aggregator'
 include 'application'
 include 'movie'
 include 'user'
