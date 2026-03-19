@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.mzalietin.mdbproject.user.domain.model.User;
 
 @Entity
 @Table(name = "mdb_user")
@@ -29,22 +28,4 @@ public class UserEntity {
 
     @Column(name = "age", nullable = false)
     private Integer age;
-
-    public static UserEntity fromDomain(User domainUser) {
-        return new UserEntity(
-            domainUser.username(),
-            domainUser.firstName(),
-            domainUser.lastName(),
-            domainUser.age()
-        );
-    }
-
-    public static User toDomain(UserEntity persistenceUser) {
-        return new User(
-            persistenceUser.getUsername(),
-            persistenceUser.getFirstName(),
-            persistenceUser.getLastName(),
-            persistenceUser.getAge()
-        );
-    }
 }
