@@ -60,7 +60,7 @@ public class MovieRatingAggregatorConfig {
         props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, JacksonJsonSerde.class.getName());
         props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, JacksonJsonSerde.class.getName());
         props.put(DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG, RecoveringDeserializationExceptionHandler.class);
-        props.put(KSTREAM_DESERIALIZATION_RECOVERER, tempRecoverer());
+        props.put(KSTREAM_DESERIALIZATION_RECOVERER, loggingRecoverer());
         props.put(PROCESSING_GUARANTEE_CONFIG, EXACTLY_ONCE_V2);
         return new KafkaStreamsConfiguration(props);
     }
@@ -92,11 +92,10 @@ public class MovieRatingAggregatorConfig {
         return valueSerde;
     }
 
-    //    @Bean
-    //    public DeadLetterPublishingRecoverer recoverer() {
-    //        return new DeadLetterPublishingRecoverer(kafkaTemplate(),
-    //            (record, ex) -> new TopicPartition("recovererDLQ", -1));
-    //    }
+    @Bean
+    public ConsumerRecordRecoverer loggingRecoverer() {
+        return (record, ex) -> logger.error("deserialization failed at record offset {}", record.offset(), ex);
+    }
 
     // -------- NON PROD CONFIG --------
 
@@ -114,10 +113,5 @@ public class MovieRatingAggregatorConfig {
             .replicas(1)
             .compact()
             .build();
-    }
-
-    @Bean
-    public ConsumerRecordRecoverer tempRecoverer() {
-        return (record, ex) -> logger.error("deserialization failed at record offset {}", record.offset(), ex);
     }
 }
