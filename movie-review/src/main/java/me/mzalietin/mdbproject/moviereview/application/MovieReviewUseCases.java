@@ -10,4 +10,6 @@ public interface MovieReviewUseCases {
     void update(MovieReview review);
 
     void delete(MovieReviewKey reviewKey);
+
+    void deleteAllForUser(String username);
 }

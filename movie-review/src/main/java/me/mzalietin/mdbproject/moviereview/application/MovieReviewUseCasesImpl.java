@@ -1,5 +1,6 @@
 package me.mzalietin.mdbproject.moviereview.application;
 
+import java.util.Collection;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.service.spi.EventStore;
@@ -36,5 +37,12 @@ class MovieReviewUseCasesImpl implements MovieReviewUseCases {
     public void delete(final MovieReviewKey reviewKey) {
         final MovieReview deleted = dataAccess.delete(reviewKey);
         eventStore.sendDeleted(deleted);
+    }
+
+    @Override
+    @Transactional("transactionManager")
+    public void deleteAllForUser(final String username) {
+        final Collection<MovieReview> removedReviews = dataAccess.deleteAllByUser(username);
+        eventStore.sendDeleted(removedReviews);
     }
 }

@@ -1,7 +1,7 @@
 package me.mzalietin.mdbproject.moviereview.domain.service.spi;
 
+import java.util.Collection;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
-import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 
 public interface EventStore {
 
@@ -10,4 +10,6 @@ public interface EventStore {
     void sendUpdated(MovieReview old, MovieReview updatedReview);
 
     void sendDeleted(MovieReview deletedReview);
+
+    void sendDeleted(Collection<MovieReview> deletedReviews);
 }

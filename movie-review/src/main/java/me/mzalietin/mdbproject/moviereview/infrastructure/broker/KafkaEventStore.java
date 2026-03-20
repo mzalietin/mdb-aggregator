@@ -1,5 +1,6 @@
 package me.mzalietin.mdbproject.moviereview.infrastructure.broker;
 
+import java.util.Collection;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.service.spi.EventStore;
@@ -39,5 +40,14 @@ public class KafkaEventStore implements EventStore {
     public void sendDeleted(final MovieReview r) {
         kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
             new MovieReviewDeleted(r.rating(), r.comment()));
+    }
+
+    @Override
+    @Transactional("kafkaTransactionManager")
+    public void sendDeleted(final Collection<MovieReview> deletedReviews) {
+        deletedReviews.forEach(r -> {
+            kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
+                new MovieReviewDeleted(r.rating(), r.comment()));
+        });
     }
 }
