@@ -30,13 +30,16 @@ public class MovieRatingProcessor {
     @Autowired
     Serde<MovieRatingEvent> valueSerde;
 
+    @Value("${movie-rating-aggregator.kafka.input-topic}")
+    String inputTopic;
+
     @Value("${movie-rating-aggregator.kafka.output-topic}")
     String outputTopic;
 
     @Autowired
     void buildPipeline(StreamsBuilder streamsBuilder) {
         streamsBuilder
-            .stream("movie-review", Consumed.with(keySerde, valueSerde))
+            .stream(inputTopic, Consumed.with(keySerde, valueSerde))
             .peek((key, value) -> logger.info("Received event key={}, value={}", key, value))
             .mapValues(value -> new RatingData(value.absoluteRatingImpact(), value.reviewsCountImpact()))
             .groupBy((key, value) -> key.movieId(), Grouped.with(String(), new JacksonJsonSerde<>(RatingData.class)))

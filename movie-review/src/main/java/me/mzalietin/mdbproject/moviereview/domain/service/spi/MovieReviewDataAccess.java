@@ -12,4 +12,6 @@ public interface MovieReviewDataAccess {
     void update(MovieReview review) throws ResourceNotFoundException;
 
     void delete(MovieReviewKey key) throws ResourceNotFoundException;
+
+    void deleteAllByUser(String username);
 }

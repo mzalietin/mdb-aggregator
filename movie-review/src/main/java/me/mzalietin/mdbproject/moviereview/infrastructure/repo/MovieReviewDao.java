@@ -2,9 +2,9 @@ package me.mzalietin.mdbproject.moviereview.infrastructure.repo;
 
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
-import me.mzalietin.mdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceAlreadyExistsException;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceNotFoundException;
+import me.mzalietin.mdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,5 +44,10 @@ public class MovieReviewDao implements MovieReviewDataAccess {
         } else {
             throw new ResourceNotFoundException("Review Key = " + key);
         }
+    }
+
+    @Override
+    public void deleteAllByUser(final String username) {
+        repo.deleteAllByUser(username);
     }
 }

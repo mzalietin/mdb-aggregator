@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
-import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.MovieReviewCreated;
-import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.MovieReviewDeleted;
-import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.MovieReviewUpdated;
+import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.out.MovieReviewCreated;
+import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.out.MovieReviewDeleted;
+import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.out.MovieReviewUpdated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,9 @@ import org.springframework.stereotype.Component;
 @Component
 @KafkaListener(
     id = "movie-review-context-group",
-    topics = "movie-review",
+    topics = "${movie.review.context.kafka.events-topic}",
     batch = "false",
-    clientIdPrefix = "MovieReviewConsumer"
+    clientIdPrefix = "MovieReviewEventsConsumer"
 )
 public class MovieReviewEventListener {
 
