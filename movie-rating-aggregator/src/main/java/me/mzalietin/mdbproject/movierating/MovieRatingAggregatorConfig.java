@@ -76,7 +76,11 @@ public class MovieRatingAggregatorConfig {
     @Bean
     public Serde<MovieReviewKey> keySerde() {
         var deserializer = new ValidatingDeserializer<>(new JacksonJsonDeserializer<MovieReviewKey>(), validator());
-        deserializer.configure(Map.of(JacksonJsonDeserializer.KEY_DEFAULT_TYPE, MovieReviewKey.class), true);
+        Map<String, Object> props = new HashMap<>();
+        props.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "me.mzalietin.mdbproject.movierating.event.in");
+        props.put(JacksonJsonDeserializer.TYPE_MAPPINGS, "review_key:me.mzalietin.mdbproject.movierating.event.in.MovieReviewKey");
+        props.put(JacksonJsonDeserializer.USE_TYPE_INFO_HEADERS, true);
+        deserializer.configure(props, true);
         return Serdes.serdeFrom(new JacksonJsonSerializer<>(), deserializer);
     }
 

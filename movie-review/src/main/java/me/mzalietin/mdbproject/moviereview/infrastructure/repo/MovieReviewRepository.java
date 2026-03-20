@@ -1,21 +1,25 @@
 package me.mzalietin.mdbproject.moviereview.infrastructure.repo;
 
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.QueryHint;
+import java.util.List;
+import java.util.Optional;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "movie-reviews", path = "movie-reviews")
-@Transactional
+@Repository
 public interface MovieReviewRepository extends PagingAndSortingRepository<MovieReviewEntity, MovieReviewKey>,
     CrudRepository<MovieReviewEntity, MovieReviewKey> {
 
-    @Modifying
-    @Transactional
-    @Query("DELETE MovieReviewEntity r WHERE r.username = :username")
-    int deleteAllByUser(@Param("username") String username);
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @QueryHints({@QueryHint(name = "jakarta.persistence.lock.timeout", value = "1000")})
+    Optional<MovieReviewEntity> findById(MovieReviewKey id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @QueryHints({@QueryHint(name = "jakarta.persistence.lock.timeout", value = "3000")})
+    List<MovieReviewEntity> findByUsername(String username);
 }

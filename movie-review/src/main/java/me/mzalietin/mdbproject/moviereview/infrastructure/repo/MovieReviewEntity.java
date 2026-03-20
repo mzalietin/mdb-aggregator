@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 
 @Entity
@@ -32,4 +33,8 @@ public class MovieReviewEntity {
 
     @Column(name = "comment", nullable = true)
     private String comment;
+
+    public MovieReview toModel() {
+        return new MovieReview(username, movieId, rating, comment);
+    }
 }

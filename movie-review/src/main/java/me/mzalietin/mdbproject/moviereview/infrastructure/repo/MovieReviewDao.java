@@ -1,5 +1,6 @@
 package me.mzalietin.mdbproject.moviereview.infrastructure.repo;
 
+import java.util.Collection;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceAlreadyExistsException;
@@ -28,26 +29,32 @@ public class MovieReviewDao implements MovieReviewDataAccess {
     }
 
     @Override
-    public void update(final MovieReview review) throws ResourceNotFoundException {
-        var key = new MovieReviewKey(review.username(), review.movieId());
-        if (repo.existsById(key)){
-            repo.save(new MovieReviewEntity(review.username(), review.movieId(), review.rating(), review.comment()));
-        } else {
-            throw new ResourceNotFoundException("Review Key = " + key);
-        }
+    public MovieReview update(final MovieReview updated) throws ResourceNotFoundException {
+        var key = new MovieReviewKey(updated.username(), updated.movieId());
+
+        var entity = repo.findById(key).orElseThrow(() -> new ResourceNotFoundException("Review Key = " + key));
+
+        var oldState = entity.toModel();
+
+        entity.setRating(updated.rating());
+        entity.setComment(updated.comment());
+
+        return oldState;
     }
 
     @Override
-    public void delete(final MovieReviewKey key) throws ResourceNotFoundException {
-        if (repo.existsById(key)){
-            repo.deleteById(key);
-        } else {
-            throw new ResourceNotFoundException("Review Key = " + key);
-        }
+    public MovieReview delete(final MovieReviewKey key) throws ResourceNotFoundException {
+        var entity = repo.findById(key).orElseThrow(() -> new ResourceNotFoundException("Review Key = " + key));
+        var deleted = entity.toModel();
+        repo.delete(entity);
+        return deleted;
     }
 
     @Override
-    public void deleteAllByUser(final String username) {
-        repo.deleteAllByUser(username);
+    public Collection<MovieReview> deleteAllByUser(final String username) {
+        var reviews = repo.findByUsername(username);
+        var deleted = reviews.stream().map(MovieReviewEntity::toModel).toList();
+        repo.deleteAll(reviews);
+        return deleted;
     }
 }
