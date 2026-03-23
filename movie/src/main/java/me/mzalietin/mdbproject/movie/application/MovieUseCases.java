@@ -11,5 +11,7 @@ public interface MovieUseCases {
 
     List<Movie> findTopMovies(Integer limit);
 
+    List<Movie> findByIds(List<String> movieIds);
+
     String create(String name, LocalDate releaseDate);
 }

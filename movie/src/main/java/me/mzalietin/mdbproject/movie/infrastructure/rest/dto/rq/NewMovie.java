@@ -1,9 +1,10 @@
-package me.mzalietin.mdbproject.movie.infrastructure.rest.dto;
+package me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rq;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record NewMovie(
-    @NotNull String name,
+    @NotEmpty String name,
     @NotNull LocalDate releaseDate) {
 }

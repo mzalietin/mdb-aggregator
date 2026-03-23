@@ -26,6 +26,11 @@ public class MovieUseCasesImpl implements MovieUseCases {
     }
 
     @Override
+    public List<Movie> findByIds(final List<String> movieIds) {
+        return movieDataAccess.findByIds(movieIds);
+    }
+
+    @Override
     @Transactional
     public String create(final String name, final LocalDate releaseDate) {
         return movieDataAccess.createMovie(name, releaseDate);

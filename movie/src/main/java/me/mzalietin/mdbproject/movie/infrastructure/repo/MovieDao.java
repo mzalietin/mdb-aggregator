@@ -32,6 +32,11 @@ public class MovieDao implements MovieDataAccess {
     }
 
     @Override
+    public List<Movie> findByIds(final List<String> movieIds) {
+        return movieRepository.findAllById(movieIds).stream().map(MovieEntity::toModel).toList();
+    }
+
+    @Override
     public String createMovie(final String name, final LocalDate releaseDate) {
         final MovieEntity saved = movieRepository.save(new MovieEntity(null, name, releaseDate, null, null));
         return saved.getId();

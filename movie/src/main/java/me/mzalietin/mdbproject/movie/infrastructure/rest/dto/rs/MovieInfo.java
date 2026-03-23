@@ -1,4 +1,4 @@
-package me.mzalietin.mdbproject.movie.infrastructure.rest.dto;
+package me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rs;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

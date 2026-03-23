@@ -4,10 +4,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import me.mzalietin.mdbproject.movie.application.MovieUseCases;
-import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.IdResponse;
-import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.ListResponse;
-import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.MovieInfo;
-import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.NewMovie;
+import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rq.MovieIds;
+import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rq.NewMovie;
+import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rs.IdResponse;
+import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rs.ListResponse;
+import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rs.MovieInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,22 +31,32 @@ public class MovieApi {
     @Autowired
     MovieUseCases movieUseCases;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MovieInfo> findMovieInfoByName(@RequestParam("name") String name) {
-        return movieUseCases.findByName(name).map(MovieInfo::new).map(movie -> ResponseEntity.ok().body(movie))
-            .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping(path = "/top/{limit}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ListResponse findTopMovies(@PathVariable("limit") @Min(1) @Max(500) Integer limit) {
-        var responseList = movieUseCases.findTopMovies(limit).stream().map(MovieInfo::new).toList();
-        return new ListResponse(responseList);
-    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public IdResponse createMovie(@RequestBody @Valid NewMovie newMovie) {
         var movieId = movieUseCases.create(newMovie.name(), newMovie.releaseDate());
         return new IdResponse(movieId);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MovieInfo> movieInfoByName(@RequestParam("name") String name) {
+        return movieUseCases.findByName(name).map(MovieInfo::new).map(movie -> ResponseEntity.ok().body(movie))
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(path = "/top/{limit}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ListResponse topMovies(@PathVariable("limit") @Min(1) @Max(500) Integer limit) {
+        var responseList = movieUseCases.findTopMovies(limit).stream().map(MovieInfo::new).toList();
+        return new ListResponse(responseList);
+    }
+
+    @PostMapping(
+        path = "/search/batch/byId",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ListResponse moviesByIds(@RequestBody @Valid MovieIds ids) {
+        var result = movieUseCases.findByIds(ids.movieIds()).stream().map(MovieInfo::new).toList();
+        return new ListResponse(result);
     }
 }

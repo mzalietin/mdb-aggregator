@@ -1,6 +1,7 @@
 package me.mzalietin.mdbproject.moviereview.domain.service.spi;
 
 import java.util.Collection;
+import java.util.List;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceAlreadyExistsException;
@@ -41,4 +42,6 @@ public interface MovieReviewDataAccess {
      * @return deleted data
      */
     Collection<MovieReview> deleteAllByUser(String username);
+
+    List<String> topByUser(String username, Integer limit);
 }
