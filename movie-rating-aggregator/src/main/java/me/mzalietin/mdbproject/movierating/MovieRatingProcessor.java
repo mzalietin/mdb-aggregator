@@ -58,7 +58,7 @@ public class MovieRatingProcessor {
         try {
             return new BigDecimal(ratingData.absoluteRating).divide(new BigDecimal(ratingData.reviewsCount), 2, RoundingMode.HALF_UP);
         } catch (ArithmeticException e) {
-            logger.error("computeAverageRating failed - {}", e.getMessage());
+            logger.warn("computeAverageRating - rating will be defaulted to 0.00 - {}", e.getMessage());
             return BigDecimal.ZERO;
         }
     }

@@ -24,8 +24,7 @@ public class UserEventListener {
         id = "movie-review-user-context-group",
         topics = "${movie.review.context.kafka.in.user-events-topic}",
         batch = "false",
-        clientIdPrefix = "UserEventsConsumer",
-        containerFactory = "txKafkaListenerContainerFactory"
+        clientIdPrefix = "UserEventsConsumer"
     )
     public void onDeleted(
         @Header(KafkaHeaders.RECEIVED_KEY) String username,
@@ -33,7 +32,7 @@ public class UserEventListener {
         Acknowledgment ack
     ) {
         if (value == null) {
-            logger.debug("Received user deleted event"); //todo populate & log kafka correlation id
+            logger.info("Received user deleted event username={}", username); //todo populate & log kafka correlation id
             movieReviewUseCases.deleteAllForUser(username);
         }
         ack.acknowledge();

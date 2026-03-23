@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-class MovieReviewUseCasesImpl implements MovieReviewUseCases {
+public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
 
     @Autowired
     MovieReviewDataAccess dataAccess;
