@@ -1,5 +1,6 @@
 package me.mzalietin.mdbproject.user.application;
 
+import me.mzalietin.mdbproject.user.domain.model.User;
 import me.mzalietin.mdbproject.user.domain.service.spi.EventStore;
 import me.mzalietin.mdbproject.user.domain.service.spi.UserDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,13 @@ public class UserUseCasesImpl implements UserUseCases {
 
     @Override
     @Transactional("transactionManager")
-    public void deleteUser(final String username) {
+    public void create(final User user) {
+        userDataAccess.createUser(user);
+    }
+
+    @Override
+    @Transactional("transactionManager")
+    public void delete(final String username) {
         userDataAccess.deleteUser(username);
         eventStore.sendDeleted(username);
     }
