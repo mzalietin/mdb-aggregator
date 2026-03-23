@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.mzalietin.mdbproject.movie.domain.model.Movie;
 
 @Entity
 @Table(name = "mdb_movie")
@@ -46,5 +47,9 @@ public class MovieEntity {
         if (reviewsCount == null) {
             reviewsCount = 0;
         }
+    }
+
+    public Movie toModel() {
+        return new Movie(id, name, releaseDate, averageRating, reviewsCount);
     }
 }
