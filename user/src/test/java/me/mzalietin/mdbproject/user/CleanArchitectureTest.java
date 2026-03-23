@@ -14,8 +14,13 @@ public class CleanArchitectureTest {
 
     @ArchTest
     static final ArchRule clean_architecture_is_respected = onionArchitecture()
-        .withOptionalLayers(true)
         .domainModels("..domain.model..")
+        .domainServices("..domain.service..")
+        .applicationServices("..application..")
+        .adapter("broker", "..infrastructure.broker..")
         .adapter("repo", "..infrastructure.repo..")
-        .adapter("dependencyInjection", JavaClass.Predicates.simpleName("UserContextConfig"));
+        .adapter("rest", "..infrastructure.rest..")
+        .adapter("dependencyInjection", JavaClass.Predicates.simpleName("UserContextConfig"))
+        .adapter("archTest", JavaClass.Predicates.simpleName("CleanArchitectureTest"))
+        .ensureAllClassesAreContainedInArchitecture();
 }

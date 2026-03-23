@@ -1,4 +1,4 @@
-package me.mzalietin.mdbproject.user.domain;
+package me.mzalietin.mdbproject.user.domain.model;
 
 public final class DomainTestFixtures {
     public static final String USERNAME = "jdoe";
