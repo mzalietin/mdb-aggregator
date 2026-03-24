@@ -20,7 +20,12 @@ public class MovieDao implements MovieDataAccess {
 
     @Override
     public Optional<Movie> findMovie(final String movieName) {
-        return movieRepository.findByName(movieName).map(MovieEntity::toModel);
+        var result = movieRepository.findByName(movieName);
+        if (result.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(result.get(0).toModel());
+        }
     }
 
     @Override
