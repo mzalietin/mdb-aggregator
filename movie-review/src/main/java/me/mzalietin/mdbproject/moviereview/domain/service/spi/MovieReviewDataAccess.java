@@ -21,27 +21,28 @@ public interface MovieReviewDataAccess {
      * Update Movie Review.
      *
      * @param review updated (new) data
-     * @return previous (old) data
-     * @throws ResourceNotFoundException if review doesn't exist
      */
-    MovieReview update(MovieReview review) throws ResourceNotFoundException;
+    void update(MovieReview review);
 
     /**
      * Remove Movie Review.
      *
-     * @param key review key
-     * @return deleted data
-     * @throws ResourceNotFoundException if review doesn't exist
+     * @param review review to delete
      */
-    MovieReview delete(MovieReviewKey key) throws ResourceNotFoundException;
+    void delete(MovieReview review);
 
     /**
-     * Remove Reviews.
+     * Remove Movie Reviews.
      *
-     * @param username user name
-     * @return deleted data
+     * @param reviews reviews to delete
      */
-    Collection<MovieReview> deleteAllByUser(String username);
+    void delete(Collection<MovieReview> reviews);
+
+    MovieReview findForUpdate(String username, String movieId) throws ResourceNotFoundException;
+
+    MovieReview findForUpdate(MovieReviewKey reviewKey) throws ResourceNotFoundException;
+
+    Collection<MovieReview> findForUpdate(String username);
 
     List<String> topByUser(String username, Integer limit);
 }

@@ -1,7 +1,7 @@
 package me.mzalietin.mdbproject.movie.infrastructure.broker;
 
 import me.mzalietin.mdbproject.movie.domain.service.spi.MovieDataAccess;
-import me.mzalietin.mdbproject.movie.infrastructure.broker.event.MovieRatingUpdated;
+import me.mzalietin.mdbproject.movie.infrastructure.broker.event.MovieRatingCalculated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class MovieRatingListener {
@@ -25,7 +26,8 @@ public class MovieRatingListener {
         batch = "false",
         clientIdPrefix = "MovieRatingConsumer"
     )
-    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, MovieRatingUpdated event, Acknowledgment ack) {
+    @Transactional("transactionManager")
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, MovieRatingCalculated event, Acknowledgment ack) {
         logger.debug("Received event for movieId={} event={}", movieId, event);
 
         movieDataAccess.updateRatingInfo(movieId, event.averageRating(), event.reviewsCount());

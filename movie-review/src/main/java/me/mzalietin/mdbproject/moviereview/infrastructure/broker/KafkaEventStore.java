@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class KafkaEventStore implements EventStore {
@@ -23,27 +22,23 @@ public class KafkaEventStore implements EventStore {
     String eventsTopic;
 
     @Override
-    @Transactional("kafkaTransactionManager")
     public void sendCreated(final MovieReview r) {
         kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()), new MovieReviewCreated(r.rating(), r.comment()));
     }
 
     @Override
-    @Transactional("kafkaTransactionManager")
     public void sendUpdated(final MovieReview old, final MovieReview r) {
         kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
             new MovieReviewUpdated(old.rating(), old.comment(), r.rating(), r.comment()));
     }
 
     @Override
-    @Transactional("kafkaTransactionManager")
     public void sendDeleted(final MovieReview r) {
         kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
             new MovieReviewDeleted(r.rating(), r.comment()));
     }
 
     @Override
-    @Transactional("kafkaTransactionManager")
     public void sendDeleted(final Collection<MovieReview> deletedReviews) {
         deletedReviews.forEach(r -> {
             kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),

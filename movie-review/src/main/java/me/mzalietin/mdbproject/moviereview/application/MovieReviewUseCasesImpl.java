@@ -27,28 +27,31 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
     @Override
     @Transactional("transactionManager")
     public void create(final MovieReview review) {
-        dataAccess.create(review);
         eventStore.sendCreated(review);
+        dataAccess.create(review);
     }
 
     @Override
     @Transactional("transactionManager")
-    public void update(final MovieReview review) {
-        final MovieReview old = dataAccess.update(review);
-        eventStore.sendUpdated(old, review);
+    public void update(final MovieReview newReview) {
+        final MovieReview oldReview = dataAccess.findForUpdate(newReview.username(), newReview.movieId());
+        eventStore.sendUpdated(oldReview, newReview);
+        dataAccess.update(newReview);
     }
 
     @Override
     @Transactional("transactionManager")
     public void delete(final MovieReviewKey reviewKey) {
-        final MovieReview deleted = dataAccess.delete(reviewKey);
-        eventStore.sendDeleted(deleted);
+        final MovieReview review = dataAccess.findForUpdate(reviewKey);
+        eventStore.sendDeleted(review);
+        dataAccess.delete(review);
     }
 
     @Override
     @Transactional("transactionManager")
     public void deleteAllForUser(final String username) {
-        final Collection<MovieReview> removedReviews = dataAccess.deleteAllByUser(username);
-        eventStore.sendDeleted(removedReviews);
+        final Collection<MovieReview> forRemoval = dataAccess.findForUpdate(username);
+        eventStore.sendDeleted(forRemoval);
+        dataAccess.delete(forRemoval);
     }
 }

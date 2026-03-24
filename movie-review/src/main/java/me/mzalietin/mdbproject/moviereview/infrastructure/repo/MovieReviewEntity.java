@@ -34,6 +34,13 @@ public class MovieReviewEntity {
     @Column(name = "comment", nullable = true)
     private String comment;
 
+    public MovieReviewEntity(MovieReview movieReview) {
+        this.username = movieReview.username();
+        this.movieId = movieReview.movieId();
+        this.rating = movieReview.rating();
+        this.comment = movieReview.comment();
+    }
+
     public MovieReview toModel() {
         return new MovieReview(username, movieId, rating, comment);
     }

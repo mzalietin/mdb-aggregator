@@ -13,7 +13,6 @@ public interface MovieReviewUseCases {
     void delete(MovieReviewKey reviewKey);
 
     void deleteAllForUser(String username);
-
     /**
      * Top favorite user movies by username.
      *

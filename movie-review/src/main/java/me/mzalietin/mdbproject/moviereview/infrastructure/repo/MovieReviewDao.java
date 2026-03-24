@@ -32,33 +32,41 @@ public class MovieReviewDao implements MovieReviewDataAccess {
     }
 
     @Override
-    public MovieReview update(final MovieReview updated) throws ResourceNotFoundException {
-        var key = new MovieReviewKey(updated.username(), updated.movieId());
-
-        var entity = repo.findById(key).orElseThrow(() -> new ResourceNotFoundException("Review Key = " + key));
-
-        var oldState = entity.toModel();
-
-        entity.setRating(updated.rating());
-        entity.setComment(updated.comment());
-
-        return oldState;
+    public void update(final MovieReview updated) throws ResourceNotFoundException {
+        var entity = new MovieReviewEntity(updated);
+        repo.save(entity);
     }
 
     @Override
-    public MovieReview delete(final MovieReviewKey key) throws ResourceNotFoundException {
-        var entity = repo.findById(key).orElseThrow(() -> new ResourceNotFoundException("Review Key = " + key));
-        var deleted = entity.toModel();
+    public void delete(final MovieReview review) throws ResourceNotFoundException {
+        var entity = new MovieReviewEntity(review);
         repo.delete(entity);
-        return deleted;
     }
 
     @Override
-    public Collection<MovieReview> deleteAllByUser(final String username) {
-        var reviews = repo.findByUsername(username);
-        var deleted = reviews.stream().map(MovieReviewEntity::toModel).toList();
-        repo.deleteAll(reviews);
-        return deleted;
+    public void delete(final Collection<MovieReview> reviews) {
+        var entities = reviews.stream().map(MovieReviewEntity::new).toList();
+        repo.deleteAll(entities);
+    }
+
+    @Override
+    public MovieReview findForUpdate(final MovieReviewKey key) throws ResourceNotFoundException {
+        return this.findForUpdate(key.username(), key.movieId());
+    }
+
+    @Override
+    public MovieReview findForUpdate(final String username, final String movieId) throws ResourceNotFoundException {
+        return repo.findByUsernameAndMovieIdForUpdate(username, movieId)
+            .map(MovieReviewEntity::toModel)
+            .orElseThrow(() -> new ResourceNotFoundException("Review Key = " + new MovieReviewKey(username, movieId)));
+    }
+
+    @Override
+    public Collection<MovieReview> findForUpdate(final String username) {
+        return repo.findByUsernameForUpdate(username)
+            .stream()
+            .map(MovieReviewEntity::toModel)
+            .toList();
     }
 
     @Override

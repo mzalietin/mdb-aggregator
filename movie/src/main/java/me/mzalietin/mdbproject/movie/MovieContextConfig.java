@@ -1,5 +1,6 @@
 package me.mzalietin.mdbproject.movie;
 
+import jakarta.persistence.EntityManagerFactory;
 import me.mzalietin.mdbproject.movie.domain.model.ResourceNotFoundException;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.TopicPartition;
@@ -18,6 +19,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
 import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.kafka.support.ExponentialBackOffWithMaxRetries;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @ComponentScan
 @EnableAutoConfiguration
@@ -33,6 +36,11 @@ public class MovieContextConfig {
 
     @Value("${movie.context.kafka.dlt}")
     String movieContextKafkaDlt;
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
+    }
 
     @Bean
     public DefaultErrorHandler handler() {
