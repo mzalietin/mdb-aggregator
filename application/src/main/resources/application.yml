@@ -4,3 +4,7 @@ spring:
 
 kafka:
     host: localhost:9092
+
+server:
+    servlet:
+        context-path: /api

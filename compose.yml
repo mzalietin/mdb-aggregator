@@ -40,10 +40,11 @@ services:
         container_name: kafka-ui
         image: provectuslabs/kafka-ui:latest
         ports:
-            - "8080:8080"
+            - "9090:9090"
         depends_on:
             - kafka0
         environment:
+            SERVER_PORT: 9090
             KAFKA_CLUSTERS_0_NAME: local
             KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092
             KAFKA_CLUSTERS_0_METRICS_PORT: 9997
