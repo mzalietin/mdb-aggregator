@@ -5,7 +5,12 @@ plugins {
 
 group = 'me.mzalietin.mdbproject'
 version = "${version}"
-sourceCompatibility = '17'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 repositories {
     mavenCentral()
