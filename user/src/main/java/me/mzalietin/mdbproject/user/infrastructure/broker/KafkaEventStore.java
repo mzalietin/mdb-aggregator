@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class KafkaEventStore implements EventStore {
@@ -17,11 +16,7 @@ public class KafkaEventStore implements EventStore {
     String eventsTopic;
 
     @Override
-    @Transactional("kafkaTransactionManager")
     public void sendDeleted(final String username) {
-        kt.executeInTransaction(kt -> {
-            kt.send(eventsTopic, username, null);
-            return true;
-        });
+        kt.send(eventsTopic, username, null);
     }
 }

@@ -1,5 +1,6 @@
 package me.mzalietin.mdbproject;
 
+import me.mzalietin.imdbproject.query.QueryServiceConfig;
 import me.mzalietin.mdbproject.movie.MovieContextConfig;
 import me.mzalietin.mdbproject.movierating.MovieRatingAggregatorConfig;
 import me.mzalietin.mdbproject.moviereview.MovieReviewContextConfig;
@@ -18,6 +19,7 @@ public class MdbAggregatorApplication {
             .sibling(MovieReviewContextConfig.class).web(WebApplicationType.SERVLET)
             .sibling(MovieRatingAggregatorConfig.class).web(WebApplicationType.NONE)
             .sibling(UserContextConfig.class).web(WebApplicationType.SERVLET)
+            .sibling(QueryServiceConfig.class).web(WebApplicationType.REACTIVE)
             .run(args);
 	}
 }

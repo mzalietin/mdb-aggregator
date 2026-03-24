@@ -66,6 +66,15 @@ public class MovieContextConfig {
     // -------- NON PROD CONFIG --------
 
     @Bean
+    public NewTopic eventsTopic() {
+        return TopicBuilder.name("movie-events")
+            .partitions(1)
+            .replicas(1)
+            .compact()
+            .build();
+    }
+
+    @Bean
     public NewTopic deadLetterTopic() {
         return TopicBuilder.name(movieContextKafkaDlt)
             .partitions(1)

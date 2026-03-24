@@ -31,7 +31,7 @@ public class UserUseCasesImpl implements UserUseCases {
     @Override
     @Transactional("transactionManager")
     public void delete(final String username) {
-        userDataAccess.deleteUser(username);
         eventStore.sendDeleted(username);
+        userDataAccess.deleteUser(username);
     }
 }

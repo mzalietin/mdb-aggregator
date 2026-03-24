@@ -23,6 +23,7 @@ dependencies {
     implementation project(':user')
     implementation project(':movie-review')
     implementation project(':movie-rating-aggregator')
+    implementation project(':query-service')
 }
 
 test {
