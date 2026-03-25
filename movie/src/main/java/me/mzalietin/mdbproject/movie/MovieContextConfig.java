@@ -45,6 +45,9 @@ public class MovieContextConfig {
     @Value("${movie.context.kafka.dlt}")
     String movieContextKafkaDlt;
 
+    @Value("${movie.context.kafka.out.events-topic}")
+    String eventsOutputTopic;
+
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
@@ -75,7 +78,7 @@ public class MovieContextConfig {
 
     @Bean
     public NewTopic eventsTopic() {
-        return TopicBuilder.name("movie-events")
+        return TopicBuilder.name(eventsOutputTopic)
             .partitions(1)
             .replicas(1)
             .compact()

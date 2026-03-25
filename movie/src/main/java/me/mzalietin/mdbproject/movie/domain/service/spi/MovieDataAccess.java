@@ -15,7 +15,7 @@ public interface MovieDataAccess {
 
     List<Movie> findByIds(List<String> movieIds);
 
-    String createMovie(String name, LocalDate releaseDate);
+    Movie createMovie(String name, LocalDate releaseDate);
 
     void updateRatingInfo(String movieId, BigDecimal rating, Integer reviewsCount) throws ResourceNotFoundException;
 }

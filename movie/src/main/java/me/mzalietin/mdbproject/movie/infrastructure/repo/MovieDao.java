@@ -42,9 +42,9 @@ public class MovieDao implements MovieDataAccess {
     }
 
     @Override
-    public String createMovie(final String name, final LocalDate releaseDate) {
+    public Movie createMovie(final String name, final LocalDate releaseDate) {
         final MovieEntity saved = movieRepository.save(new MovieEntity(null, name, releaseDate, null, null));
-        return saved.getId();
+        return saved.toModel();
     }
 
     @Override

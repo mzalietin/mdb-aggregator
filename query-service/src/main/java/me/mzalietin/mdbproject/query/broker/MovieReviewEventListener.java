@@ -1,37 +1,49 @@
 package me.mzalietin.mdbproject.query.broker;
 
+import me.mzalietin.mdbproject.query.QueryServiceFacade;
+import me.mzalietin.mdbproject.query.broker.event.ReviewCreated;
+import me.mzalietin.mdbproject.query.broker.event.ReviewDeleted;
+import me.mzalietin.mdbproject.query.broker.event.ReviewKey;
+import me.mzalietin.mdbproject.query.broker.event.ReviewUpdated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Component;
 
-//@Component
+@Component
+@KafkaListener(
+    id = "query-service-review-group",
+    topics = "${query.service.kafka.in.review-events-topic}",
+    batch = "false",
+    clientIdPrefix = "QueryServiceReviewConsumer"
+)
 public class MovieReviewEventListener {
 
     private static final Logger logger = LoggerFactory.getLogger(MovieReviewEventListener.class);
 
     @Autowired
-    //MovieDataAccess movieDataAccess;
+    QueryServiceFacade queryServiceFacade;
 
-    @KafkaListener(
-        id = "query-service-group",
-        topics = "${query.service.kafka.in.review-events-topic}",
-        batch = "false",
-        clientIdPrefix = "MovieRatingConsumer"
-    )
-    @Transactional("transactionManager")
-    public void listen(
-        @Header(KafkaHeaders.RECEIVED_KEY) String movieId,
-        String event,
-        Acknowledgment ack
-    ) {
-        logger.debug("Received event for movieId={} event={}", movieId, event);
+    @KafkaHandler
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewCreated event) {
+        logger.info("Received event for key={}, event={}", key, event);
+        //queryServiceFacade.movieDao().save(movieId, event);
+    }
 
-        //movieDataAccess.updateRatingInfo(movieId, event.averageRating(), event.reviewsCount());
-        ack.acknowledge();
+    @KafkaHandler
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewUpdated event) {
+        logger.info("Received event for key={}, event={}", key, event);
+        //queryServiceFacade.movieDao().save(movieId, event);
+    }
+
+    @KafkaHandler
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewDeleted event) {
+        logger.info("Received event for key={}, event={}", key, event);
+        //queryServiceFacade.movieDao().save(movieId, event);
     }
 }

@@ -1,5 +1,6 @@
 package me.mzalietin.mdbproject.movie.application;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +15,6 @@ public interface MovieUseCases {
     List<Movie> findByIds(List<String> movieIds);
 
     String create(String name, LocalDate releaseDate);
+
+    void updateRating(String id, BigDecimal newRating, Integer newReviewsCount);
 }
