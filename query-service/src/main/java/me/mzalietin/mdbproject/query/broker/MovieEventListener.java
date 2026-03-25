@@ -1,4 +1,4 @@
-package me.mzalietin.imdbproject.query.broker;
+package me.mzalietin.mdbproject.query.broker;
 
 import org.springframework.stereotype.Component;
 

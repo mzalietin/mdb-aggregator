@@ -1,8 +1,32 @@
 plugins {
+    id 'java'
+    id 'org.springframework.boot' version "${spring_boot_version}"
+}
+
+group = 'me.mzalietin.mdbproject'
+version = "${version}"
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
+    implementation "org.springframework.boot:spring-boot-starter:${spring_boot_version}"
+
+    implementation project(':movie')
+    implementation project(':user')
+    implementation project(':movie-review')
+    implementation project(':movie-rating-aggregator')
+    implementation project(':query-service')
 }
 
-subprojects {
+test {
+    useJUnitPlatform()
 }

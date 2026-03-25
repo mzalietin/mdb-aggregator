@@ -14,7 +14,15 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @ComponentScan
-@EnableAutoConfiguration
+@EnableAutoConfiguration(excludeName = {
+    "org.springframework.boot.r2dbc.autoconfigure.R2dbcAutoConfiguration",
+    "org.springframework.boot.r2dbc.autoconfigure.R2dbcInitializationAutoConfiguration",
+    "org.springframework.boot.r2dbc.autoconfigure.R2dbcProxyAutoConfiguration",
+    "org.springframework.boot.r2dbc.autoconfigure.R2dbcTransactionManagerAutoConfiguration",
+    "org.springframework.boot.r2dbc.autoconfigure.health.ConnectionFactoryHealthContributorAutoConfiguration",
+    "org.springframework.boot.r2dbc.autoconfigure.metrics.ConnectionPoolMetricsAutoConfiguration",
+    "org.springframework.boot.r2dbc.autoconfigure.observation.R2dbcObservationAutoConfiguration"
+})
 @EnableKafka
 @Configuration
 @PropertySource("classpath:user-context.properties")

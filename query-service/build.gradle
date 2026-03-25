@@ -1,8 +1,8 @@
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
-group = 'me.mzalietin.imdbproject'
+group = 'me.mzalietin.mdbproject'
 version = "${version}"
 
 repositories {

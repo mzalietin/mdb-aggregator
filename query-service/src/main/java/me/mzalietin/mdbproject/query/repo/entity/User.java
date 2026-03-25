@@ -1,4 +1,4 @@
-package me.mzalietin.imdbproject.query.repo.entity;
+package me.mzalietin.mdbproject.query.repo.entity;
 
 public class User {
     private String username;

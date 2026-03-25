@@ -1,6 +1,6 @@
 package me.mzalietin.mdbproject;
 
-import me.mzalietin.imdbproject.query.QueryServiceConfig;
+import me.mzalietin.mdbproject.query.QueryServiceConfig;
 import me.mzalietin.mdbproject.movie.MovieContextConfig;
 import me.mzalietin.mdbproject.movierating.MovieRatingAggregatorConfig;
 import me.mzalietin.mdbproject.moviereview.MovieReviewContextConfig;

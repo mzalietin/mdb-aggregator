@@ -1,4 +1,4 @@
-package me.mzalietin.imdbproject.query.broker;
+package me.mzalietin.mdbproject.query.broker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,6 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.stereotype.Component;
 
 //@Component
 public class UserEventListener {
