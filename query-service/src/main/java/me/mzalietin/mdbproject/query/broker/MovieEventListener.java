@@ -1,6 +1,6 @@
 package me.mzalietin.mdbproject.query.broker;
 
-import me.mzalietin.mdbproject.query.QueryServiceFacade;
+import me.mzalietin.mdbproject.query.repo.QueryServiceDaoFacade;
 import me.mzalietin.mdbproject.query.broker.event.MovieCreated;
 import me.mzalietin.mdbproject.query.broker.event.MovieRatingUpdated;
 import org.slf4j.Logger;
@@ -26,17 +26,17 @@ public class MovieEventListener {
     private static final Logger logger = LoggerFactory.getLogger(MovieEventListener.class);
 
     @Autowired
-    QueryServiceFacade queryServiceFacade;
+    QueryServiceDaoFacade queryServiceDaoFacade;
 
     @KafkaHandler
     public Mono<?> listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieCreated event) {
         logger.info("Received event for movieId={} event={}", movieId, event);
-        return queryServiceFacade.movieDao().save(movieId, event);
+        return queryServiceDaoFacade.movieDao().save(movieId, event);
     }
 
     @KafkaHandler
     public Mono<?> listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieRatingUpdated event) {
         logger.info("Received event for movieId={} event={}", movieId, event);
-        return queryServiceFacade.movieDao().save(movieId, event);
+        return queryServiceDaoFacade.movieDao().save(movieId, event);
     }
 }

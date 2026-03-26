@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS user_projection;
-CREATE TABLE IF NOT EXISTS user_projection (
+CREATE TABLE user_projection (
     username VARCHAR(255) NOT NULL,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS user_projection (
 );
 
 DROP TABLE IF EXISTS movie_projection;
-CREATE TABLE IF NOT EXISTS movie_projection (
+CREATE TABLE movie_projection (
     id VARCHAR(50) NOT NULL,
     name VARCHAR(255) NOT NULL,
     avg_rating DECIMAL NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS movie_projection (
 );
 
 DROP TABLE IF EXISTS movie_review_projection;
-CREATE TABLE IF NOT EXISTS movie_review_projection (
+CREATE TABLE movie_review_projection (
     username VARCHAR(255) NOT NULL,
     movie_id VARCHAR(50) NOT NULL,
     movie_name VARCHAR(255) NOT NULL,
