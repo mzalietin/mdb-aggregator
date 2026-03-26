@@ -1,13 +1,16 @@
 package me.mzalietin.mdbproject.queryservice.infrastructure.repo;
 
+import java.math.BigDecimal;
 import java.time.Duration;
+import me.mzalietin.mdbproject.queryservice.domain.model.Movie;
+import me.mzalietin.mdbproject.queryservice.domain.model.MovieWithUserRating;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewCreated;
-import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewDeleted;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewKey;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewUpdated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 @Component
 public class MovieReviewDao extends BaseDao {
@@ -44,5 +47,25 @@ public class MovieReviewDao extends BaseDao {
             .fetch()
             .rowsUpdated()
             .block(Duration.ofMillis(1000));
+    }
+
+    public Flux<MovieWithUserRating> topByUser(String username, Integer limit) {
+        return databaseClient.sql("""
+                select m.id, m.name, m.avg_rating, mr.rating as user_rating, m.reviews_count from movie_review_projection mr join movie_projection m on mr.movie_id = m.id
+                where mr.username = $1
+                order by mr.rating desc
+                limit $2
+                """)
+            .bind("$1", username)
+            .bind("$2", limit)
+            .map(readable -> new MovieWithUserRating(
+                readable.get("user_rating", Integer.class),
+                new Movie(
+                    readable.get("id", String.class),
+                    readable.get("name", String.class),
+                    readable.get("avg_rating", BigDecimal.class),
+                    readable.get("reviews_count", Integer.class)
+                )))
+            .all();
     }
 }

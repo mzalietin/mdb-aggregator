@@ -2,6 +2,7 @@ package me.mzalietin.mdbproject.queryservice.infrastructure.repo;
 
 import java.math.BigDecimal;
 import me.mzalietin.mdbproject.queryservice.domain.model.Movie;
+import me.mzalietin.mdbproject.queryservice.domain.model.MovieWithUserRating;
 import me.mzalietin.mdbproject.queryservice.domain.model.User;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieCreated;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieRatingUpdated;
@@ -45,8 +46,8 @@ public class QueryServiceDaoFacade implements ReadOperations, WriteOperations {
     }
 
     @Override
-    public Flux<Movie> topByUser(final String username, final Integer limit) {
-        return null;
+    public Flux<MovieWithUserRating> topByUser(final String username, final Integer limit) {
+        return movieReviewDao.topByUser(username, limit);
     }
 
     @Override

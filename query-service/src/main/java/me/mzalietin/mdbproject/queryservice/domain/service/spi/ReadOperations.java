@@ -2,6 +2,7 @@ package me.mzalietin.mdbproject.queryservice.domain.service.spi;
 
 import java.math.BigDecimal;
 import me.mzalietin.mdbproject.queryservice.domain.model.Movie;
+import me.mzalietin.mdbproject.queryservice.domain.model.MovieWithUserRating;
 import me.mzalietin.mdbproject.queryservice.domain.model.User;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,7 +22,7 @@ public interface ReadOperations {
     /*
        Top favorite user movies by username.
      */
-    Flux<Movie> topByUser(String username, Integer limit);
+    Flux<MovieWithUserRating> topByUser(String username, Integer limit);
 
     /*
         User info by username
