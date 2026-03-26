@@ -15,12 +15,13 @@ public abstract class BaseDao {
         this.databaseClient = databaseClient;
     }
 
-    protected Mono<Result> wrapIntoTransaction(Function<Connection, Publisher<? extends Result>> operation) {
+    protected Mono<Long> wrapIntoTransaction(Function<Connection, Publisher<? extends Result>> operation) {
         return Mono.from(databaseClient.getConnectionFactory().create())
             .flatMap(c -> Mono.from(c.beginTransaction())
                 .then(Mono.from(operation.apply(c)))
                 .delayUntil(r -> c.commitTransaction())
                 .doFinally((st) -> c.close())
-            );
+            )
+            .flatMap(result -> Mono.from(result.getRowsUpdated()));
     }
 }

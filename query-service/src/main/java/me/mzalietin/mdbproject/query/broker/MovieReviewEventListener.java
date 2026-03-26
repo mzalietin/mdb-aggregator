@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 @KafkaListener(
-    id = "query-service-review-group",
+    id = "query-service-review-context-group",
     topics = "${query.service.kafka.in.review-events-topic}",
     batch = "false",
     clientIdPrefix = "QueryServiceReviewConsumer"

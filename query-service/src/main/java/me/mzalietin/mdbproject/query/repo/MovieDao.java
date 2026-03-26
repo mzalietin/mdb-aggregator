@@ -15,24 +15,24 @@ public class MovieDao extends BaseDao {
         super(databaseClient);
     }
 
-    public Mono<Long> save(String id, MovieCreated createdEvent) {
+    public Mono<?> save(String id, MovieCreated createdEvent) {
         return wrapIntoTransaction(
             c -> c.createStatement("insert into movie_projection(id,name,avg_rating,reviews_count) values($1,$2,$3,$4)")
                 .bind("$1", id)
                 .bind("$2", createdEvent.name())
                 .bind("$3", createdEvent.rating())
                 .bind("$4", createdEvent.reviewsCount())
-                .execute())
-            .flatMap(result -> Mono.from(result.getRowsUpdated()));
+                .execute()
+        );
     }
 
-    public Mono<Long> save(String id, MovieRatingUpdated updatedEvent) {
+    public Mono<?> save(String id, MovieRatingUpdated updatedEvent) {
         return wrapIntoTransaction(
             c -> c.createStatement("update movie_projection set avg_rating=$1, reviews_count=$2 where id=$3")
                 .bind("$1", updatedEvent.averageRating())
                 .bind("$2", updatedEvent.reviewsCount())
                 .bind("$3", id)
-                .execute())
-            .flatMap(result -> Mono.from(result.getRowsUpdated()));
+                .execute()
+        );
     }
 }

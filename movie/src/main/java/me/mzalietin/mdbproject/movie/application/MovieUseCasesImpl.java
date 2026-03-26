@@ -36,7 +36,7 @@ public class MovieUseCasesImpl implements MovieUseCases {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public String create(final String name, final LocalDate releaseDate) {
         var newMovie = movieDataAccess.createMovie(name, releaseDate);
         eventStore.sendCreated(newMovie);
@@ -44,7 +44,7 @@ public class MovieUseCasesImpl implements MovieUseCases {
     }
 
     @Override
-    @Transactional
+    @Transactional("transactionManager")
     public void updateRating(String id, BigDecimal newRating, Integer newReviewsCount) {
         eventStore.sendRatingUpdated(id, newRating, newReviewsCount);
         movieDataAccess.updateRatingInfo(id, newRating, newReviewsCount);

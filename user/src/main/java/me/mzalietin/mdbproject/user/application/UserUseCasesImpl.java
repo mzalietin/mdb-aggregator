@@ -25,6 +25,7 @@ public class UserUseCasesImpl implements UserUseCases {
     @Override
     @Transactional("transactionManager")
     public void create(final User user) {
+        eventStore.sendCreated(user);
         userDataAccess.createUser(user);
     }
 

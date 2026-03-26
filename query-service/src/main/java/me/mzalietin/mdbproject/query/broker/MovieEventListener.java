@@ -1,8 +1,8 @@
 package me.mzalietin.mdbproject.query.broker;
 
-import me.mzalietin.mdbproject.query.repo.QueryServiceDaoFacade;
 import me.mzalietin.mdbproject.query.broker.event.MovieCreated;
 import me.mzalietin.mdbproject.query.broker.event.MovieRatingUpdated;
+import me.mzalietin.mdbproject.query.repo.QueryServiceDaoFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 @KafkaListener(
-    id = "query-service-movie-group",
+    id = "query-service-movie-context-group",
     topics = "${query.service.kafka.in.movie-events-topic}",
     batch = "false",
     clientIdPrefix = "QueryServiceMovieConsumer"

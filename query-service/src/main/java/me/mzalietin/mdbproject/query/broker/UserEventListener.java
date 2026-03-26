@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.kafka.support.KafkaNull;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @Component
 @KafkaListener(
-    id = "query-service-user-group",
+    id = "query-service-user-context-group",
     topics = "${query.service.kafka.in.user-events-topic}",
     batch = "false",
     clientIdPrefix = "QueryServiceUserConsumer"
@@ -26,17 +28,15 @@ public class UserEventListener {
     @Autowired
     QueryServiceDaoFacade queryServiceDaoFacade;
 
-    @KafkaHandler(isDefault = true)
-    public void onCreated(@Header(KafkaHeaders.RECEIVED_KEY) String username, @Payload UserCreated value) {
+    @KafkaHandler
+    public Mono<?> onCreated(@Header(KafkaHeaders.RECEIVED_KEY) String username, @Payload UserCreated value) {
         logger.info("Received user created event username={}", username);
-        //queryServiceDaoFacade.save
+        return queryServiceDaoFacade.userDao().save(username, value);
     }
 
     @KafkaHandler(isDefault = true)
-    public void onDeleted(@Header(KafkaHeaders.RECEIVED_KEY) String username, @Payload(required = false) Object value) {
-        if (value == null) {
-            logger.info("Received user deleted event username={}", username);
-            //queryServiceDaoFacade.save
-        }
+    public Mono<?> onDeleted(@Header(KafkaHeaders.RECEIVED_KEY) String username, @Payload(required = false) KafkaNull nul) {
+        logger.info("Received user deleted event username={}", username);
+        return queryServiceDaoFacade.userDao().delete(username);
     }
 }

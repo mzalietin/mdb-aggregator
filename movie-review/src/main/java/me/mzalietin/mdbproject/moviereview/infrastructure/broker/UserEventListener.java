@@ -1,7 +1,6 @@
 package me.mzalietin.mdbproject.moviereview.infrastructure.broker;
 
 import me.mzalietin.mdbproject.moviereview.application.MovieReviewUseCases;
-import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.in.UserEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class UserEventListener {
     )
     public void onDeleted(
         @Header(KafkaHeaders.RECEIVED_KEY) String username,
-        @Payload(required = false) UserEvent value,
+        @Payload(required = false) String value,
         Acknowledgment ack
     ) {
         if (value == null) {

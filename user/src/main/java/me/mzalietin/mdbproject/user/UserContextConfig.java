@@ -39,7 +39,10 @@ public class UserContextConfig {
     // non Prod config
 
     @Bean
-    public NewTopic eventsTopic() {
+    public NewTopic eventsTopic() throws Exception {
+        //        try (AdminClient client = AdminClient.create(kafkaAdmin.getConfigurationProperties())) {
+        //            client.deleteTopics(List.of(eventsTopic)).all().get();
+        //        }
         return TopicBuilder.name(eventsTopic)
             .partitions(1)
             .replicas(1)
