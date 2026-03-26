@@ -4,10 +4,13 @@ import io.r2dbc.spi.Connection;
 import io.r2dbc.spi.Result;
 import java.util.function.Function;
 import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.r2dbc.core.DatabaseClient;
-import reactor.core.publisher.Mono;
 
 public abstract class BaseDao {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected final DatabaseClient databaseClient;
 
@@ -15,13 +18,7 @@ public abstract class BaseDao {
         this.databaseClient = databaseClient;
     }
 
-    protected Mono<Long> wrapIntoTransaction(Function<Connection, Publisher<? extends Result>> operation) {
-        return Mono.from(databaseClient.getConnectionFactory().create())
-            .flatMap(c -> Mono.from(c.beginTransaction())
-                .then(Mono.from(operation.apply(c)))
-                .delayUntil(r -> c.commitTransaction())
-                .doFinally((st) -> c.close())
-            )
-            .flatMap(result -> Mono.from(result.getRowsUpdated()));
+    protected void runInTransaction(Function<Connection, Publisher<? extends Result>> operation) {
+        //todo
     }
 }

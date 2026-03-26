@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @KafkaListener(
@@ -31,20 +31,23 @@ public class MovieReviewEventListener {
     QueryServiceDaoFacade queryServiceDaoFacade;
 
     @KafkaHandler
-    public Mono<?> listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewCreated event) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewCreated event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
-        return queryServiceDaoFacade.movieReviewDao().save(key, event);
+        queryServiceDaoFacade.movieReviewDao().save(key, event);
+        ack.acknowledge();
     }
 
     @KafkaHandler
-    public Mono<?> listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewUpdated event) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewUpdated event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
-        return queryServiceDaoFacade.movieReviewDao().save(key, event);
+        queryServiceDaoFacade.movieReviewDao().save(key, event);
+        ack.acknowledge();
     }
 
     @KafkaHandler
-    public Mono<?> listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewDeleted event) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewDeleted event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
-        return queryServiceDaoFacade.movieReviewDao().save(key, event);
+        queryServiceDaoFacade.movieReviewDao().save(key, event);
+        ack.acknowledge();
     }
 }

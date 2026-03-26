@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @KafkaListener(
@@ -29,14 +29,16 @@ public class MovieEventListener {
     QueryServiceDaoFacade queryServiceDaoFacade;
 
     @KafkaHandler
-    public Mono<?> listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieCreated event) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieCreated event, Acknowledgment ack) {
         logger.info("Received event for movieId={} event={}", movieId, event);
-        return queryServiceDaoFacade.movieDao().save(movieId, event);
+        queryServiceDaoFacade.movieDao().save(movieId, event);
+        ack.acknowledge();
     }
 
     @KafkaHandler
-    public Mono<?> listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieRatingUpdated event) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieRatingUpdated event, Acknowledgment ack) {
         logger.info("Received event for movieId={} event={}", movieId, event);
-        return queryServiceDaoFacade.movieDao().save(movieId, event);
+        queryServiceDaoFacade.movieDao().save(movieId, event);
+        ack.acknowledge();
     }
 }
