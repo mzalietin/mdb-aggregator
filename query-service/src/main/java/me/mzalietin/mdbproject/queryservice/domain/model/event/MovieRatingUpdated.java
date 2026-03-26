@@ -1,4 +1,4 @@
-package me.mzalietin.mdbproject.query.broker.event;
+package me.mzalietin.mdbproject.queryservice.domain.model.event;
 
 import java.math.BigDecimal;
 

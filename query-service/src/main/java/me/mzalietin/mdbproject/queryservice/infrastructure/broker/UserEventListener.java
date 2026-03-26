@@ -1,7 +1,7 @@
-package me.mzalietin.mdbproject.query.broker;
+package me.mzalietin.mdbproject.queryservice.infrastructure.broker;
 
-import me.mzalietin.mdbproject.query.broker.event.UserCreated;
-import me.mzalietin.mdbproject.query.repo.QueryServiceDaoFacade;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.UserCreated;
+import me.mzalietin.mdbproject.queryservice.domain.service.spi.WriteOperations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +26,19 @@ public class UserEventListener {
     private static final Logger logger = LoggerFactory.getLogger(UserEventListener.class);
 
     @Autowired
-    QueryServiceDaoFacade queryServiceDaoFacade;
+    WriteOperations writeOperations;
 
     @KafkaHandler
     public void onCreated(@Header(KafkaHeaders.RECEIVED_KEY) String username, @Payload UserCreated value, Acknowledgment ack) {
         logger.info("Received user created event username={}", username);
-        queryServiceDaoFacade.userDao().save(username, value);
+        writeOperations.createUser(username, value);
         ack.acknowledge();
     }
 
     @KafkaHandler(isDefault = true)
     public void onDeleted(@Header(KafkaHeaders.RECEIVED_KEY) String username, @Payload(required = false) KafkaNull nul, Acknowledgment ack) {
         logger.info("Received user deleted event username={}", username);
-        queryServiceDaoFacade.userDao().delete(username);
+        writeOperations.deleteUser(username);
         ack.acknowledge();
     }
 }

@@ -1,6 +1,5 @@
 package me.mzalietin.mdbproject.user.application;
 
-import java.util.Optional;
 import me.mzalietin.mdbproject.user.domain.model.User;
 import me.mzalietin.mdbproject.user.domain.service.spi.EventStore;
 import me.mzalietin.mdbproject.user.domain.service.spi.UserDataAccess;
@@ -16,11 +15,6 @@ public class UserUseCasesImpl implements UserUseCases {
 
     @Autowired
     UserDataAccess userDataAccess;
-
-    @Override
-    public Optional<User> get(final String username) {
-        return userDataAccess.getUser(username);
-    }
 
     @Override
     @Transactional("transactionManager")

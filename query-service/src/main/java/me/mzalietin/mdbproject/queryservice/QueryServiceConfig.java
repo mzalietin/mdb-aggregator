@@ -1,4 +1,4 @@
-package me.mzalietin.mdbproject.query;
+package me.mzalietin.mdbproject.queryservice;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;

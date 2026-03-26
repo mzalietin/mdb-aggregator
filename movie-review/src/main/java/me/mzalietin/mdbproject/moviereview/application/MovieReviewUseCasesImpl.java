@@ -20,11 +20,6 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
     EventStore eventStore;
 
     @Override
-    public List<String> topByUser(final String username, final Integer limit) {
-        return dataAccess.topByUser(username, limit);
-    }
-
-    @Override
     @Transactional("transactionManager")
     public void create(final MovieReview review) {
         eventStore.sendCreated(review);

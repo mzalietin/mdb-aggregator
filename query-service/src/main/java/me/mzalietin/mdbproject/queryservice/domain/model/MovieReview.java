@@ -1,4 +1,4 @@
-package me.mzalietin.mdbproject.query.repo.entity;
+package me.mzalietin.mdbproject.queryservice.domain.model;
 
 public class MovieReview {
     private String username;

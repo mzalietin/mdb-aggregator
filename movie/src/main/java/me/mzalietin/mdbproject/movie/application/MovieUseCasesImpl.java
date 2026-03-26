@@ -21,21 +21,6 @@ public class MovieUseCasesImpl implements MovieUseCases {
     EventStore eventStore;
 
     @Override
-    public Optional<Movie> findByName(final String name) {
-        return movieDataAccess.findMovie(name);
-    }
-
-    @Override
-    public List<Movie> findTopMovies(Integer limit) {
-        return movieDataAccess.findTopMoviesByRating(limit);
-    }
-
-    @Override
-    public List<Movie> findByIds(final List<String> movieIds) {
-        return movieDataAccess.findByIds(movieIds);
-    }
-
-    @Override
     @Transactional("transactionManager")
     public String create(final String name, final LocalDate releaseDate) {
         var newMovie = movieDataAccess.createMovie(name, releaseDate);

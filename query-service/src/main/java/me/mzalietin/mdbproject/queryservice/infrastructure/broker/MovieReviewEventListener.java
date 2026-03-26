@@ -1,10 +1,10 @@
-package me.mzalietin.mdbproject.query.broker;
+package me.mzalietin.mdbproject.queryservice.infrastructure.broker;
 
-import me.mzalietin.mdbproject.query.broker.event.ReviewCreated;
-import me.mzalietin.mdbproject.query.broker.event.ReviewDeleted;
-import me.mzalietin.mdbproject.query.broker.event.ReviewKey;
-import me.mzalietin.mdbproject.query.broker.event.ReviewUpdated;
-import me.mzalietin.mdbproject.query.repo.QueryServiceDaoFacade;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewCreated;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewDeleted;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewKey;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewUpdated;
+import me.mzalietin.mdbproject.queryservice.domain.service.spi.WriteOperations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,26 +28,26 @@ public class MovieReviewEventListener {
     private static final Logger logger = LoggerFactory.getLogger(MovieReviewEventListener.class);
 
     @Autowired
-    QueryServiceDaoFacade queryServiceDaoFacade;
+    WriteOperations writeOperations;
 
     @KafkaHandler
     public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewCreated event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
-        queryServiceDaoFacade.movieReviewDao().save(key, event);
+        writeOperations.createReview(key, event);
         ack.acknowledge();
     }
 
     @KafkaHandler
     public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewUpdated event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
-        queryServiceDaoFacade.movieReviewDao().save(key, event);
+        writeOperations.updateReview(key, event);
         ack.acknowledge();
     }
 
     @KafkaHandler
     public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewDeleted event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
-        queryServiceDaoFacade.movieReviewDao().save(key, event);
+        writeOperations.deleteReview(key);
         ack.acknowledge();
     }
 }

@@ -9,12 +9,6 @@ import me.mzalietin.mdbproject.movie.domain.model.ResourceNotFoundException;
 
 public interface MovieDataAccess {
 
-    Optional<Movie> findMovie(String movieName);
-
-    List<Movie> findTopMoviesByRating(Integer limit);
-
-    List<Movie> findByIds(List<String> movieIds);
-
     Movie createMovie(String name, LocalDate releaseDate);
 
     void updateRatingInfo(String movieId, BigDecimal rating, Integer reviewsCount) throws ResourceNotFoundException;

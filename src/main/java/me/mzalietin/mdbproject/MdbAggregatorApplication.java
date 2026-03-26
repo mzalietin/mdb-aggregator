@@ -2,12 +2,11 @@ package me.mzalietin.mdbproject;
 
 import static org.springframework.boot.Banner.Mode.OFF;
 
-import me.mzalietin.mdbproject.query.QueryServiceConfig;
+import me.mzalietin.mdbproject.queryservice.QueryServiceConfig;
 import me.mzalietin.mdbproject.movie.MovieContextConfig;
 import me.mzalietin.mdbproject.movierating.MovieRatingAggregatorConfig;
 import me.mzalietin.mdbproject.moviereview.MovieReviewContextConfig;
 import me.mzalietin.mdbproject.user.UserContextConfig;
-import org.springframework.boot.Banner;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;

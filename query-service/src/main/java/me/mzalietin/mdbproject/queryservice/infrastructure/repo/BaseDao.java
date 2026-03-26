@@ -1,4 +1,4 @@
-package me.mzalietin.mdbproject.query.repo;
+package me.mzalietin.mdbproject.queryservice.infrastructure.repo;
 
 import io.r2dbc.spi.Connection;
 import io.r2dbc.spi.Result;

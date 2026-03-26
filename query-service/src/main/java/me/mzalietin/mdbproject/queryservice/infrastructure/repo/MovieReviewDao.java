@@ -1,10 +1,10 @@
-package me.mzalietin.mdbproject.query.repo;
+package me.mzalietin.mdbproject.queryservice.infrastructure.repo;
 
 import java.time.Duration;
-import me.mzalietin.mdbproject.query.broker.event.ReviewCreated;
-import me.mzalietin.mdbproject.query.broker.event.ReviewDeleted;
-import me.mzalietin.mdbproject.query.broker.event.ReviewKey;
-import me.mzalietin.mdbproject.query.broker.event.ReviewUpdated;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewCreated;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewDeleted;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewKey;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewUpdated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ public class MovieReviewDao extends BaseDao {
             .block(Duration.ofMillis(1000));
     }
 
-    public void save(ReviewKey key, ReviewDeleted event) {
+    public void delete(ReviewKey key) {
         databaseClient.sql("delete from movie_review_projection where username=$1 and movie_id=$2")
             .bind("$1", key.username())
             .bind("$2", key.movieId())

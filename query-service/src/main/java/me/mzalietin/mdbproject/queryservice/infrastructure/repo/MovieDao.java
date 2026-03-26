@@ -1,11 +1,15 @@
-package me.mzalietin.mdbproject.query.repo;
+package me.mzalietin.mdbproject.queryservice.infrastructure.repo;
 
+import java.math.BigDecimal;
 import java.time.Duration;
-import me.mzalietin.mdbproject.query.broker.event.MovieCreated;
-import me.mzalietin.mdbproject.query.broker.event.MovieRatingUpdated;
+import me.mzalietin.mdbproject.queryservice.domain.model.Movie;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieCreated;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieRatingUpdated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Component
 public class MovieDao extends BaseDao {
@@ -13,6 +17,20 @@ public class MovieDao extends BaseDao {
     @Autowired
     public MovieDao(final DatabaseClient databaseClient) {
         super(databaseClient);
+    }
+
+    public Mono<BigDecimal> ratingByName(String name) {
+        return databaseClient.sql("select avg_rating from movie_projection where name=$1")
+            .bind("$1", name)
+            .mapValue(BigDecimal.class)
+            .first();
+    }
+
+    public Flux<Movie> topByRating(Integer limit) {
+        return databaseClient.sql("select * from movie_projection order by avg_rating desc limit $1")
+            .bind("$1", limit)
+            .mapProperties(Movie.class)
+            .all();
     }
 
     public void save(String id, MovieCreated createdEvent) {

@@ -1,8 +1,8 @@
-package me.mzalietin.mdbproject.query.broker;
+package me.mzalietin.mdbproject.queryservice.infrastructure.broker;
 
-import me.mzalietin.mdbproject.query.broker.event.MovieCreated;
-import me.mzalietin.mdbproject.query.broker.event.MovieRatingUpdated;
-import me.mzalietin.mdbproject.query.repo.QueryServiceDaoFacade;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieCreated;
+import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieRatingUpdated;
+import me.mzalietin.mdbproject.queryservice.domain.service.spi.WriteOperations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +26,19 @@ public class MovieEventListener {
     private static final Logger logger = LoggerFactory.getLogger(MovieEventListener.class);
 
     @Autowired
-    QueryServiceDaoFacade queryServiceDaoFacade;
+    WriteOperations writeOperations;
 
     @KafkaHandler
     public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieCreated event, Acknowledgment ack) {
         logger.info("Received event for movieId={} event={}", movieId, event);
-        queryServiceDaoFacade.movieDao().save(movieId, event);
+        writeOperations.createMovie(movieId, event);
         ack.acknowledge();
     }
 
     @KafkaHandler
     public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieRatingUpdated event, Acknowledgment ack) {
         logger.info("Received event for movieId={} event={}", movieId, event);
-        queryServiceDaoFacade.movieDao().save(movieId, event);
+        writeOperations.updateMovie(movieId, event);
         ack.acknowledge();
     }
 }
