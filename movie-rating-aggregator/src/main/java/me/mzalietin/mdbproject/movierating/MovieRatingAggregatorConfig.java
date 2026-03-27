@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import me.mzalietin.mdbproject.movierating.event.in.MovieRatingEvent;
 import me.mzalietin.mdbproject.movierating.event.in.MovieReviewKey;
-import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
@@ -28,7 +27,6 @@ import org.springframework.kafka.annotation.EnableKafkaStreams;
 import org.springframework.kafka.annotation.KafkaStreamsDefaultConfiguration;
 import org.springframework.kafka.config.KafkaStreamsConfiguration;
 import org.springframework.kafka.config.TopicBuilder;
-import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.listener.ConsumerRecordRecoverer;
 import org.springframework.kafka.streams.RecoveringDeserializationExceptionHandler;
 import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
@@ -104,13 +102,6 @@ public class MovieRatingAggregatorConfig {
     }
 
     // -------- NON PROD CONFIG --------
-
-    @Bean
-    public KafkaAdmin admin() {
-        Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost);
-        return new KafkaAdmin(configs);
-    }
 
     @Bean
     public NewTopic ratingOutputTopic() {

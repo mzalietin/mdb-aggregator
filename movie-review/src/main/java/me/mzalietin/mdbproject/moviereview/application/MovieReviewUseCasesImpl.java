@@ -1,7 +1,6 @@
 package me.mzalietin.mdbproject.moviereview.application;
 
 import java.util.Collection;
-import java.util.List;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.service.spi.EventStore;

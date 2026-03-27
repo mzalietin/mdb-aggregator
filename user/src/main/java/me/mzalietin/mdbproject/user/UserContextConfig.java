@@ -14,15 +14,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @ComponentScan
-@EnableAutoConfiguration(excludeName = {
-    "org.springframework.boot.r2dbc.autoconfigure.R2dbcAutoConfiguration",
-    "org.springframework.boot.r2dbc.autoconfigure.R2dbcInitializationAutoConfiguration",
-    "org.springframework.boot.r2dbc.autoconfigure.R2dbcProxyAutoConfiguration",
-    "org.springframework.boot.r2dbc.autoconfigure.R2dbcTransactionManagerAutoConfiguration",
-    "org.springframework.boot.r2dbc.autoconfigure.health.ConnectionFactoryHealthContributorAutoConfiguration",
-    "org.springframework.boot.r2dbc.autoconfigure.metrics.ConnectionPoolMetricsAutoConfiguration",
-    "org.springframework.boot.r2dbc.autoconfigure.observation.R2dbcObservationAutoConfiguration"
-})
+@EnableAutoConfiguration
 @EnableKafka
 @Configuration
 @PropertySource("classpath:user-context.properties")
@@ -40,9 +32,6 @@ public class UserContextConfig {
 
     @Bean
     public NewTopic eventsTopic() throws Exception {
-        //        try (AdminClient client = AdminClient.create(kafkaAdmin.getConfigurationProperties())) {
-        //            client.deleteTopics(List.of(eventsTopic)).all().get();
-        //        }
         return TopicBuilder.name(eventsTopic)
             .partitions(1)
             .replicas(1)

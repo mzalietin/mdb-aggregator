@@ -39,7 +39,7 @@ public class QueryApi {
         return readOperations.userInfo(username);
     }
 
-    @GetMapping(path = "/users/{username}/top/{limit}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/movie-reviews/{username}/top/{limit}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ListResponse<MovieWithUserRating>> topByUser(@PathVariable("username") String username, @PathVariable("limit") Integer limit) {
         return readOperations.topByUser(username, limit)
             .reduce(new ListResponse<>(new ArrayList<>()), reducer());

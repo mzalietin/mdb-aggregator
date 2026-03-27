@@ -2,8 +2,6 @@ package me.mzalietin.mdbproject.movie.domain.service.spi;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 import me.mzalietin.mdbproject.movie.domain.model.Movie;
 import me.mzalietin.mdbproject.movie.domain.model.ResourceNotFoundException;
 
