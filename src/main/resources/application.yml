@@ -1,12 +1,12 @@
+kafka:
+    host: localhost:9092
+
+postgres:
+    host: localhost:5432
+
 spring:
     application:
         name: mdb-aggregator
-
-kafka:
-    host: ${kafka.host.override:localhost:9092}
-
-postgres:
-    host: ${postgres.host.override:localhost:5432}
 
 server:
     servlet:

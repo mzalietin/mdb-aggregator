@@ -36,6 +36,12 @@ services:
             KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
             KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
             KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+        healthcheck:
+            test: nc -z localhost 9092 || exit -1
+            start_period: 15s
+            interval: 5s
+            timeout: 10s
+            retries: 10
 
     kafka-ui:
         container_name: kafka-ui
@@ -43,7 +49,8 @@ services:
         ports:
             - "9090:9090"
         depends_on:
-            - kafka0
+            kafka0:
+                condition: service_healthy
         environment:
             SERVER_PORT: 9090
             KAFKA_CLUSTERS_0_NAME: local
@@ -61,5 +68,7 @@ services:
             - "8083:8083" # User API
             - "8084:8084" # Query API
         depends_on:
-            - kafka0
-            - postgres
+            kafka0:
+                condition: service_healthy
+            postgres:
+                condition: service_started

@@ -1,11 +1,7 @@
 package me.mzalietin.mdbproject.movie;
 
 import jakarta.persistence.EntityManagerFactory;
-import java.util.HashMap;
-import java.util.Map;
 import me.mzalietin.mdbproject.movie.domain.model.ResourceNotFoundException;
-import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.TopicBuilder;
-import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
 import org.springframework.kafka.listener.DefaultErrorHandler;
@@ -40,12 +34,6 @@ public class MovieContextConfig {
 
     @Value("${movie.context.kafka.dlt}")
     String movieContextKafkaDlt;
-
-    @Value("${movie.context.kafka.out.events-topic}")
-    String eventsOutputTopic;
-
-    @Value("${kafka.host}")
-    String kafkaHost;
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
@@ -71,27 +59,5 @@ public class MovieContextConfig {
                 logger.error("Record topic {}, offset {} failed with exception", record.topic(), record.offset(), ex);
                 return new TopicPartition(movieContextKafkaDlt, -1);
             });
-    }
-
-    // -------- NON PROD CONFIG --------
-
-    @Bean
-    public KafkaAdmin admin() {
-        Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost);
-        KafkaAdmin admin = new KafkaAdmin(configs);
-        admin.createOrModifyTopics(
-            TopicBuilder.name(eventsOutputTopic)
-                .partitions(1)
-                .replicas(1)
-                .compact()
-                .build(),
-            TopicBuilder.name(movieContextKafkaDlt)
-                .partitions(1)
-                .replicas(1)
-                .compact()
-                .build()
-        );
-        return admin;
     }
 }
