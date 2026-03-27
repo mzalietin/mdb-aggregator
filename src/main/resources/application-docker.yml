@@ -1,0 +1,7 @@
+kafka:
+    host:
+        override: kafka0:9092
+
+postgres:
+    host:
+        override: postgres:5432

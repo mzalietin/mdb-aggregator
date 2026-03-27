@@ -1,5 +1,5 @@
 services:
-    database:
+    postgres:
         image: postgres:15.17-alpine
         restart: always
         shm_size: 128mb
@@ -52,9 +52,14 @@ services:
             DYNAMIC_CONFIG_ENABLED: 'true'
 
     aggregator-service:
-        image: mzalietin/mdb-aggregator:latest
+        container_name: mdb-aggregator
+        hostname: mdb-aggregator
+        image: mzalietin/mdb-aggregator:0.0.1
         ports:
             - "8081:8081" # Movie API
             - "8082:8082" # Movie Review API
             - "8083:8083" # User API
             - "8084:8084" # Query API
+        depends_on:
+            - kafka0
+            - postgres

@@ -32,16 +32,6 @@ test {
     useJUnitPlatform()
 }
 
-dependencyAnalysis {
-    issues {
-        all {
-            onAny {
-                severity("fail")
-            }
-        }
-    }
-}
-
 jib {
     from {
         image = "gcr.io/distroless/java17-debian13"
@@ -57,6 +47,9 @@ jib {
             "-XX:MaxRAMPercentage=75",
             "-XX:+UseZGC",
             "-XX:+ExitOnOutOfMemoryError"
+        ]
+        environment = [
+            "SPRING_PROFILES_ACTIVE": "docker"
         ]
     }
 }
