@@ -50,3 +50,11 @@ services:
             KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092
             KAFKA_CLUSTERS_0_METRICS_PORT: 9997
             DYNAMIC_CONFIG_ENABLED: 'true'
+
+    aggregator-service:
+        image: mzalietin/mdb-aggregator:latest
+        ports:
+            - "8081:8081" # Movie API
+            - "8082:8082" # Movie Review API
+            - "8083:8083" # User API
+            - "8084:8084" # Query API
