@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import me.mzalietin.mdbproject.movierating.event.in.MovieRatingEvent;
 import me.mzalietin.mdbproject.movierating.event.in.MovieReviewKey;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.EnableKafkaStreams;
 import org.springframework.kafka.annotation.KafkaStreamsDefaultConfiguration;
 import org.springframework.kafka.config.KafkaStreamsConfiguration;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.listener.ConsumerRecordRecoverer;
 import org.springframework.kafka.streams.RecoveringDeserializationExceptionHandler;
 import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
@@ -46,6 +48,9 @@ public class MovieRatingAggregatorConfig {
 
     @Value("${movie-rating-aggregator.kafka.commit-interval-ms}")
     Integer commitInterval;
+
+    @Value("${movie-rating-aggregator.kafka.output-topic}")
+    String outputTopic;
 
     private static final Logger logger = LoggerFactory.getLogger(MovieRatingAggregatorConfig.class);
 
@@ -94,5 +99,16 @@ public class MovieRatingAggregatorConfig {
     @Bean
     public LocalValidatorFactoryBean validator() {
         return new LocalValidatorFactoryBean();
+    }
+
+    // non Prod config
+
+    @Bean
+    public NewTopic outputTopic() {
+        return TopicBuilder.name(outputTopic)
+            .partitions(1)
+            .replicas(1)
+            .compact()
+            .build();
     }
 }

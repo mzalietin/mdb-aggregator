@@ -2,6 +2,7 @@ package me.mzalietin.mdbproject.movie;
 
 import jakarta.persistence.EntityManagerFactory;
 import me.mzalietin.mdbproject.movie.domain.model.ResourceNotFoundException;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
 import org.springframework.kafka.listener.DefaultErrorHandler;
@@ -34,6 +36,9 @@ public class MovieContextConfig {
 
     @Value("${movie.context.kafka.dlt}")
     String movieContextKafkaDlt;
+
+    @Value("${movie.context.kafka.out.events-topic}")
+    String eventsTopic;
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
@@ -59,5 +64,25 @@ public class MovieContextConfig {
                 logger.error("Record topic {}, offset {} failed with exception", record.topic(), record.offset(), ex);
                 return new TopicPartition(movieContextKafkaDlt, -1);
             });
+    }
+
+    // non Prod config
+
+    @Bean
+    public NewTopic eventsTopic() {
+        return TopicBuilder.name(eventsTopic)
+            .partitions(1)
+            .replicas(1)
+            .compact()
+            .build();
+    }
+
+    @Bean
+    public NewTopic deadLetterTopic() {
+        return TopicBuilder.name(movieContextKafkaDlt)
+            .partitions(1)
+            .replicas(1)
+            .compact()
+            .build();
     }
 }

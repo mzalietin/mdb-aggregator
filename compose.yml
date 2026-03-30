@@ -58,6 +58,8 @@ services:
             KAFKA_CLUSTERS_0_METRICS_PORT: 9997
             DYNAMIC_CONFIG_ENABLED: 'true'
 
+    # CREATE SEPARATE COMPOSE RUNNER AND MOVE SERVICES THERE
+
     aggregator-service:
         container_name: mdb-aggregator
         hostname: mdb-aggregator
@@ -71,4 +73,14 @@ services:
             kafka0:
                 condition: service_healthy
             postgres:
+                condition: service_started
+
+    gateway-service:
+        container_name: mdb-gateway
+        hostname: mdb-gateway
+        image: mzalietin/mdb-gateway:0.0.1
+        ports:
+            - "8080:8080"
+        depends_on:
+            aggregator-service:
                 condition: service_started

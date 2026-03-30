@@ -20,7 +20,6 @@ repositories {
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter:${spring_boot_version}"
-    implementation "org.apache.kafka:kafka-clients:4.2.0"
 
     implementation project(':movie')
     implementation project(':user')
@@ -42,7 +41,7 @@ jib {
     }
     container {
         user = "nonroot"
-        ports = ["8080"]
+        ports = ["8081","8082","8083","8084"]
         jvmFlags = [
             "-XX:+UseContainerSupport",
             "-XX:MaxRAMPercentage=75",

@@ -51,6 +51,8 @@ Prerequisites: Java 17
 
 ### Build Docker image
 
+Prerequisites: Docker environment
+
 `./gradlew clean build jibDockerBuild`
 
 ### Run
