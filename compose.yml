@@ -36,6 +36,7 @@ services:
             KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
             KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
             KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+            KAFKA_HEAP_OPTS: "-Xms2g -Xmx2g"
         healthcheck:
             test: nc -z localhost 9092 || exit -1
             start_period: 15s
@@ -84,3 +85,10 @@ services:
         depends_on:
             aggregator-service:
                 condition: service_started
+
+    k6:
+       image: grafana/k6:1.7.0
+       container_name: k6
+       volumes:
+           - ./scripts/k6:/scripts
+       command: run /scripts/load-script.js
