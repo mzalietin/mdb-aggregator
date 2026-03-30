@@ -1,3 +1,6 @@
+# THIS IS INFRASTRUCTURE ONLY DOCKER COMPOSE
+# FOR A FULL COMPOSE FILE WITH CONTAINERIZED SERVICES REFER TO 'mdb-demo' REPOSITORY
+
 services:
     postgres:
         image: postgres:15.17-alpine
@@ -58,37 +61,3 @@ services:
             KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092
             KAFKA_CLUSTERS_0_METRICS_PORT: 9997
             DYNAMIC_CONFIG_ENABLED: 'true'
-
-    # CREATE SEPARATE COMPOSE RUNNER AND MOVE SERVICES THERE
-
-    aggregator-service:
-        container_name: mdb-aggregator
-        hostname: mdb-aggregator
-        image: mzalietin/mdb-aggregator:0.0.1
-        ports:
-            - "8081:8081" # Movie API
-            - "8082:8082" # Movie Review API
-            - "8083:8083" # User API
-            - "8084:8084" # Query API
-        depends_on:
-            kafka0:
-                condition: service_healthy
-            postgres:
-                condition: service_started
-
-    gateway-service:
-        container_name: mdb-gateway
-        hostname: mdb-gateway
-        image: mzalietin/mdb-gateway:0.0.1
-        ports:
-            - "8080:8080"
-        depends_on:
-            aggregator-service:
-                condition: service_started
-
-    k6:
-       image: grafana/k6:1.7.0
-       container_name: k6
-       volumes:
-           - ./scripts/k6:/scripts
-       command: run /scripts/load-script.js

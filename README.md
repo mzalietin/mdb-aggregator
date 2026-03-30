@@ -1,10 +1,10 @@
 # MovieDB backend
 
-## Component description
+## Component
 
-MovieDB - Aggregator Service
+### MovieDB - Aggregator Service
 
-## Task description
+## Task
 
 Application that stores info about movies, users and their reviews.
 
