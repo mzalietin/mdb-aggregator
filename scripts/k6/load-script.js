@@ -6,13 +6,20 @@ import { SharedArray } from 'k6/data';
 export const options = {
   scenarios: {
     load_test: {
-      executor: 'ramping-vus',
-      startVUs: 0,
+      executor: 'ramping-arrival-rate',
+      startRate: 0,
+      timeUnit: '1s',
+      preAllocatedVUs: 20,
+      maxVUs: 100,
       stages: [
-        { duration: '30s', target: 10 },
-        { duration: '1m', target: 20 },
-        { duration: '1m', target: 40 },
-        { duration: '10s', target: 0 },
+        { duration: '30s', target: 50 },
+        { duration: '1m', target: 150 },
+        { duration: '1m', target: 250 },
+        { duration: '1m', target: 400 },
+        { duration: '1m', target: 600 },
+        { duration: '1m', target: 800 },
+        { duration: '30s', target: 1000 },
+        { duration: '10s', target: 10 },
       ],
     },
   },
@@ -29,9 +36,6 @@ const movieIds = new SharedArray('movie IDs', function () {
     .split('\r\n')
     //.slice(1) // skip header
     .filter(line => line.trim() !== '')
-    .map(line => {
-      return line;
-    });
 });
 
 // ---- HELPERS ----
