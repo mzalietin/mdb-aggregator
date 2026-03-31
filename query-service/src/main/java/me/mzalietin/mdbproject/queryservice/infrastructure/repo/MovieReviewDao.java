@@ -21,7 +21,7 @@ public class MovieReviewDao extends BaseDao {
     }
 
     public void save(ReviewKey key, ReviewCreated event) {
-        databaseClient.sql("insert into movie_review_projection(username,movie_id,rating) values($1,$2,$3)")
+        databaseClient.sql("insert into movie_review_projection(username,movie_id,rating) values($1,$2,$3) on conflict do nothing")
             .bind("$1", key.username())
             .bind("$2", key.movieId())
             .bind("$3", event.rating())

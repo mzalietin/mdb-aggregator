@@ -24,7 +24,7 @@ public class UserDao extends BaseDao {
     }
 
     public void save(String username, UserCreated event) {
-        databaseClient.sql("insert into user_projection(username,first_name,last_name,age) values($1,$2,$3,$4)")
+        databaseClient.sql("insert into user_projection(username,first_name,last_name,age) values($1,$2,$3,$4) on conflict do nothing")
             .bind("$1", username)
             .bind("$2", event.firstName())
             .bind("$3", event.lastName())

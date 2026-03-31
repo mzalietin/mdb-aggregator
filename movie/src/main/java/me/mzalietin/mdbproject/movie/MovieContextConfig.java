@@ -1,7 +1,6 @@
 package me.mzalietin.mdbproject.movie;
 
 import jakarta.persistence.EntityManagerFactory;
-import me.mzalietin.mdbproject.movie.domain.model.ResourceNotFoundException;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
@@ -53,7 +52,6 @@ public class MovieContextConfig {
         bo.setMaxInterval(1000);
         DefaultErrorHandler handler = new DefaultErrorHandler(recoverer(), bo);
         handler.setCommitRecovered(true);
-        handler.addNotRetryableExceptions(ResourceNotFoundException.class);
         return handler;
     }
 

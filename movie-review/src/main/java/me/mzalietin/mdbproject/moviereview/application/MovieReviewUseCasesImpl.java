@@ -45,7 +45,9 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
     @Transactional("transactionManager")
     public void deleteAllForUser(final String username) {
         final Collection<MovieReview> forRemoval = dataAccess.findForUpdate(username);
-        eventStore.sendDeleted(forRemoval);
-        dataAccess.delete(forRemoval);
+        if (!forRemoval.isEmpty()) {
+            eventStore.sendDeleted(forRemoval);
+            dataAccess.delete(forRemoval);
+        }
     }
 }
