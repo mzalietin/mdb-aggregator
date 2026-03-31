@@ -78,7 +78,7 @@ Acknowledged but unaddressed concerns:
 
 ## Architectural diagram
 
-TODO
+![Alt text of the image](https://github.com/mzalietin/mdb-demo/blob/2bc910ca8fd9d656ca6ce7d569f63c5c76642277/diagram/mdb-backend.jpg)
 
 ## REST API
 
