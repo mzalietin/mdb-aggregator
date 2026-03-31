@@ -1,10 +1,12 @@
 # MovieDB backend
 
-## Component
+Application that stores info about movies, users and their reviews.
 
-### MovieDB - Aggregator Service
+# Component
 
-## Task
+## MovieDB - Aggregator Service
+
+# Task
 
 Application that stores info about movies, users and their reviews.
 
@@ -41,24 +43,65 @@ Customer requirements:
 
 </details>
 
-## Build
+# Design
 
-### Default build & test
+This application is a modular monolith that implements **Saga pattern with Event-Sourcing**.
+
+The design addresses following concerns:
++ **Command-Query Responsibility Segregation (CQRS)** - aggregates which handle commands (`movie`, `movie-review`, `user`) are separated from read projection (`query-service`)
++ **Replay capability** - projection (`query-service`) can be rebuilt from event store (Kafka)
++ **Idempotent consumers** - consumers (`movie`, `movie-review`, `query-service`) are configured to handle duplicate messages in a fail-safe manner, but aim to leverage Kafka's Exactly-Once Semantics
+
+Acknowledged but unaddressed concerns:
++ **Transactional Outbox Pattern** - would avoid dual write problem (synchronous DB + Kafka write) with potential lost events
++ **Snapshots** - avoid replaying millions of events
++ **Security**
++ **Observability**
++ **CI/CD**
++ **Unit/Integration test coverage**
++ etc. due to timebox constraints
+
+## Tech stack
+
++ Java 17
++ Spring Boot Framework
+  + Spring Web / WebFlux
+  + Spring Data JPA
+  + Spring Data R2DBC
+  + Spring Kafka
+  + Spring Validation
++ Gradle
++ PostgreSQL
++ Apache Kafka (Broker & Stream Processing)
++ JUnit, ArchUnit
++ Grafana K6 for quick load testing
+
+## Architectural diagram
+
+TODO
+
+## REST API
+
+TODO
+
+# Build
+
+## Default build & test
 
 Prerequisites: Java 17
 
 `./gradlew clean build`
 
-### Build Docker image
+## Build Docker image
 
 Prerequisites: Docker environment
 
 `./gradlew clean build jibDockerBuild`
 
-### Run
+## Run
 
 `java -jar build/libs/mdb-aggregator-0.0.1.jar`
 
-### Debug
+## Debug
 
 `java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar build/libs/mdb-aggregator-0.0.1.jar`
