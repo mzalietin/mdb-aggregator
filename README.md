@@ -45,6 +45,9 @@ Customer requirements:
 
 # Design
 
+<details>
+  <summary>Click to expand</summary>
+
 This application is a modular monolith that implements **Saga pattern with Event-Sourcing**.
 
 The design addresses following concerns:
@@ -61,44 +64,69 @@ Acknowledged but unaddressed concerns:
 + **Unit/Integration test coverage**
 + etc. due to timebox constraints
 
+</details>
+
+## Architectural diagram
+
+<details>
+  <summary>Click to expand</summary>
+
+![Alt text of the image](https://github.com/mzalietin/mdb-demo/blob/2bc910ca8fd9d656ca6ce7d569f63c5c76642277/diagram/mdb-backend.jpg)
+
+</details>
+
+## REST API
+
+| Desc                        | Method | URL                                                              | Body                                                                              |
+|-----------------------------|:------:|:-----------------------------------------------------------------|:----------------------------------------------------------------------------------|
+| create movie                |  POST  | `http://localhost:8081/api/movies`                               | {"name":"string","releaseDate":"yyyy-mm-dd"}                                      |
+| create review               |  POST  | `http://localhost:8082/api/movie-reviews`                        | {"movieId":"string","username":"string","rating":"int [1-10]","comment":"string"} |
+| update review               |  PUT   | `http://localhost:8082/api/movie-reviews`                        | {"movieId":"string","username":"string","rating":"int [1-10]","comment":"string"} |
+| delete review               | DELETE | `http://localhost:8082/api/movie-reviews`                        | {"movieId":"string","username":"string"}                                          |
+| create user                 |  POST  | `http://localhost:8083/api/users`                                | {"username":"string","firstName":"string","lastName":"string","age":"int"}        |
+| delete user                 | DELETE | `http://localhost:8083/api/users/{username}`                     |                                                                                   |
+| movie rating by name        |  GET   | `http://localhost:8084/api/movies/rating?name={movieName}`       |                                                                                   |
+| top movies by avg rating    |  GET   | `http://localhost:8084/api/movies/top/{limit}`                   |                                                                                   |
+| top movies by user's rating |  GET   | `http://localhost:8084/api/movie-reviews/{username}/top/{limit}` |                                                                                   |
+| user info by username       |  GET   | `http://localhost:8084/api/users/{username}`                     |                                                                                   |
+
 ## Tech stack
 
 + Java 17
 + Spring Boot Framework
-  + Spring Web / WebFlux
-  + Spring Data JPA
-  + Spring Data R2DBC
-  + Spring Kafka
-  + Spring Validation
+    + Spring Web / WebFlux
+    + Spring Data JPA
+    + Spring Data R2DBC
+    + Spring Kafka
+    + Spring Validation
 + Gradle
 + PostgreSQL
 + Apache Kafka (Broker & Stream Processing)
 + JUnit, ArchUnit
 + Grafana K6 for quick load testing
 
-## Architectural diagram
-
-![Alt text of the image](https://github.com/mzalietin/mdb-demo/blob/2bc910ca8fd9d656ca6ce7d569f63c5c76642277/diagram/mdb-backend.jpg)
-
-## REST API
-
-TODO
-
 # Build
 
 ## Default build & test
 
-Prerequisites: Java 17
+Environment:
++ Java 17
 
 `./gradlew clean build`
 
 ## Build Docker image
 
-Prerequisites: Docker environment
+Environment:
++ Docker
 
 `./gradlew clean build jibDockerBuild`
 
 ## Run
+
+Environment:
++ Java 17
++ PostgreSQL on `localhost:5432`
++ Kafka on `localhost:9092`
 
 `java -jar build/libs/mdb-aggregator-0.0.1.jar`
 
