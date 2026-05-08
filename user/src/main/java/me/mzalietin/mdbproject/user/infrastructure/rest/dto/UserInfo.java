@@ -13,8 +13,4 @@ public record UserInfo(
     public User toModel() {
         return new User(username, firstName, lastName, age);
     }
-
-    public UserInfo(User model) {
-        this(model.username(), model.firstName(), model.firstName(), model.age());
-    }
 }
