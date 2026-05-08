@@ -3,8 +3,8 @@ package me.mzalietin.mdbproject.moviereview.infrastructure.rest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import me.mzalietin.mdbproject.moviereview.application.MovieReviewUseCases;
-import me.mzalietin.mdbproject.moviereview.infrastructure.rest.dto.CreateReview;
-import me.mzalietin.mdbproject.moviereview.infrastructure.rest.dto.UpdateReview;
+import me.mzalietin.mdbproject.moviereview.infrastructure.rest.dto.rq.CreateReview;
+import me.mzalietin.mdbproject.moviereview.infrastructure.rest.dto.rq.UpdateReview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,19 +28,18 @@ public class MovieReviewApi {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createReview(@RequestBody @Valid CreateReview review) {
-        reviewUseCases.create(review.toModel());
-
+    public String createReview(@RequestBody @Valid CreateReview review) {
+        return reviewUseCases.create(review.toModel());
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateReview(@PathVariable("id") @NotNull Long id, @RequestBody @Valid UpdateReview update) {
+    public void updateReview(@PathVariable("id") @NotNull String id, @RequestBody @Valid UpdateReview update) {
         reviewUseCases.update(id, update.rating(), update.comment());
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteReview(@PathVariable("id") @NotNull Long id) {
+    public void deleteReview(@PathVariable("id") @NotNull String id) {
         reviewUseCases.delete(id);
     }
 }

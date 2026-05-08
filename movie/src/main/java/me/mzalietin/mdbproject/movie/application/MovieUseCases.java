@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public interface MovieUseCases {
 
-    String create(String name, LocalDate releaseDate);
+    Long create(String name, LocalDate releaseDate);
 
     void updateRating(String id, BigDecimal newRating, Integer newReviewsCount);
 }

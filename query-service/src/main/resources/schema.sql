@@ -6,15 +6,15 @@ CREATE TABLE IF NOT EXISTS user_projection (
 );
 
 CREATE TABLE IF NOT EXISTS movie_projection (
-    id VARCHAR(255) PRIMARY KEY,
+    id bigint PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     avg_rating DECIMAL NOT NULL,
     reviews_count INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS movie_review_projection (
-    id bigint PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
-    movie_id VARCHAR(50) NOT NULL,
+    id VARCHAR(255) PRIMARY KEY,
+    username VARCHAR(30) NOT NULL,
+    movie_id bigint NOT NULL,
     rating INT NOT NULL
 );

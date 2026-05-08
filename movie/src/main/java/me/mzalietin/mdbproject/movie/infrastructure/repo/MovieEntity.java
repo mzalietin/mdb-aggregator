@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,9 +24,14 @@ import me.mzalietin.mdbproject.movie.domain.model.Movie;
 @AllArgsConstructor
 public class MovieEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_id_seq")
+    @SequenceGenerator(
+        name = "movie_id_seq",
+        sequenceName = "movie_id_seq",
+        allocationSize = 1
+    )
     @Column(name = "id")
-    private String id;
+    private Long id;
 
     @Column(name = "name", length = 100, nullable = false)
     private String name;

@@ -6,11 +6,11 @@ import me.mzalietin.mdbproject.moviereview.domain.model.ResourceNotFoundExceptio
 
 public interface MovieReviewUseCases {
 
-    void create(MovieReview review) throws ResourceAlreadyExistsException;;
+    String create(MovieReview review) throws ResourceAlreadyExistsException;
 
-    void update(Long id, Integer newRating, String newComment) throws ResourceNotFoundException;
+    void update(String id, Integer newRating, String newComment) throws ResourceNotFoundException;
 
-    void delete(Long id) throws ResourceNotFoundException;;
+    void delete(String id) throws ResourceNotFoundException;;
 
     void deleteAllForUser(String username);
 }

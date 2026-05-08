@@ -1,4 +1,4 @@
-package me.mzalietin.mdbproject.moviereview.infrastructure.rest.dto;
+package me.mzalietin.mdbproject.moviereview.infrastructure.rest.dto.rq;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

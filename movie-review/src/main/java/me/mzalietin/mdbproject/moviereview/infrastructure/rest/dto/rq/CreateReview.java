@@ -1,4 +1,4 @@
-package me.mzalietin.mdbproject.moviereview.infrastructure.rest.dto;
+package me.mzalietin.mdbproject.moviereview.infrastructure.rest.dto.rq;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public record CreateReview(
     @NotNull String username,
-    @NotNull String movieId,
+    @NotNull Long movieId,
     @NotNull @Min(1) @Max(10) Integer rating,
     @NotNull @Size(max = 5000) String comment
 ) {

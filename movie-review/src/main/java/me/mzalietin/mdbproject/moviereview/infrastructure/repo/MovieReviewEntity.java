@@ -15,13 +15,13 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 public class MovieReviewEntity {
     @Id
-    private Long id;
+    private String id;
     private String username;
-    private String movieId;
+    private Long movieId;
     private Integer rating;
     private String comment;
 
-    public MovieReviewEntity(Long id, MovieReview movieReview) {
+    public MovieReviewEntity(String id, MovieReview movieReview) {
         this.id = id;
         this.username = movieReview.username();
         this.movieId = movieReview.movieId();

@@ -19,7 +19,7 @@ public class MovieUseCasesImpl implements MovieUseCases {
 
     @Override
     @Transactional("transactionManager")
-    public String create(final String name, final LocalDate releaseDate) {
+    public Long create(final String name, final LocalDate releaseDate) {
         var newMovie = movieDataAccess.createMovie(name, releaseDate);
         eventStore.sendCreated(newMovie);
         return newMovie.id();

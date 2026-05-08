@@ -23,26 +23,27 @@ public class KafkaEventStore implements EventStore {
 
     @Override
     public void sendCreated(final MovieReview r) {
-        kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()), new MovieReviewCreated(r.rating(), r.comment()));
+        //todo
+        //kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()), new MovieReviewCreated(r.rating(), r.comment()));
     }
 
     @Override
     public void sendUpdated(final MovieReview old, final MovieReview r) {
-        kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
-            new MovieReviewUpdated(old.rating(), old.comment(), r.rating(), r.comment()));
+//        kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
+//            new MovieReviewUpdated(old.rating(), old.comment(), r.rating(), r.comment()));
     }
 
     @Override
     public void sendDeleted(final MovieReview r) {
-        kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
-            new MovieReviewDeleted(r.rating(), r.comment()));
+//        kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
+//            new MovieReviewDeleted(r.rating(), r.comment()));
     }
 
     @Override
     public void sendDeleted(final Collection<MovieReview> deletedReviews) {
-        deletedReviews.forEach(r -> {
-            kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
-                new MovieReviewDeleted(r.rating(), r.comment()));
-        });
+//        deletedReviews.forEach(r -> {
+//            kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
+//                new MovieReviewDeleted(r.rating(), r.comment()));
+//        });
     }
 }

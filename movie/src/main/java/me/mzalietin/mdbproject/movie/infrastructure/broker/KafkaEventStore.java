@@ -21,7 +21,7 @@ public class KafkaEventStore implements EventStore {
 
     @Override
     public void sendCreated(final Movie movie) {
-        kafkaTemplate.send(eventsOutputTopic, movie.id(), new MovieCreated(movie.name(), movie.releaseDate(), movie.rating(),
+        kafkaTemplate.send(eventsOutputTopic, movie.id().toString(), new MovieCreated(movie.name(), movie.releaseDate(), movie.rating(),
             movie.reviewsCount()));
     }
 

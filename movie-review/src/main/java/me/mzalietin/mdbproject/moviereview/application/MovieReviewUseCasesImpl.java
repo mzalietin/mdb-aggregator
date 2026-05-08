@@ -19,14 +19,14 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
 
     @Override
     @Transactional("transactionManager")
-    public void create(final MovieReview review) {
+    public String create(final MovieReview review) {
         //eventStore.sendCreated(review);
-        dataAccess.create(review);
+        return dataAccess.create(review);
     }
 
     @Override
     @Transactional("transactionManager")
-    public void update(Long id, Integer newRating, String newComment) {
+    public void update(String id, Integer newRating, String newComment) {
         final MovieReview oldReview = dataAccess.findByIdIfExists(id);
         final MovieReview newReview = new MovieReview(oldReview.username(), oldReview.movieId(), newRating, newComment);
         //eventStore.sendUpdated(oldReview, newReview);
@@ -35,7 +35,7 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
 
     @Override
     @Transactional("transactionManager")
-    public void delete(final Long id) {
+    public void delete(final String id) {
         MovieReview review = dataAccess.findByIdIfExists(id);
         //eventStore.sendDeleted(review);
         dataAccess.delete(id);
@@ -44,7 +44,7 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
     @Override
     @Transactional("transactionManager")
     public void deleteAllForUser(final String username) {
-        final Map<Long, MovieReview> forRemoval = dataAccess.findByUser(username);
+        final Map<String, MovieReview> forRemoval = dataAccess.findByUser(username);
         if (!forRemoval.isEmpty()) {
             //eventStore.sendDeleted(forRemoval);
             dataAccess.delete(forRemoval.keySet());

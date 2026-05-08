@@ -35,7 +35,7 @@ public class MovieDao extends BaseDao {
 
     public void save(String id, MovieCreated createdEvent) {
         databaseClient.sql("insert into movie_projection(id,name,avg_rating,reviews_count) values($1,$2,$3,$4) on conflict do nothing")
-            .bind("$1", id)
+            .bind("$1", Long.valueOf(id))
             .bind("$2", createdEvent.name())
             .bind("$3", createdEvent.rating())
             .bind("$4", createdEvent.reviewsCount())

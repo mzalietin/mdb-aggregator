@@ -3,7 +3,6 @@ package me.mzalietin.mdbproject.movie.infrastructure.rest;
 import jakarta.validation.Valid;
 import me.mzalietin.mdbproject.movie.application.MovieUseCases;
 import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rq.NewMovie;
-import me.mzalietin.mdbproject.movie.infrastructure.rest.dto.rs.IdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,8 +23,7 @@ public class MovieApi {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public IdResponse createMovie(@RequestBody @Valid NewMovie newMovie) {
-        var movieId = movieUseCases.create(newMovie.name(), newMovie.releaseDate());
-        return new IdResponse(movieId);
+    public Long createMovie(@RequestBody @Valid NewMovie newMovie) {
+        return movieUseCases.create(newMovie.name(), newMovie.releaseDate());
     }
 }

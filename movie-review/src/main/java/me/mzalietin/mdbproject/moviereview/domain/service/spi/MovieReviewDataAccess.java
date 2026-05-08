@@ -14,7 +14,7 @@ public interface MovieReviewDataAccess {
      * @param review new data
      * @throws ResourceAlreadyExistsException if review already exists for given user and movie
      */
-    void create(MovieReview review) throws ResourceAlreadyExistsException;
+    String create(MovieReview review) throws ResourceAlreadyExistsException;
 
     /**
      * Update Movie Review.
@@ -22,18 +22,18 @@ public interface MovieReviewDataAccess {
      * @param id review ID
      * @param review updated (new) data
      */
-    void update(Long id, MovieReview review) throws ResourceNotFoundException;
+    void update(String id, MovieReview review) throws ResourceNotFoundException;
 
     /**
      * Remove Movie Review.
      *
      * @param id review ID
      */
-    void delete(Long id) throws ResourceNotFoundException;
+    void delete(String id) throws ResourceNotFoundException;
 
-    void delete(Collection<Long> ids);
+    void delete(Collection<String> ids);
 
-    MovieReview findByIdIfExists(Long id) throws ResourceNotFoundException;
+    MovieReview findByIdIfExists(String id) throws ResourceNotFoundException;
 
-    Map<Long, MovieReview> findByUser(String username);
+    Map<String, MovieReview> findByUser(String username);
 }
