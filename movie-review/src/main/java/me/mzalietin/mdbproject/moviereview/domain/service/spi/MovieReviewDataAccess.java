@@ -1,8 +1,8 @@
 package me.mzalietin.mdbproject.moviereview.domain.service.spi;
 
 import java.util.Collection;
+import java.util.Map;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
-import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceAlreadyExistsException;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceNotFoundException;
 
@@ -19,27 +19,21 @@ public interface MovieReviewDataAccess {
     /**
      * Update Movie Review.
      *
+     * @param id review ID
      * @param review updated (new) data
      */
-    void update(MovieReview review);
+    void update(Long id, MovieReview review) throws ResourceNotFoundException;
 
     /**
      * Remove Movie Review.
      *
-     * @param review review to delete
+     * @param id review ID
      */
-    void delete(MovieReview review);
+    void delete(Long id) throws ResourceNotFoundException;
 
-    /**
-     * Remove Movie Reviews.
-     *
-     * @param reviews reviews to delete
-     */
-    void delete(Collection<MovieReview> reviews);
+    void delete(Collection<Long> ids);
 
-    MovieReview findForUpdate(String username, String movieId) throws ResourceNotFoundException;
+    MovieReview findByIdIfExists(Long id) throws ResourceNotFoundException;
 
-    MovieReview findForUpdate(MovieReviewKey reviewKey) throws ResourceNotFoundException;
-
-    Collection<MovieReview> findForUpdate(String username);
+    Map<Long, MovieReview> findByUser(String username);
 }

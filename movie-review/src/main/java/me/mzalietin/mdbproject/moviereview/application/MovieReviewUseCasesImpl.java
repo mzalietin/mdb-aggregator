@@ -1,8 +1,7 @@
 package me.mzalietin.mdbproject.moviereview.application;
 
-import java.util.Collection;
+import java.util.Map;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
-import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.service.spi.EventStore;
 import me.mzalietin.mdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,33 +20,34 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
     @Override
     @Transactional("transactionManager")
     public void create(final MovieReview review) {
-        eventStore.sendCreated(review);
+        //eventStore.sendCreated(review);
         dataAccess.create(review);
     }
 
     @Override
     @Transactional("transactionManager")
-    public void update(final MovieReview newReview) {
-        final MovieReview oldReview = dataAccess.findForUpdate(newReview.username(), newReview.movieId());
-        eventStore.sendUpdated(oldReview, newReview);
-        dataAccess.update(newReview);
+    public void update(Long id, Integer newRating, String newComment) {
+        final MovieReview oldReview = dataAccess.findByIdIfExists(id);
+        final MovieReview newReview = new MovieReview(oldReview.username(), oldReview.movieId(), newRating, newComment);
+        //eventStore.sendUpdated(oldReview, newReview);
+        dataAccess.update(id, newReview);
     }
 
     @Override
     @Transactional("transactionManager")
-    public void delete(final MovieReviewKey reviewKey) {
-        final MovieReview review = dataAccess.findForUpdate(reviewKey);
-        eventStore.sendDeleted(review);
-        dataAccess.delete(review);
+    public void delete(final Long id) {
+        MovieReview review = dataAccess.findByIdIfExists(id);
+        //eventStore.sendDeleted(review);
+        dataAccess.delete(id);
     }
 
     @Override
     @Transactional("transactionManager")
     public void deleteAllForUser(final String username) {
-        final Collection<MovieReview> forRemoval = dataAccess.findForUpdate(username);
+        final Map<Long, MovieReview> forRemoval = dataAccess.findByUser(username);
         if (!forRemoval.isEmpty()) {
-            eventStore.sendDeleted(forRemoval);
-            dataAccess.delete(forRemoval);
+            //eventStore.sendDeleted(forRemoval);
+            dataAccess.delete(forRemoval.keySet());
         }
     }
 }

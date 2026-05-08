@@ -8,7 +8,7 @@ import me.mzalietin.mdbproject.user.domain.model.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "mdb_user")
+@Table(name = "app_user")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -16,7 +16,7 @@ import lombok.Setter;
 import me.mzalietin.mdbproject.movie.domain.model.Movie;
 
 @Entity
-@Table(name = "mdb_movie")
+@Table(name = "movie")
 @Getter
 @Setter
 @NoArgsConstructor
