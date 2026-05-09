@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record MovieReviewUpdated(
+    @NotNull Long movieId,
     @NotNull @Min(1) @Max(10) Integer oldRating,
     @NotNull @Size(max = 5000) String oldComment,
     @NotNull @Min(1) @Max(10) Integer newRating,

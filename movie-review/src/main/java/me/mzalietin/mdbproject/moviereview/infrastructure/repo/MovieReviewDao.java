@@ -11,6 +11,7 @@ import me.mzalietin.mdbproject.moviereview.domain.model.ResourceAlreadyExistsExc
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceNotFoundException;
 import me.mzalietin.mdbproject.moviereview.domain.service.spi.MovieReviewDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.stereotype.Component;
@@ -27,16 +28,18 @@ public class MovieReviewDao implements MovieReviewDataAccess {
     @Override
     public String create(final MovieReview review) throws ResourceAlreadyExistsException {
         try {
-            var saved = jdbcOperations.insert(new MovieReviewEntity(null, review));
+            var saved = jdbcOperations.insert(new MovieReviewEntity(review));
             return saved.getId();
         } catch (DuplicateKeyException e) {
             throw new ResourceAlreadyExistsException("Review already exists for given user and movie", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalArgumentException("Unable to create a review for given user and movie: " + review, e);
         }
     }
 
     @Override
-    public void update(final String id, final MovieReview updated) throws ResourceNotFoundException {
-        jdbcOperations.update(new MovieReviewEntity(id, updated));
+    public void update(final MovieReview updated) throws ResourceNotFoundException {
+        jdbcOperations.update(new MovieReviewEntity(updated));
     }
 
     @Override

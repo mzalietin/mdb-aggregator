@@ -29,14 +29,14 @@ public class MovieEventListener {
     WriteOperations writeOperations;
 
     @KafkaHandler
-    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieCreated event, Acknowledgment ack) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) Long movieId, @Payload MovieCreated event, Acknowledgment ack) {
         logger.info("Received event for movieId={} event={}", movieId, event);
         writeOperations.createMovie(movieId, event);
         ack.acknowledge();
     }
 
     @KafkaHandler
-    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, @Payload MovieRatingUpdated event, Acknowledgment ack) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) Long movieId, @Payload MovieRatingUpdated event, Acknowledgment ack) {
         logger.info("Received event for movieId={} event={}", movieId, event);
         writeOperations.updateMovie(movieId, event);
         ack.acknowledge();

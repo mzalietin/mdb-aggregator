@@ -27,7 +27,7 @@ public class MovieUseCasesImpl implements MovieUseCases {
 
     @Override
     @Transactional("transactionManager")
-    public void updateRating(String id, BigDecimal newRating, Integer newReviewsCount) {
+    public void updateRating(Long id, BigDecimal newRating, Integer newReviewsCount) {
         eventStore.sendRatingUpdated(id, newRating, newReviewsCount);
         movieDataAccess.updateRatingInfo(id, newRating, newReviewsCount);
     }

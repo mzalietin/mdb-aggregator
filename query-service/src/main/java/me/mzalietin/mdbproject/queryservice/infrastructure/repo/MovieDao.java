@@ -33,9 +33,9 @@ public class MovieDao extends BaseDao {
             .all();
     }
 
-    public void save(String id, MovieCreated createdEvent) {
+    public void save(Long id, MovieCreated createdEvent) {
         databaseClient.sql("insert into movie_projection(id,name,avg_rating,reviews_count) values($1,$2,$3,$4) on conflict do nothing")
-            .bind("$1", Long.valueOf(id))
+            .bind("$1", id)
             .bind("$2", createdEvent.name())
             .bind("$3", createdEvent.rating())
             .bind("$4", createdEvent.reviewsCount())
@@ -44,7 +44,7 @@ public class MovieDao extends BaseDao {
             .block(Duration.ofMillis(1000));
     }
 
-    public void save(String id, MovieRatingUpdated updatedEvent) {
+    public void save(Long id, MovieRatingUpdated updatedEvent) {
         databaseClient.sql("update movie_projection set avg_rating=$1, reviews_count=$2 where id=$3")
             .bind("$1", updatedEvent.averageRating())
             .bind("$2", updatedEvent.reviewsCount())

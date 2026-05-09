@@ -27,7 +27,7 @@ public class MovieRatingListener {
         clientIdPrefix = "MovieRatingConsumer"
     )
     @Transactional("transactionManager")
-    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String movieId, MovieRatingCalculated event, Acknowledgment ack) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) Long movieId, MovieRatingCalculated event, Acknowledgment ack) {
         logger.debug("Received event for movieId={} event={}", movieId, event);
 
         movieUseCases.updateRating(movieId, event.averageRating(), event.reviewsCount());

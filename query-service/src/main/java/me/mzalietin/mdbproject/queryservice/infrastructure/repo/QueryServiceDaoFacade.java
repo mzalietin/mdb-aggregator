@@ -56,27 +56,27 @@ public class QueryServiceDaoFacade implements ReadOperations, WriteOperations {
     }
 
     @Override
-    public void createMovie(final String id, final MovieCreated event) {
+    public void createMovie(final Long id, final MovieCreated event) {
         movieDao.save(id, event);
     }
 
     @Override
-    public void updateMovie(final String id, final MovieRatingUpdated event) {
+    public void updateMovie(final Long id, final MovieRatingUpdated event) {
         movieDao.save(id, event);
     }
 
     @Override
-    public void createReview(final ReviewKey id, final ReviewCreated event) {
+    public void createReview(final String id, final ReviewCreated event) {
         movieReviewDao.save(id, event);
     }
 
     @Override
-    public void updateReview(final ReviewKey id, final ReviewUpdated event) {
+    public void updateReview(final String id, final ReviewUpdated event) {
         movieReviewDao.save(id, event);
     }
 
     @Override
-    public void deleteReview(final ReviewKey id) {
+    public void deleteReview(final String id) {
         movieReviewDao.delete(id);
     }
 

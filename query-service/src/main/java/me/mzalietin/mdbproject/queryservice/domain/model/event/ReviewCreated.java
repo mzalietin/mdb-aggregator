@@ -1,4 +1,4 @@
 package me.mzalietin.mdbproject.queryservice.domain.model.event;
 
-public record ReviewCreated(Integer rating, String comment) {
+public record ReviewCreated(String username, Long movieId, Integer rating, String comment) {
 }

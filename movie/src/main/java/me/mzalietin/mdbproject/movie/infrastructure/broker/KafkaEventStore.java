@@ -14,19 +14,19 @@ import org.springframework.stereotype.Component;
 public class KafkaEventStore implements EventStore {
 
     @Autowired
-    KafkaTemplate<String, Object> kafkaTemplate;
+    KafkaTemplate<Long, Object> kafkaTemplate;
 
     @Value("${movie.context.kafka.out.events-topic}")
     String eventsOutputTopic;
 
     @Override
     public void sendCreated(final Movie movie) {
-        kafkaTemplate.send(eventsOutputTopic, movie.id().toString(), new MovieCreated(movie.name(), movie.releaseDate(), movie.rating(),
+        kafkaTemplate.send(eventsOutputTopic, movie.id(), new MovieCreated(movie.name(), movie.releaseDate(), movie.rating(),
             movie.reviewsCount()));
     }
 
     @Override
-    public void sendRatingUpdated(final String movieId, final BigDecimal newRating, final Integer newReviewsCount) {
+    public void sendRatingUpdated(final Long movieId, final BigDecimal newRating, final Integer newReviewsCount) {
         kafkaTemplate.send(eventsOutputTopic, movieId, new MovieRatingUpdated(newRating, newReviewsCount));
     }
 }

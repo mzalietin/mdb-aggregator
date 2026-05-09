@@ -1,13 +1,13 @@
 package me.mzalietin.mdbproject.movierating;
 
-import static org.apache.kafka.common.serialization.Serdes.String;
+import static org.apache.kafka.common.serialization.Serdes.Long;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import me.mzalietin.mdbproject.movierating.event.in.MovieRatingEvent;
-import me.mzalietin.mdbproject.movierating.event.in.MovieReviewKey;
 import me.mzalietin.mdbproject.movierating.event.out.MovieRatingCalculated;
 import org.apache.kafka.common.serialization.Serde;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.Grouped;
@@ -25,7 +25,7 @@ public class MovieRatingProcessor {
     private static final Logger logger = LoggerFactory.getLogger(MovieRatingProcessor.class);
 
     @Autowired
-    Serde<MovieReviewKey> keySerde;
+    Serde<String> keySerde;
 
     @Autowired
     Serde<MovieRatingEvent> valueSerde;
@@ -41,8 +41,9 @@ public class MovieRatingProcessor {
         streamsBuilder
             .stream(inputTopic, Consumed.with(keySerde, valueSerde))
             .peek((key, value) -> logger.info("Received event key={}, value={}", key, value))
-            .mapValues(value -> new RatingData(value.absoluteRatingImpact(), value.reviewsCountImpact()))
-            .groupBy((key, value) -> key.movieId(), Grouped.with(String(), new JacksonJsonSerde<>(RatingData.class)))
+            .map((reviewId, event) ->
+                new KeyValue<>(event.movieId(), new RatingData(event.absoluteRatingImpact(), event.reviewsCountImpact())))
+            .groupBy((key, value) -> key, Grouped.with(Long(), new JacksonJsonSerde<>(RatingData.class)))
             .reduce((aggValue, newValue) -> {
                 aggValue.absoluteRating += newValue.absoluteRating;
                 aggValue.reviewsCount += newValue.reviewsCount;
@@ -51,7 +52,7 @@ public class MovieRatingProcessor {
             .mapValues(v -> new MovieRatingCalculated(computeAverageRating(v), v.reviewsCount))
             .toStream()
             .peek((key, value) -> logger.info("Pushing event key={}, value={}", key, value))
-            .to(outputTopic, Produced.with(String(), new JacksonJsonSerde<>(MovieRatingCalculated.class).noTypeInfo()));
+            .to(outputTopic, Produced.with(Long(), new JacksonJsonSerde<>(MovieRatingCalculated.class).noTypeInfo()));
     }
 
     static BigDecimal computeAverageRating(RatingData ratingData) {

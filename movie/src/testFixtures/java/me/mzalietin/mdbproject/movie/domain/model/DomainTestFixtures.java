@@ -6,7 +6,7 @@ import java.time.Month;
 
 public final class DomainTestFixtures {
 
-    public static final String MOVIE_ID = "e693f305-bc96-4d63-871c-1dbb8d41dd51";
+    public static final Long MOVIE_ID = 12345L;
     public static final String MOVIE_NAME = "Forrest Gump";
     public static final LocalDate RELEASE_DATE = LocalDate.of(1994, Month.JUNE, 23);
     public static final BigDecimal MOVIE_RATING_ZERO = BigDecimal.ZERO;

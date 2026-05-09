@@ -19,17 +19,16 @@ public interface MovieReviewDataAccess {
     /**
      * Update Movie Review.
      *
-     * @param id review ID
      * @param review updated (new) data
      */
-    void update(String id, MovieReview review) throws ResourceNotFoundException;
+    void update(MovieReview review);
 
     /**
      * Remove Movie Review.
      *
      * @param id review ID
      */
-    void delete(String id) throws ResourceNotFoundException;
+    void delete(String id);
 
     void delete(Collection<String> ids);
 

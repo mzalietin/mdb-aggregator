@@ -5,7 +5,6 @@ import java.time.Duration;
 import me.mzalietin.mdbproject.queryservice.domain.model.Movie;
 import me.mzalietin.mdbproject.queryservice.domain.model.MovieWithUserRating;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewCreated;
-import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewKey;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewUpdated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.r2dbc.core.DatabaseClient;
@@ -20,30 +19,29 @@ public class MovieReviewDao extends BaseDao {
         super(databaseClient);
     }
 
-    public void save(ReviewKey key, ReviewCreated event) {
-        databaseClient.sql("insert into movie_review_projection(username,movie_id,rating) values($1,$2,$3) on conflict do nothing")
-            .bind("$1", key.username())
-            .bind("$2", key.movieId())
-            .bind("$3", event.rating())
+    public void save(String key, ReviewCreated event) {
+        databaseClient.sql("insert into movie_review_projection(id,username,movie_id,rating) values($1,$2,$3,$4) on conflict do nothing")
+            .bind("$1", key)
+            .bind("$2", event.username())
+            .bind("$3", event.movieId())
+            .bind("$4", event.rating())
             .fetch()
             .rowsUpdated()
             .block(Duration.ofMillis(1000));
     }
 
-    public void save(ReviewKey key, ReviewUpdated event) {
-        databaseClient.sql("update movie_review_projection set rating=$1 where username=$2 and movie_id=$3")
+    public void save(String key, ReviewUpdated event) {
+        databaseClient.sql("update movie_review_projection set rating=$1 where id=$2")
             .bind("$1", event.newRating())
-            .bind("$2", key.username())
-            .bind("$3", key.movieId())
+            .bind("$2", key)
             .fetch()
             .rowsUpdated()
             .block(Duration.ofMillis(1000));
     }
 
-    public void delete(ReviewKey key) {
-        databaseClient.sql("delete from movie_review_projection where username=$1 and movie_id=$2")
-            .bind("$1", key.username())
-            .bind("$2", key.movieId())
+    public void delete(String key) {
+        databaseClient.sql("delete from movie_review_projection where id=$1")
+            .bind("$1", key)
             .fetch()
             .rowsUpdated()
             .block(Duration.ofMillis(1000));

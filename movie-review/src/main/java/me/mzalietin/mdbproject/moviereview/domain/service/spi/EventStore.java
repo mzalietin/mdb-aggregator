@@ -5,7 +5,7 @@ import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 
 public interface EventStore {
 
-    void sendCreated(MovieReview newReview);
+    void sendCreated(String id, MovieReview newReview);
 
     void sendUpdated(MovieReview old, MovieReview updatedReview);
 

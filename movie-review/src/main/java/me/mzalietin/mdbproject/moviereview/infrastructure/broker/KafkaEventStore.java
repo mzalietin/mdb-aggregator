@@ -2,7 +2,6 @@ package me.mzalietin.mdbproject.moviereview.infrastructure.broker;
 
 import java.util.Collection;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
-import me.mzalietin.mdbproject.moviereview.domain.model.MovieReviewKey;
 import me.mzalietin.mdbproject.moviereview.domain.service.spi.EventStore;
 import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.out.MovieReviewCreated;
 import me.mzalietin.mdbproject.moviereview.infrastructure.broker.event.out.MovieReviewDeleted;
@@ -16,34 +15,30 @@ import org.springframework.stereotype.Component;
 public class KafkaEventStore implements EventStore {
 
     @Autowired
-    KafkaTemplate<MovieReviewKey, Object> kt;
+    KafkaTemplate<String, Object> kt;
 
     @Value("${movie.review.context.kafka.out.events-topic}")
     String eventsTopic;
 
     @Override
-    public void sendCreated(final MovieReview r) {
-        //todo
-        //kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()), new MovieReviewCreated(r.rating(), r.comment()));
+    public void sendCreated(String id, final MovieReview r) {
+        kt.send(eventsTopic, id, new MovieReviewCreated(r.username(), r.movieId(), r.rating(), r.comment()));
     }
 
     @Override
-    public void sendUpdated(final MovieReview old, final MovieReview r) {
-//        kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
-//            new MovieReviewUpdated(old.rating(), old.comment(), r.rating(), r.comment()));
+    public void sendUpdated(final MovieReview old, final MovieReview newRev) {
+        kt.send(eventsTopic, old.id(), new MovieReviewUpdated(old.rating(), old.comment(), newRev.rating(), newRev.comment()));
     }
 
     @Override
     public void sendDeleted(final MovieReview r) {
-//        kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
-//            new MovieReviewDeleted(r.rating(), r.comment()));
+        kt.send(eventsTopic, r.id(), new MovieReviewDeleted(r.rating(), r.comment()));
     }
 
     @Override
     public void sendDeleted(final Collection<MovieReview> deletedReviews) {
-//        deletedReviews.forEach(r -> {
-//            kt.send(eventsTopic, new MovieReviewKey(r.username(), r.movieId()),
-//                new MovieReviewDeleted(r.rating(), r.comment()));
-//        });
+        deletedReviews.forEach(
+            r -> kt.send(eventsTopic, r.id(), new MovieReviewDeleted(r.rating(), r.comment()))
+        );
     }
 }

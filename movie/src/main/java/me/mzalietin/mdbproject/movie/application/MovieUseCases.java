@@ -7,5 +7,5 @@ public interface MovieUseCases {
 
     Long create(String name, LocalDate releaseDate);
 
-    void updateRating(String id, BigDecimal newRating, Integer newReviewsCount);
+    void updateRating(Long id, BigDecimal newRating, Integer newReviewsCount);
 }

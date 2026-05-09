@@ -21,8 +21,8 @@ public class MovieReviewEntity {
     private Integer rating;
     private String comment;
 
-    public MovieReviewEntity(String id, MovieReview movieReview) {
-        this.id = id;
+    public MovieReviewEntity(MovieReview movieReview) {
+        this.id = movieReview.id();
         this.username = movieReview.username();
         this.movieId = movieReview.movieId();
         this.rating = movieReview.rating();
@@ -30,6 +30,6 @@ public class MovieReviewEntity {
     }
 
     public MovieReview toModel() {
-        return new MovieReview(username, movieId, rating, comment);
+        return new MovieReview(id, username, movieId, rating, comment);
     }
 }

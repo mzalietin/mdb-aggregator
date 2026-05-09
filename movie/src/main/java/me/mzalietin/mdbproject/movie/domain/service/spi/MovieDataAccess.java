@@ -9,5 +9,5 @@ public interface MovieDataAccess {
 
     Movie createMovie(String name, LocalDate releaseDate);
 
-    void updateRatingInfo(String movieId, BigDecimal rating, Integer reviewsCount) throws RatingUpdateException;
+    void updateRatingInfo(Long movieId, BigDecimal rating, Integer reviewsCount) throws RatingUpdateException;
 }

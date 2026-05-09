@@ -11,7 +11,6 @@ import static org.springframework.kafka.streams.RecoveringDeserializationExcepti
 import java.util.HashMap;
 import java.util.Map;
 import me.mzalietin.mdbproject.movierating.event.in.MovieRatingEvent;
-import me.mzalietin.mdbproject.movierating.event.in.MovieReviewKey;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
@@ -72,14 +71,8 @@ public class MovieRatingAggregatorConfig {
     }
 
     @Bean
-    public Serde<MovieReviewKey> keySerde() {
-        var deserializer = new ValidatingDeserializer<>(new JacksonJsonDeserializer<MovieReviewKey>(), validator());
-        Map<String, Object> props = new HashMap<>();
-        props.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "me.mzalietin.mdbproject.movierating.event.in");
-        props.put(JacksonJsonDeserializer.TYPE_MAPPINGS, "review_key:me.mzalietin.mdbproject.movierating.event.in.MovieReviewKey");
-        props.put(JacksonJsonDeserializer.USE_TYPE_INFO_HEADERS, true);
-        deserializer.configure(props, true);
-        return Serdes.serdeFrom(new JacksonJsonSerializer<>(), deserializer);
+    public Serde<String> keySerde() {
+        return Serdes.String();
     }
 
     @Bean

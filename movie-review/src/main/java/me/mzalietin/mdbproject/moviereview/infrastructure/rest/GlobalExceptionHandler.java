@@ -25,4 +25,12 @@ public class GlobalExceptionHandler {
         detail.setDetail(e.getMessage());
         return detail;
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ProblemDetail handleException(IllegalArgumentException e) {
+        var detail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        detail.setTitle("Malformed Request");
+        detail.setDetail(e.getMessage());
+        return detail;
+    }
 }

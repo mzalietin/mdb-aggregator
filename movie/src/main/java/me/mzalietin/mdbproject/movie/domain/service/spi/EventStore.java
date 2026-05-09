@@ -7,5 +7,5 @@ public interface EventStore {
 
     void sendCreated(Movie movie);
 
-    void sendRatingUpdated(String movieId, BigDecimal newRating, Integer newReviewsCount);
+    void sendRatingUpdated(Long movieId, BigDecimal newRating, Integer newReviewsCount);
 }

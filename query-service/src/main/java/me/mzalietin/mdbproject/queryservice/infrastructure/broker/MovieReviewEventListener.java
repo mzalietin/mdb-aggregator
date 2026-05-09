@@ -31,21 +31,21 @@ public class MovieReviewEventListener {
     WriteOperations writeOperations;
 
     @KafkaHandler
-    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewCreated event, Acknowledgment ack) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String key, @Payload ReviewCreated event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
         writeOperations.createReview(key, event);
         ack.acknowledge();
     }
 
     @KafkaHandler
-    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewUpdated event, Acknowledgment ack) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String key, @Payload ReviewUpdated event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
         writeOperations.updateReview(key, event);
         ack.acknowledge();
     }
 
     @KafkaHandler
-    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) ReviewKey key, @Payload ReviewDeleted event, Acknowledgment ack) {
+    public void listen(@Header(KafkaHeaders.RECEIVED_KEY) String key, @Payload ReviewDeleted event, Acknowledgment ack) {
         logger.info("Received event for key={}, event={}", key, event);
         writeOperations.deleteReview(key);
         ack.acknowledge();

@@ -20,24 +20,25 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
     @Override
     @Transactional("transactionManager")
     public String create(final MovieReview review) {
-        //eventStore.sendCreated(review);
-        return dataAccess.create(review);
+        String id = dataAccess.create(review);
+        eventStore.sendCreated(id, review);
+        return id;
     }
 
     @Override
     @Transactional("transactionManager")
     public void update(String id, Integer newRating, String newComment) {
         final MovieReview oldReview = dataAccess.findByIdIfExists(id);
-        final MovieReview newReview = new MovieReview(oldReview.username(), oldReview.movieId(), newRating, newComment);
-        //eventStore.sendUpdated(oldReview, newReview);
-        dataAccess.update(id, newReview);
+        final MovieReview newReview = new MovieReview(id, oldReview.username(), oldReview.movieId(), newRating, newComment);
+        eventStore.sendUpdated(oldReview, newReview);
+        dataAccess.update(newReview);
     }
 
     @Override
     @Transactional("transactionManager")
     public void delete(final String id) {
         MovieReview review = dataAccess.findByIdIfExists(id);
-        //eventStore.sendDeleted(review);
+        eventStore.sendDeleted(review);
         dataAccess.delete(id);
     }
 
@@ -46,7 +47,7 @@ public class MovieReviewUseCasesImpl implements MovieReviewUseCases {
     public void deleteAllForUser(final String username) {
         final Map<String, MovieReview> forRemoval = dataAccess.findByUser(username);
         if (!forRemoval.isEmpty()) {
-            //eventStore.sendDeleted(forRemoval);
+            eventStore.sendDeleted(forRemoval.values());
             dataAccess.delete(forRemoval.keySet());
         }
     }

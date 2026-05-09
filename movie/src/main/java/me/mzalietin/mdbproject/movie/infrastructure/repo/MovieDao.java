@@ -21,7 +21,7 @@ public class MovieDao implements MovieDataAccess {
     }
 
     @Override
-    public void updateRatingInfo(final String movieId, final BigDecimal rating, final Integer reviewsCount) {
+    public void updateRatingInfo(final Long movieId, final BigDecimal rating, final Integer reviewsCount) {
         final int updatedRows = movieRepository.updateRating(movieId, rating, reviewsCount);
         if (updatedRows == 0) {
             throw new RatingUpdateException("Rating update failed for movieId = " + movieId);

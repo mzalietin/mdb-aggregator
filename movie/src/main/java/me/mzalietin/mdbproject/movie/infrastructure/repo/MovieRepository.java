@@ -8,12 +8,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MovieRepository extends JpaRepository<MovieEntity, String> {
+public interface MovieRepository extends JpaRepository<MovieEntity, Long> {
 
     @Modifying
     @Query("UPDATE MovieEntity m SET m.averageRating = :averageRating, m.reviewsCount = :reviewsCount WHERE m.id = :id")
     int updateRating(
-        @Param("id") String id,
+        @Param("id") Long id,
         @Param("averageRating") BigDecimal rating,
         @Param("reviewsCount") Integer reviewsCount
     );
