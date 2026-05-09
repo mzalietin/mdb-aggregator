@@ -1,5 +1,6 @@
 package me.mzalietin.mdbproject.moviereview.infrastructure.rest;
 
+import me.mzalietin.mdbproject.moviereview.domain.model.MalformedInputDataException;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceAlreadyExistsException;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class GlobalExceptionHandler {
         return detail;
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ProblemDetail handleException(IllegalArgumentException e) {
+    @ExceptionHandler(MalformedInputDataException.class)
+    public ProblemDetail handleException(MalformedInputDataException e) {
         var detail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         detail.setTitle("Malformed Request");
         detail.setDetail(e.getMessage());

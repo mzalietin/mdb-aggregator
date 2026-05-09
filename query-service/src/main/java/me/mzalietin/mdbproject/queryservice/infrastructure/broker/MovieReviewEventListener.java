@@ -2,7 +2,6 @@ package me.mzalietin.mdbproject.queryservice.infrastructure.broker;
 
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewCreated;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewDeleted;
-import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewKey;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewUpdated;
 import me.mzalietin.mdbproject.queryservice.domain.service.spi.WriteOperations;
 import org.slf4j.Logger;

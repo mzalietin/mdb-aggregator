@@ -7,7 +7,6 @@ import me.mzalietin.mdbproject.queryservice.domain.model.User;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieCreated;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieRatingUpdated;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewCreated;
-import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewKey;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.ReviewUpdated;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.UserCreated;
 import me.mzalietin.mdbproject.queryservice.domain.service.spi.ReadOperations;

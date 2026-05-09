@@ -1,5 +1,7 @@
 package me.mzalietin.mdbproject.queryservice.infrastructure.broker;
 
+import static org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG;
+
 import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieCreated;
 import me.mzalietin.mdbproject.queryservice.domain.model.event.MovieRatingUpdated;
 import me.mzalietin.mdbproject.queryservice.domain.service.spi.WriteOperations;
@@ -19,7 +21,8 @@ import org.springframework.stereotype.Component;
     id = "query-service-movie-context-group",
     topics = "${query.service.kafka.in.movie-events-topic}",
     batch = "false",
-    clientIdPrefix = "QueryServiceMovieConsumer"
+    clientIdPrefix = "QueryServiceMovieConsumer",
+    properties = { KEY_DESERIALIZER_CLASS_CONFIG + "=org.apache.kafka.common.serialization.LongDeserializer" }
 )
 public class MovieEventListener {
 

@@ -6,6 +6,7 @@ import static org.springframework.data.relational.core.query.Query.query;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
+import me.mzalietin.mdbproject.moviereview.domain.model.MalformedInputDataException;
 import me.mzalietin.mdbproject.moviereview.domain.model.MovieReview;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceAlreadyExistsException;
 import me.mzalietin.mdbproject.moviereview.domain.model.ResourceNotFoundException;
@@ -33,7 +34,7 @@ public class MovieReviewDao implements MovieReviewDataAccess {
         } catch (DuplicateKeyException e) {
             throw new ResourceAlreadyExistsException("Review already exists for given user and movie", e);
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("Unable to create a review for given user and movie: " + review, e);
+            throw new MalformedInputDataException("Unable to create a review for given user and movie: " + review, e);
         }
     }
 
